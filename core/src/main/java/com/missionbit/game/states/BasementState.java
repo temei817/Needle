@@ -12,11 +12,13 @@ import com.missionbit.game.characters.Female;
 public class BasementState extends State{
 
     private Female female;
+    private Texture bkgrd;
 
     public BasementState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
         female = new Female(50,50);
+        bkgrd = new Texture("images/basement.png");
     }
 
     @Override
@@ -42,6 +44,7 @@ public class BasementState extends State{
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
+        sb.draw(bkgrd,0,0,800,480);
         sb.draw(female.getChar(),female.getCharPos().x-female.getBounds().getWidth()/2,female.getCharPos().y-female.getBounds().getHeight()/2);
         sb.end();
     }
@@ -49,5 +52,6 @@ public class BasementState extends State{
     @Override
     public void dispose() {
         female.dispose();
+        bkgrd.dispose();
     }
 }
