@@ -7,7 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.missionbit.game.states.BasementState;
 import com.missionbit.game.states.GameStateManager;
 
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
+
+
 public class Needle extends ApplicationAdapter {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 480;
