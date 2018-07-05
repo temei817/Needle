@@ -16,8 +16,8 @@ import com.badlogic.gdx.math.Vector3;
 import java.util.Random;
 
 public class Needle extends ApplicationAdapter {
-    public static final int WIDTH = 500;
-    public static final int HEIGHT = 200;
+    public static final int WIDTH = 960;
+    public static final int HEIGHT = 540;
 
     private OrthographicCamera camera;
     private Random randomSource;
@@ -33,13 +33,13 @@ public class Needle extends ApplicationAdapter {
 
         // Set up camera for 2d view of 800x480 pixels
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 500, 200);
+        camera.setToOrtho(false, 960, 540);
 
         // Create a sprite batch for rendering our image
         myBatch = new SpriteBatch();
 
         //TODO: Load our image
-        background = new Texture("basement.png");
+        background = new Texture("BASEMENT.png");
     }
 
     @Override
