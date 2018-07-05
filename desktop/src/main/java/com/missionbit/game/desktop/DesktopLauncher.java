@@ -17,9 +17,9 @@ public class DesktopLauncher {
 
     private static LwjglApplicationConfiguration getDefaultConfiguration() {
         LwjglApplicationConfiguration configuration = new LwjglApplicationConfiguration();
-        configuration.title = "Needle";
-        configuration.width = 640;
-        configuration.height = 480;
+        configuration.title = Needle.TITLE;
+        configuration.width = Needle.WIDTH;
+        configuration.height = Needle.HEIGHT;
         for (int size : new int[] { 128, 64, 32, 16 }) {
             configuration.addIcon("libgdx" + size + ".png", FileType.Internal);
         }
