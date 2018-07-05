@@ -17,6 +17,7 @@ public class DesktopLauncher {
 
     private static LwjglApplicationConfiguration getDefaultConfiguration() {
         LwjglApplicationConfiguration configuration = new LwjglApplicationConfiguration();
+
         configuration.title = Needle.TITLE;
         configuration.width = Needle.WIDTH;
         configuration.height = Needle.HEIGHT;

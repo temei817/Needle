@@ -1,9 +1,11 @@
 package com.missionbit.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.missionbit.game.Needle;
@@ -13,6 +15,8 @@ public class BasementState extends State{
 
     private Female female;
     private Texture bkgrd;
+
+    //private float stateTime;
 
     public BasementState(GameStateManager gsm) {
         super(gsm);
@@ -45,7 +49,9 @@ public class BasementState extends State{
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.draw(bkgrd,0,0,800,480);
-        sb.draw(female.getChar(),female.getCharPos().x-female.getBounds().getWidth()/2,female.getCharPos().y-female.getBounds().getHeight()/2);
+        //TextureRegion currentFrame = female.getAnimation().getCurrentFrame().getKeyFrame(stateTime, true);
+        //sb.draw(currentFrame, 50, 50); // Draw current frame at (50, 50)
+        sb.draw(female.getAni(),female.getCharPos().x-female.getBounds().getWidth()/2,female.getCharPos().y-female.getBounds().getHeight()/2);
         sb.end();
     }
 
