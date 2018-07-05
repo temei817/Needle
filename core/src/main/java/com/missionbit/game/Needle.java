@@ -2,20 +2,15 @@ package com.missionbit.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.missionbit.game.states.BasementState;
+import com.missionbit.game.states.GameStateManager;
 
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 
-import java.util.Random;
 
 public class Needle extends ApplicationAdapter {
+<<<<<<< HEAD
     public static final int WIDTH = 960;
     public static final int HEIGHT = 540;
 
@@ -40,27 +35,32 @@ public class Needle extends ApplicationAdapter {
 
         //TODO: Load our image
         background = new Texture("BASEMENT.png");
-    }
+=======
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 480;
+    public static final String TITLE = "Needle";
+    private GameStateManager gsm;
+    private SpriteBatch batch;
 
     @Override
-    public void render() {
-
-        // Clear the screen
+    public void create () {
+        batch = new SpriteBatch();
+        gsm = new GameStateManager();
+        gsm.push(new BasementState(gsm));
         Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        //Set up our camera
-        camera.update();
-        myBatch.setProjectionMatrix(camera.combined);
-
-        //TODO: Draw our image!
-        myBatch.begin();
-        myBatch.draw(background,0,0);
-        myBatch.end();
+>>>>>>> 628d91927f9689c4188179c68e9a53488f0f287d
     }
 
     @Override
-    public void dispose() {
-        myBatch.dispose();
+    public void render () {
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        gsm.update(Gdx.graphics.getDeltaTime());
+        gsm.render(batch);
     }
+
+    @Override
+    public void dispose () {
+        batch.dispose();
+    }
+
 }
