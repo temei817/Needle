@@ -45,6 +45,8 @@ public class SafeState extends State {
         buttons.add(b);
         b = new Button(266, 32, 26, 16, "Check");
         buttons.add(b);
+        b = new Button(328, 11, 40,30, "Back");
+        buttons.add(b);
 
 
 
