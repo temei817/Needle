@@ -15,14 +15,17 @@ public class BasementState extends State{
 
     private Female female;
     private Texture bkgrd;
+    private float offsetX, offsetY;
 
     //private float stateTime;
 
     public BasementState(GameStateManager gsm) {
         super(gsm);
-        cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
+        cam.setToOrtho(false, Needle.WIDTH/1.5f, Needle.HEIGHT/1.5f);
         female = new Female(50,50);
         bkgrd = new Texture("images/basement.png");
+        offsetX = female.getChar().getWidth()/2;
+        offsetY = female.getChar().getHeight()/2;
     }
 
     @Override
@@ -39,19 +42,21 @@ public class BasementState extends State{
 
     @Override
     public void update(float dt) {
-        cam.update();
+        cam.position.x = female.getCharPos().x + 80;
         handleInput();
         female.update(dt);
+        cam.update();
 
     }
 
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
+        sb.setProjectionMatrix(cam.combined);
         sb.draw(bkgrd,0,0,800,480);
-        //TextureRegion currentFrame = female.getAnimation().getCurrentFrame().getKeyFrame(stateTime, true);
-        //sb.draw(currentFrame, 50, 50); // Draw current frame at (50, 50)
-        sb.draw(female.getAni(),female.getCharPos().x-female.getBounds().getWidth()/2,female.getCharPos().y-female.getBounds().getHeight()/2);
+        //sb.draw(female.getAni(),female.getCharPos().x-female.getBounds().getWidth()/2,female.getCharPos().y-female.getBounds().getHeight()/2);
+        sb.draw(female.getAni(),female.getCharPos().x,female.getCharPos().y,female.getCharSize(),female.getCharSize());
+
         sb.end();
     }
 
