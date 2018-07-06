@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.missionbit.game.Animations;
 
 public abstract class Character {
     protected Texture character;
@@ -11,6 +12,8 @@ public abstract class Character {
     protected Vector3 velocity;
     protected Rectangle bounds;
     protected Vector3 targetLoc;
+    protected  Texture characterStill;
+    protected Animations charStill;
 
     protected abstract void update(float dt);
     protected abstract void dispose();
