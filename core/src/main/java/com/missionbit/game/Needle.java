@@ -24,8 +24,8 @@ public class Needle extends ApplicationAdapter {
     public void create () {
         batch = new SpriteBatch();
         gsm = new GameStateManager();
-        //gsm.push(new BasementState(gsm));
-        gsm.push(new SafeState(gsm));
+        gsm.push(new BasementState(gsm));
+        //gsm.push(new SafeState(gsm));
         Gdx.gl.glClearColor(0, 0, 0, 1);
     }
 

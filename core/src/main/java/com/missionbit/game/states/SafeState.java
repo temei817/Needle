@@ -68,6 +68,7 @@ public class SafeState extends State {
                 boolean hit = b.handleClick(touchPos);
                 if (hit){
                     System.out.println(b.getValue());
+                    //gsm.set(new BasementState(gsm));
                 }
                 System.out.println(touchPos.x + " " + touchPos.y);
             }

@@ -17,12 +17,12 @@ public class Female extends Character{
     public Female(int x, int y) {
         character = new Texture("images/femaleWalk.png");
         t = new TextureRegion(character);
-        charSize = 600;
+        charSize = 150;
         charPos = new Vector3(x,y,0);
         targetLoc = new Vector3();
         direction = new Vector3();
         bounds = new Rectangle(x,y,character.getWidth(),character.getWidth());
-        charAnimation = new Animations(t,16,0.5f);
+        charAnimation = new Animations(t,16,1f);
     }
 
     @Override
@@ -67,8 +67,10 @@ public class Female extends Character{
     }
 
     public void setTargetLoc(int x, int y){
-        targetLoc.set(x,y,0);
-        direction.set(x,y,0);
+        if(y<100 ){
+            targetLoc.set(x, y, 0);
+            direction.set(x, y, 0);
+        }
         direction.sub(charPos);
         direction.nor();
     }
