@@ -14,6 +14,8 @@ public abstract class Character {
     protected Vector3 targetLoc;
     protected  Texture characterStill;
     protected Animations charStill;
+    protected  Texture characterL;
+    protected Animations characterLeft;
 
     protected abstract void update(float dt);
     protected abstract void dispose();

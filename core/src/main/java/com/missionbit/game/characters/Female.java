@@ -18,6 +18,8 @@ public class Female extends Character{
     public Female(int x, int y) {
         character = new Texture("images/femaleWalk.png");
         characterStill = new Texture("images/femaleIdle.png");
+        characterL = new Texture("images/femaleIdleL.png");
+
         t = new TextureRegion(character);
         charSize = 150;
         charPos = new Vector3(x,y,0);
@@ -26,6 +28,7 @@ public class Female extends Character{
         bounds = new Rectangle(x,y,charSize,charSize);
         charAnimation = new Animations(t,16,1f);
         charStill = new Animations(new TextureRegion(characterStill),19,1f);
+        characterLeft= new Animations(new TextureRegion(characterL),19,1f);
         moving = false;
         velocity = new Vector3(100,0,0);
     }
