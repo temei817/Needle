@@ -6,12 +6,16 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.missionbit.game.states.BasementState;
 import com.missionbit.game.states.GameStateManager;
+
+import com.missionbit.game.states.SafeState;
+
 import com.missionbit.game.states.MenuState;
 
 
+
 public class Needle extends ApplicationAdapter {
-    public static final int WIDTH = 800;
-    public static final int HEIGHT = 480;
+    public static final int WIDTH = 960;
+    public static final int HEIGHT = 540;
     public static final String TITLE = "Needle";
     private GameStateManager gsm;
     private SpriteBatch batch;
@@ -20,7 +24,8 @@ public class Needle extends ApplicationAdapter {
     public void create () {
         batch = new SpriteBatch();
         gsm = new GameStateManager();
-        gsm.push(new BasementState(gsm));
+        //gsm.push(new BasementState(gsm));
+        gsm.push(new SafeState(gsm));
         Gdx.gl.glClearColor(0, 0, 0, 1);
     }
 
@@ -37,3 +42,5 @@ public class Needle extends ApplicationAdapter {
     }
 
 }
+
+
