@@ -54,7 +54,7 @@ public class BasementState extends State{
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.setProjectionMatrix(cam.combined);
-        sb.draw(bkgrd,camOffset,0,Needle.WIDTH,Needle.HEIGHT);
+        sb.draw(bkgrd,0,0,Needle.WIDTH,Needle.HEIGHT);
         if(female.getMoving()) {
             sb.draw(female.getAni(), female.getCharPos().x-300, female.getCharPos().y, female.getCharSize(), female.getCharSize());
         }
