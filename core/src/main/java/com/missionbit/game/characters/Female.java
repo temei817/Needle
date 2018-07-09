@@ -114,10 +114,9 @@ public class Female extends Character{
         //temp.scl(10f);
         Vector3 temp = new Vector3(direction);
         temp.scl(10f);
-        shapeRenderer.line(0,0,temp.x,temp.y);
         shapeRenderer.circle(targetLoc.x,targetLoc.y,10);
         shapeRenderer.circle(charPos.x,charPos.y,10);
-        shapeRenderer.rect(charPos.x,charPos.y,charSize,charSize);
+        shapeRenderer.rect(charPos.x,charPos.y,80,120);
 
 
     }

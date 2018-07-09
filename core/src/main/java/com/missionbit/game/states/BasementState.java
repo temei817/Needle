@@ -29,7 +29,7 @@ public class BasementState extends State{
         cam.setToOrtho(false, Needle.WIDTH/1.5f, Needle.HEIGHT/1.5f);
         female = new Female(50,50);
         bkgrd = new Texture("images/basement.png");
-        camOffset = -300;
+        camOffset = 300;
         bkgdButton = new Button(camOffset,0,800,130,"1");
         bkgdButtonTwo = new Button(500,0,160,400,"2");
     }
@@ -57,7 +57,7 @@ public class BasementState extends State{
     public void update(float dt) {
         handleInput();
         female.update(dt);
-        cam.position.x = female.getCharPos().x-camOffset;
+        cam.position.x = female.getCharPos().x;
         cam.update();
 
     }
@@ -69,14 +69,18 @@ public class BasementState extends State{
         sb.setProjectionMatrix(cam.combined);
         sb.draw(bkgrd,0,0,Needle.WIDTH,Needle.HEIGHT);
         if(female.getMovingR()) {
-            sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, female.getCharSize(), female.getCharSize());
+            //sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, female.getCharSize(), female.getCharSize());
+            sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, 80,120);
+
         }
+        /*
         else if(female.getMovingL()){
             sb.draw(female.getAniWalkLeft(), female.getCharPos().x, female.getCharPos().y, female.getCharSize(), female.getCharSize());
         }
         else{
             sb.draw(female.getAniStill(), female.getCharPos().x, female.getCharPos().y, female.getCharSize(), female.getCharSize());
         }
+        */
         sb.end();
         if(showDebug) {
             debugRenderer.setProjectionMatrix(cam.combined);
