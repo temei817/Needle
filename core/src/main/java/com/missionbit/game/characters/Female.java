@@ -2,6 +2,7 @@ package com.missionbit.game.characters;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.missionbit.game.Animations;
@@ -11,22 +12,24 @@ public class Female extends Character{
     private int charSize;
     private Vector3 direction;
     private Animations charAnimation;
-    private TextureRegion t;
-    private boolean moving;
-    //private float charPos;
+    private boolean movingR, movingL;
 
     public Female(int x, int y) {
         character = new Texture("images/femaleWalk.png");
         characterStill = new Texture("images/femaleIdle.png");
-        t = new TextureRegion(character);
+        charStillLeft = new Texture("images/femaleIdleL.png");
+        charWalkLeft = new Texture("images/femaleWalkL.png");
         charSize = 150;
         charPos = new Vector3(x,y,0);
         targetLoc = new Vector3();
         direction = new Vector3();
         bounds = new Rectangle(x,y,charSize,charSize);
-        charAnimation = new Animations(t,16,1f);
+        charAnimation = new Animations(new TextureRegion(character),16,1f);
         charStill = new Animations(new TextureRegion(characterStill),19,1f);
-        moving = false;
+        charStillL = new Animations(new TextureRegion(charStillLeft), 19,1f);
+        charWalkL = new Animations(new TextureRegion(charWalkLeft), 16,1f);
+        movingR = false;
+        movingL = false;
         velocity = new Vector3(100,0,0);
     }
 
@@ -34,12 +37,12 @@ public class Female extends Character{
     public void update(float dt) {
         charAnimation.update(dt);
         if( charPos.dst(targetLoc) >= 1) {
-            moving = true;
+            movingR = true;
             charPos.x += direction.x * velocity.x * dt;
             charPos.y += direction.y * velocity.x * dt;
         }
         else{
-            moving = false;
+            movingR = false;
         }
 
     }
@@ -47,12 +50,27 @@ public class Female extends Character{
     @Override
     public void dispose() {
         character.dispose();
+        charWalkLeft.dispose();
+        charStillLeft.dispose();
+        characterStill.dispose();
 
     }
 
 
-    public void setMoving(boolean move){
-        moving = move;
+    public Vector3 getTargetLoc(){
+        return targetLoc;
+    }
+
+    public void setMovingL(boolean moveL){
+        movingL = moveL;
+    }
+
+    public void setMovingR(boolean move){
+        movingR = move;
+    }
+
+    public Boolean getMovingL(){
+        return movingL;
     }
 
     public Rectangle getBounds(){
@@ -61,6 +79,14 @@ public class Female extends Character{
 
     public Texture getChar(){
         return character;
+    }
+
+    public TextureRegion getAniWalkLeft() {
+        return charWalkL.getFrame();
+    }
+
+    public TextureRegion getStillLeft(){
+        return charStillL.getFrame();
     }
 
     public TextureRegion getAni(){
@@ -82,8 +108,22 @@ public class Female extends Character{
         direction.nor();
     }
 
-    public boolean getMoving(){
-        return moving;
+    public void drawDebug(ShapeRenderer shapeRenderer){
+        //Vector3 temp = new Vector3(charPos);
+        //temp.add(direction);
+        //temp.scl(10f);
+        Vector3 temp = new Vector3(direction);
+        temp.scl(10f);
+        shapeRenderer.line(0,0,temp.x,temp.y);
+        shapeRenderer.circle(targetLoc.x,targetLoc.y,10);
+        shapeRenderer.circle(charPos.x,charPos.y,10);
+        shapeRenderer.rect(charPos.x,charPos.y,charSize,charSize);
+
+
+    }
+
+    public boolean getMovingR(){
+        return movingR;
     }
 
     public int getCharSize(){
