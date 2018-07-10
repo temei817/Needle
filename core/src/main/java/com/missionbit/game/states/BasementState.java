@@ -49,6 +49,9 @@ public class BasementState extends State{
             else if(female.getTargetLoc().y>400 && female.getCharPos().x>=500){
                 female.setTargetLoc((int)touchPos.x,400);
             }
+            if(touchPos.x > 200){
+                gsm.push(new SafeState(gsm));
+            }
 
         }
     }
