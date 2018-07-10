@@ -75,6 +75,11 @@ public class SafeState extends State {
                     else if(b.getValue().equals("Check")){
                         if(Combo.equals(Answer)){
                             System.out.println("Unlocked");
+                            Combo = "";
+                        }
+                        else{
+                            Combo = "";
+                            System.out.println("Wrong! Try Again");
                         }
                     }
                     else{
