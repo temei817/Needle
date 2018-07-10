@@ -39,11 +39,11 @@ public class BasementState extends State{
     protected void handleInput() {
 
         //move char if player taps
-        if(Gdx.input.justTouched()){
+        if (Gdx.input.justTouched()) {
             Vector3 touchPos = new Vector3();
-            touchPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
+            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             cam.unproject(touchPos);
-            female.setTargetLoc((int)touchPos.x,(int)touchPos.y);
+            female.setTargetLoc((int) touchPos.x, (int) touchPos.y);
             //bounds for char movement
             //bkgdbutton bounds
             if(female.getTargetLoc().y > 80 && female.getCharPos().x<500){
@@ -52,10 +52,14 @@ public class BasementState extends State{
             //bkgdbutton2 bounds
             else if(female.getTargetLoc().y>400 && female.getCharPos().x>=500){
                 female.setTargetLoc((int) touchPos.x, 400);
+            /*
+            if (touchPos.x > 200) {
+                gsm.push(new SafeState(gsm));
+                */
+
             }
 
         }
-
     }
 
     @Override
@@ -75,14 +79,14 @@ public class BasementState extends State{
         sb.draw(bkgrd,camOffset,0,Needle.WIDTH,Needle.HEIGHT);
         if(female.getMovingR()) {
             //sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, female.getCharSize(), female.getCharSize());
-            sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, female.getCharSize(),female.getCharSize());
+            sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, 49,98);
 
         }
         else if(female.getMovingL()){
             sb.draw(female.getAniWalkLeft(), female.getCharPos().x, female.getCharPos().y, female.getCharSize(), female.getCharSize());
         }
         else{
-            sb.draw(female.getAniStill(), female.getCharPos().x, female.getCharPos().y, female.getCharSize(), female.getCharSize());
+            sb.draw(female.getAniStill(), female.getCharPos().x, female.getCharPos().y,50, 98);
         }
         sb.end();
         if(showDebug) {
