@@ -39,27 +39,26 @@ public class BasementState extends State{
     protected void handleInput() {
 
         //move char if player taps
-        if(Gdx.input.justTouched()){
+        if (Gdx.input.justTouched()) {
             Vector3 touchPos = new Vector3();
-            touchPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
+            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             cam.unproject(touchPos);
-            female.setTargetLoc((int)touchPos.x,(int)touchPos.y);
+            female.setTargetLoc((int) touchPos.x, (int) touchPos.y);
             //bounds for char movement
             //bkgdbutton bounds
-            if(female.getTargetLoc().y > 130 && female.getCharPos().x<500){
-                female.setTargetLoc((int)touchPos.x,80);
+            if (female.getTargetLoc().y > 130 && female.getCharPos().x < 500) {
+                female.setTargetLoc((int) touchPos.x, 80);
             }
             //bkgdbutton2 bounds
-            else if(female.getTargetLoc().y>400 && female.getCharPos().x>700){
-                female.setTargetLoc((int)touchPos.x,400);
+            else if (female.getTargetLoc().y > 400 && female.getCharPos().x > 700) {
+                female.setTargetLoc((int) touchPos.x, 400);
             }
-            //bkgdbutton3 bounds
-            else if(female.getTargetLoc().x == 500 && female.getTargetLoc().y > 130){
-                female.setTargetLoc((int)touchPos.x,110);
+            if (touchPos.x > 200) {
+                gsm.push(new SafeState(gsm));
+
             }
 
         }
-
     }
 
     @Override

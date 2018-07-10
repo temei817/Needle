@@ -82,6 +82,9 @@ public class SafeState extends State {
                             System.out.println("Wrong! Try Again");
                         }
                     }
+                    else if(b.getValue().equals("Back")){
+                        gsm.pop();
+                    }
                     else{
                         Combo += b.getValue();
                     }
@@ -105,6 +108,7 @@ public class SafeState extends State {
 
     @Override
     public void render(SpriteBatch sb) {
+        sb.setProjectionMatrix(cam.combined);
         sb.begin();
         sb.draw(safe,0,0);
         sb.end();
