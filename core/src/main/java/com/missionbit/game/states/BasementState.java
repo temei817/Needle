@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.missionbit.game.Button;
@@ -30,8 +31,8 @@ public class BasementState extends State{
         female = new Female(50,50);
         bkgrd = new Texture("images/basement.png");
         camOffset = -300;
-        bkgdButton = new Button(camOffset,0,800,130,"1");
-        bkgdButtonTwo = new Button(500,0,160,400,"2");
+        bkgdButton = new Button(0,0,800,130,"1");
+        bkgdButtonTwo = new Button(800,0,160,400,"2");
         //bkgdButtonThree = new Button(470,0,60,50, "3");
     }
 
@@ -46,12 +47,13 @@ public class BasementState extends State{
             female.setTargetLoc((int) touchPos.x, (int) touchPos.y);
             //bounds for char movement
             //bkgdbutton bounds
-            if(female.getTargetLoc().y > 80 && female.getCharPos().x<500){
+            if(female.getTargetLoc().y > 80 && female.getCharPos().x<800){
                 female.setTargetLoc((int)touchPos.x,60);
             }
             //bkgdbutton2 bounds
-            else if(female.getTargetLoc().y>400 && female.getCharPos().x>=500){
+            else if(female.getTargetLoc().y>400 && female.getCharPos().x>=800) {
                 female.setTargetLoc((int) touchPos.x, 400);
+            }
             /*
             if (touchPos.x > 200) {
                 gsm.push(new SafeState(gsm));
@@ -60,13 +62,24 @@ public class BasementState extends State{
             }
 
         }
-    }
 
     @Override
     public void update(float dt) {
         handleInput();
         female.update(dt);
+        float minX = cam.viewportWidth/2, maxX = bkgrd.getWidth()-cam.viewportWidth/2;
         cam.position.x = female.getCharPos().x;
+
+        //camera bounds
+        if(cam.position.x  <= minX) {
+            cam.position.x = minX;
+        }
+        else if(cam.position.x > maxX) {
+            cam.position.x = maxX;
+        }
+        else{
+            cam.position.x = female.getCharPos().x;
+        }
         cam.update();
 
     }
@@ -76,7 +89,7 @@ public class BasementState extends State{
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.setProjectionMatrix(cam.combined);
-        sb.draw(bkgrd,camOffset,0,Needle.WIDTH,Needle.HEIGHT);
+        sb.draw(bkgrd,0,0,Needle.WIDTH,Needle.HEIGHT);
         if(female.getMovingR()) {
             //sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, female.getCharSize(), female.getCharSize());
             sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, 49,98);
