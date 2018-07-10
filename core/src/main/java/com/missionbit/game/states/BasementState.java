@@ -30,9 +30,9 @@ public class BasementState extends State{
         female = new Female(50,50);
         bkgrd = new Texture("images/basement.png");
         camOffset = -300;
-        bkgdButton = new Button(camOffset,0,770,130,"1");
-        bkgdButtonTwo = new Button(530,0,160,400,"2");
-        bkgdButtonThree = new Button(470,0,60,50, "3");
+        bkgdButton = new Button(camOffset,0,800,130,"1");
+        bkgdButtonTwo = new Button(500,0,160,400,"2");
+        //bkgdButtonThree = new Button(470,0,60,50, "3");
     }
 
     @Override
@@ -46,16 +46,12 @@ public class BasementState extends State{
             female.setTargetLoc((int)touchPos.x,(int)touchPos.y);
             //bounds for char movement
             //bkgdbutton bounds
-            if(female.getTargetLoc().y > 130 && female.getCharPos().x<500){
-                female.setTargetLoc((int)touchPos.x,80);
+            if(female.getTargetLoc().y > 80 && female.getCharPos().x<500){
+                female.setTargetLoc((int)touchPos.x,60);
             }
             //bkgdbutton2 bounds
-            else if(female.getTargetLoc().y>400 && female.getCharPos().x>700){
-                female.setTargetLoc((int)touchPos.x,400);
-            }
-            //bkgdbutton3 bounds
-            else if(female.getTargetLoc().x == 500 && female.getTargetLoc().y > 130){
-                female.setTargetLoc((int)touchPos.x,110);
+            else if(female.getTargetLoc().y>400 && female.getCharPos().x>=500){
+                female.setTargetLoc((int) touchPos.x, 400);
             }
 
         }
@@ -95,7 +91,7 @@ public class BasementState extends State{
             debugRenderer.setColor(0, 1, 0, 1);
             bkgdButton.drawDebug(debugRenderer);
             bkgdButtonTwo.drawDebug(debugRenderer);
-            bkgdButtonThree.drawDebug(debugRenderer);
+            //bkgdButtonThree.drawDebug(debugRenderer);
             female.drawDebug(debugRenderer);
         }
         debugRenderer.end();
