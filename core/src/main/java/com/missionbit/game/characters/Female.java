@@ -25,8 +25,8 @@ public class Female extends Character{
         direction = new Vector3();
         bounds = new Rectangle(x,y,charSize,charSize);
         charAnimation = new Animations(new TextureRegion(character),16,1f);
-        charStill = new Animations(new TextureRegion(characterStill),19,1f);
-        charStillL = new Animations(new TextureRegion(charStillLeft), 19,1f);
+        charStill = new Animations(new TextureRegion(characterStill),21,1f);
+        charStillL = new Animations(new TextureRegion(charStillLeft), 21,1f);
         charWalkL = new Animations(new TextureRegion(charWalkLeft), 16,1f);
         movingR = false;
         movingL = false;
@@ -116,7 +116,7 @@ public class Female extends Character{
         temp.scl(10f);
         shapeRenderer.circle(targetLoc.x,targetLoc.y,10);
         shapeRenderer.circle(charPos.x,charPos.y,10);
-        shapeRenderer.rect(charPos.x,charPos.y,charSize,charSize);
+        shapeRenderer.rect(charPos.x,charPos.y,49,98);
 
 
     }

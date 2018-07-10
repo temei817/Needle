@@ -79,14 +79,14 @@ public class BasementState extends State{
         sb.draw(bkgrd,camOffset,0,Needle.WIDTH,Needle.HEIGHT);
         if(female.getMovingR()) {
             //sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, female.getCharSize(), female.getCharSize());
-            sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, female.getCharSize(),female.getCharSize());
+            sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, 49,98);
 
         }
         else if(female.getMovingL()){
             sb.draw(female.getAniWalkLeft(), female.getCharPos().x, female.getCharPos().y, female.getCharSize(), female.getCharSize());
         }
         else{
-            sb.draw(female.getAniStill(), female.getCharPos().x, female.getCharPos().y, female.getCharSize(), female.getCharSize());
+            sb.draw(female.getAniStill(), female.getCharPos().x, female.getCharPos().y,50, 98);
         }
         sb.end();
         if(showDebug) {
