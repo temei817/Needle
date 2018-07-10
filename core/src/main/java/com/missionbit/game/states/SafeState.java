@@ -17,6 +17,8 @@ public class SafeState extends State {
     private ShapeRenderer debugRenderer = new ShapeRenderer();
     private boolean showDebug = true;
     private ArrayList<Button> buttons = new ArrayList<Button>();
+    private String Combo = "";
+    private String Answer = "6197";
     public SafeState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
@@ -67,10 +69,22 @@ public class SafeState extends State {
             for(Button b: buttons){
                 boolean hit = b.handleClick(touchPos);
                 if (hit){
+                    if(b.getValue().equals("X")){
+                        Combo = "";
+                    }
+                    else if(b.getValue().equals("Check")){
+                        if(Combo.equals(Answer)){
+                            System.out.println("Unlocked");
+                        }
+                    }
+                    else{
+                        Combo += b.getValue();
+                    }
                     System.out.println(b.getValue());
                     //gsm.set(new BasementState(gsm));
                 }
-                System.out.println(touchPos.x + " " + touchPos.y);
+
+                System.out.println(touchPos.x + " " + touchPos.y + " " + Combo);
             }
 
         }
