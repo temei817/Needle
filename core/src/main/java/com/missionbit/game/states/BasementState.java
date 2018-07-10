@@ -18,7 +18,7 @@ public class BasementState extends State{
     private Female female;
     private Texture bkgrd;
     private float camOffset;
-    private Button bkgdButton, bkgdButtonTwo;
+    private Button bkgdButton, bkgdButtonTwo, bkgdButtonThree;
     private ShapeRenderer debugRenderer = new ShapeRenderer();
     private boolean showDebug = true;
 
@@ -29,9 +29,10 @@ public class BasementState extends State{
         cam.setToOrtho(false, Needle.WIDTH/1.5f, Needle.HEIGHT/1.5f);
         female = new Female(50,50);
         bkgrd = new Texture("images/basement.png");
-        camOffset = 300;
-        bkgdButton = new Button(camOffset,0,800,130,"1");
-        bkgdButtonTwo = new Button(500,0,160,400,"2");
+        camOffset = -300;
+        bkgdButton = new Button(camOffset,0,770,130,"1");
+        bkgdButtonTwo = new Button(530,0,160,400,"2");
+        bkgdButtonThree = new Button(470,0,60,50, "3");
     }
 
     @Override
@@ -43,14 +44,22 @@ public class BasementState extends State{
             touchPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
             cam.unproject(touchPos);
             female.setTargetLoc((int)touchPos.x,(int)touchPos.y);
+            //bounds for char movement
+            //bkgdbutton bounds
             if(female.getTargetLoc().y > 130 && female.getCharPos().x<500){
                 female.setTargetLoc((int)touchPos.x,80);
             }
-            else if(female.getTargetLoc().y>400 && female.getCharPos().x>=500){
+            //bkgdbutton2 bounds
+            else if(female.getTargetLoc().y>400 && female.getCharPos().x>700){
                 female.setTargetLoc((int)touchPos.x,400);
+            }
+            //bkgdbutton3 bounds
+            else if(female.getTargetLoc().x == 500 && female.getTargetLoc().y > 130){
+                female.setTargetLoc((int)touchPos.x,110);
             }
 
         }
+
     }
 
     @Override
@@ -67,20 +76,18 @@ public class BasementState extends State{
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.setProjectionMatrix(cam.combined);
-        sb.draw(bkgrd,0,0,Needle.WIDTH,Needle.HEIGHT);
+        sb.draw(bkgrd,camOffset,0,Needle.WIDTH,Needle.HEIGHT);
         if(female.getMovingR()) {
             //sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, female.getCharSize(), female.getCharSize());
-            sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, 80,120);
+            sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, female.getCharSize(),female.getCharSize());
 
         }
-        /*
         else if(female.getMovingL()){
             sb.draw(female.getAniWalkLeft(), female.getCharPos().x, female.getCharPos().y, female.getCharSize(), female.getCharSize());
         }
         else{
             sb.draw(female.getAniStill(), female.getCharPos().x, female.getCharPos().y, female.getCharSize(), female.getCharSize());
         }
-        */
         sb.end();
         if(showDebug) {
             debugRenderer.setProjectionMatrix(cam.combined);
@@ -88,6 +95,7 @@ public class BasementState extends State{
             debugRenderer.setColor(0, 1, 0, 1);
             bkgdButton.drawDebug(debugRenderer);
             bkgdButtonTwo.drawDebug(debugRenderer);
+            bkgdButtonThree.drawDebug(debugRenderer);
             female.drawDebug(debugRenderer);
         }
         debugRenderer.end();
