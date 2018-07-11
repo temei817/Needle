@@ -36,23 +36,20 @@ public class Female extends Character{
     @Override
     public void update(float dt) {
         charAnimation.update(dt);
+        charStill.update(dt);
+        charStillL.update(dt);
+        charWalkL.update(dt);
+
+
         if( charPos.dst2(targetLoc) >= 1) {
-            movingR = true;
+            movingR = direction.x > 0;
+            movingL = direction.x < 0;
             charPos.x += direction.x * velocity.x * dt;
             charPos.y += direction.y * velocity.x * dt;
 
-        }
-
-        else if( targetLoc.isZero()) {
-//            movingL = true;
-//            charPos.x += direction.x * velocity.x * dt;
-//            charPos.y += direction.y * velocity.x * dt;
+        } else{
             movingR = false;
             movingL = false;
-        }
-        else{
-            movingR = false;
-            movingL = true;
         }
 
     }

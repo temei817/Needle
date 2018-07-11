@@ -102,7 +102,7 @@ public class BasementState extends State{
             sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, 49, 98);
             System.out.println("moving right");
         }
-            else if (!female.getMovingR()) {
+            else if (female.getMovingL()) {
                 //female.dispose();
                 sb.draw(female.getAniWalkLeft(), female.getCharPos().x, female.getCharPos().y, 49, 98);
                 System.out.println("moving left");
