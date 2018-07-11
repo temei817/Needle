@@ -40,8 +40,8 @@ public class BasementState extends State{
         BookShelfAnimation = new Animations(new TextureRegion(book),28,2f);
         bkgdButton = new Button(0,0,800,130,"1");
         bkgdButtonTwo = new Button(800,0,160,400,"2");
-        bookshelfButton = new Button(312,105,115,164, "bookshelf");
         safeButton = new PolygonButton(safevertices);
+        bookshelfButton = new Button(589,115,115,164, "bookshelf");
         //bkgdButtonThree = new Button(470,0,60,50, "3");
 
     }
@@ -55,7 +55,11 @@ public class BasementState extends State{
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             cam.unproject(touchPos);
             System.out.println("Click" + touchPos.x + " " + touchPos.y);
+            female.setTargetLoc((int) touchPos.x, (int) touchPos.y);
+
+            System.out.println(touchPos.x + ", " + touchPos.y);
             mapBounds(touchPos);
+
 //            if (touchPos.x > 200) {
 //                gsm.push(new SafeState(gsm));
 //
@@ -100,35 +104,47 @@ public class BasementState extends State{
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.setProjectionMatrix(cam.combined);
-        sb.draw(bkgrd,0,0,Needle.WIDTH,Needle.HEIGHT);
+        sb.draw(bkgrd, 0, 0, Needle.WIDTH, Needle.HEIGHT);
         TextureRegion Frame = BookShelfAnimation.getFrame();
-        sb.draw(Frame,312,105, 162, 164);
-        if(female.getMovingR()) {
-            //sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, female.getCharSize(), female.getCharSize());
-            sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, 49,98);
+        sb.draw(Frame, 589, 115, 163, 169);
+        //female.update(Gdx.graphics.getDeltaTime());
+        if (female.getMovingR()) {
+            sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, 49, 98);
+            System.out.println("moving right");
+        }
+            else if (!female.getMovingR()) {
+                //female.dispose();
+                sb.draw(female.getAniWalkLeft(), female.getCharPos().x, female.getCharPos().y, 49, 98);
+                System.out.println("moving left");
+            }
+            else if (!female.getMovingR() && !female.getMovingL()) {
+                //female.dispose();
+                sb.draw(female.getAniStill(), female.getCharPos().x, female.getCharPos().y, 50, 98);
+                System.out.println("still");
+            }
 
-        }
-        else if(female.getMovingL()){
-            sb.draw(female.getAniWalkLeft(), female.getCharPos().x, female.getCharPos().y, 49,98);
-        }
-        else{
-            sb.draw(female.getAniStill(), female.getCharPos().x, female.getCharPos().y,50, 98);
-        }
-        sb.end();
-        if(showDebug) {
-            debugRenderer.setProjectionMatrix(cam.combined);
-            debugRenderer.begin(ShapeRenderer.ShapeType.Line);
-            debugRenderer.setColor(1, 1, 1, 1);
-            bkgdButton.drawDebug(debugRenderer);
-            bkgdButtonTwo.drawDebug(debugRenderer);
-            //bkgdButtonThree.drawDebug(debugRenderer);
-            female.drawDebug(debugRenderer);
-            bookshelfButton.drawDebug(debugRenderer);
-            safeButton.drawDebug(debugRenderer);
-        }
-        debugRenderer.end();
-
+        /*if (female.velocity.x == 0 && female.velocity.y == 0){
+            sb.draw(female.getAniStill(), female.getCharPos().x, female.getCharPos().y, 50, 98);
     }
+        else {
+            sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, 49, 98);
+        }*/
+            sb.end();
+            if (showDebug) {
+                debugRenderer.setProjectionMatrix(cam.combined);
+                debugRenderer.begin(ShapeRenderer.ShapeType.Line);
+                debugRenderer.setColor(1, 1, 1, 1);
+                bkgdButton.drawDebug(debugRenderer);
+                bkgdButtonTwo.drawDebug(debugRenderer);
+                //bkgdButtonThree.drawDebug(debugRenderer);
+                female.drawDebug(debugRenderer);
+                bookshelfButton.drawDebug(debugRenderer);
+                safeButton.drawDebug(debugRenderer);
+            }
+            debugRenderer.end();
+
+        }
+
 
     public void mapBounds(Vector3 touchPos){
         //bounds for char movement
@@ -144,8 +160,10 @@ public class BasementState extends State{
     }
 
     @Override
-    public void dispose() {
+    public void dispose(){
         female.dispose();
         bkgrd.dispose();
     }
 }
+
+

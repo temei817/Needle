@@ -1,5 +1,6 @@
 package com.missionbit.game.states;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -24,11 +25,15 @@ public class BookshelfState extends State {
 
     @Override
     protected void handleInput() {
+        if(Gdx.input.justTouched()){
+            gsm.pop();
+        }
 
     }
 
     @Override
     public void update(float dt) {
+        handleInput();
         BookShelfAnimation.update(dt);
 
     }
