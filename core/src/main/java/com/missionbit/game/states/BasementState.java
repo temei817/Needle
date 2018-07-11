@@ -46,6 +46,9 @@ public class BasementState extends State{
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             cam.unproject(touchPos);
             female.setTargetLoc((int) touchPos.x, (int) touchPos.y);
+
+            System.out.println(touchPos.x + ", " + touchPos.y);
+
             //bounds for char movement
             //bkgdbutton bounds
             if (female.getTargetLoc().y > 80 && female.getCharPos().x < 800) {
@@ -89,20 +92,31 @@ public class BasementState extends State{
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.setProjectionMatrix(cam.combined);
-        sb.draw(bkgrd,0,0,Needle.WIDTH,Needle.HEIGHT);
-        if(female.getMovingR()) {
-            //sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, female.getCharSize(), female.getCharSize());
-            sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, 49,98);
-
+        sb.draw(bkgrd, 0, 0, Needle.WIDTH, Needle.HEIGHT);
+        //female.update(Gdx.graphics.getDeltaTime());
+        if(female.getMovingR() ) {
+            sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, 49, 98);
+            System.out.println("moving right");
         }
-        else if(female.getMovingL()){
+        else if(!female.getMovingR()){
+            //female.dispose();
             sb.draw(female.getAniWalkLeft(), female.getCharPos().x, female.getCharPos().y, 49,98);
+            System.out.println("moving left");
         }
-        else{
+        else if(!female.getMovingR() && !female.getMovingL()){
+            //female.dispose();
             sb.draw(female.getAniStill(), female.getCharPos().x, female.getCharPos().y,50, 98);
+            System.out.println("still");
         }
+        /*if (female.velocity.x == 0 && female.velocity.y == 0){
+            sb.draw(female.getAniStill(), female.getCharPos().x, female.getCharPos().y, 50, 98);
+    }
+        else {
+            sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, 49, 98);
+        }*/
+
         TextureRegion Frame = BookShelfAnimation.getFrame();
-        sb.draw(Frame,312,105, 162, 164);
+        sb.draw(Frame,589,115, 163, 169);
         sb.end();
         if(showDebug) {
             debugRenderer.setProjectionMatrix(cam.combined);

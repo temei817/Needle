@@ -9,7 +9,7 @@ import com.missionbit.game.Animations;
 public abstract class Character {
     protected Texture character;
     protected Vector3 charPos;
-    protected Vector3 velocity;
+    public Vector3 velocity;
     protected Rectangle bounds;
     protected Vector3 targetLoc;
     protected  Texture characterStill;
