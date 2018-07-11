@@ -38,13 +38,12 @@ public class BookshelfState extends State {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
         TextureRegion Frame = BookShelfAnimation.getFrame();
-        sb.draw(Frame,0,0,Frame.getRegionWidth(),Frame.getRegionHeight());
+        sb.draw(Frame,270,-75,648,656);
         sb.end();
     }
 
     @Override
     public void dispose() {
-//        BookShelfAnimation.dispose;
 
     }
 }
