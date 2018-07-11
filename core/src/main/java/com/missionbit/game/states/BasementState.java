@@ -17,6 +17,7 @@ public class BasementState extends State{
     private Texture bkgrd;
     private float camOffset;
     private Button bkgdButton, bkgdButtonTwo, bkgdButtonThree;
+    private Button bookshelfButton, safeButton;
     private ShapeRenderer debugRenderer = new ShapeRenderer();
     private boolean showDebug = true;
     private Animations BookShelfAnimation;
@@ -34,6 +35,8 @@ public class BasementState extends State{
         BookShelfAnimation = new Animations(new TextureRegion(book),28,2f);
         bkgdButton = new Button(0,0,800,130,"1");
         bkgdButtonTwo = new Button(800,0,160,400,"2");
+        bookshelfButton = new Button(589,115,115,164, "bookshelf");
+        safeButton = new Button(770,80,40,60,"safe");
         //bkgdButtonThree = new Button(470,0,60,50, "3");
     }
 
@@ -49,23 +52,22 @@ public class BasementState extends State{
 
             System.out.println(touchPos.x + ", " + touchPos.y);
 
-            //bounds for char movement
-            //bkgdbutton bounds
-            if (female.getTargetLoc().y > 80 && female.getCharPos().x < 800) {
-                female.setTargetLoc((int) touchPos.x, 60);
-            }
-            //bkgdbutton2 bounds
-            else if (female.getTargetLoc().y > 400 && female.getCharPos().x >= 800) {
-                female.setTargetLoc((int) touchPos.x, 400);
+            female.setTargetLoc((int) touchPos.x, 400);
 
-            }
+            mapBounds(touchPos);
+
 //            if (touchPos.x > 200) {
 //                gsm.push(new SafeState(gsm));
 //
 //            }
 
+                //switch to first person bookshelf if touched
+                if (bookshelfButton.handleClick(touchPos)) {
+                    gsm.push(new BookshelfState(gsm));
+                }
+
+            }
         }
-    }
 
         @Override
         public void update ( float dt){
@@ -93,47 +95,65 @@ public class BasementState extends State{
         sb.begin();
         sb.setProjectionMatrix(cam.combined);
         sb.draw(bkgrd, 0, 0, Needle.WIDTH, Needle.HEIGHT);
+        TextureRegion Frame = BookShelfAnimation.getFrame();
+        sb.draw(Frame, 589, 115, 163, 169);
         //female.update(Gdx.graphics.getDeltaTime());
-        if(female.getMovingR() ) {
+        if (female.getMovingR()) {
             sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, 49, 98);
             System.out.println("moving right");
         }
-        else if(!female.getMovingR()){
-            //female.dispose();
-            sb.draw(female.getAniWalkLeft(), female.getCharPos().x, female.getCharPos().y, 49,98);
-            System.out.println("moving left");
-        }
-        else if(!female.getMovingR() && !female.getMovingL()){
-            //female.dispose();
-            sb.draw(female.getAniStill(), female.getCharPos().x, female.getCharPos().y,50, 98);
-            System.out.println("still");
-        }
+            else if (!female.getMovingR()) {
+                //female.dispose();
+                sb.draw(female.getAniWalkLeft(), female.getCharPos().x, female.getCharPos().y, 49, 98);
+                System.out.println("moving left");
+            }
+            else if (!female.getMovingR() && !female.getMovingL()) {
+                //female.dispose();
+                sb.draw(female.getAniStill(), female.getCharPos().x, female.getCharPos().y, 50, 98);
+                System.out.println("still");
+            }
+
         /*if (female.velocity.x == 0 && female.velocity.y == 0){
             sb.draw(female.getAniStill(), female.getCharPos().x, female.getCharPos().y, 50, 98);
     }
         else {
             sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, 49, 98);
         }*/
+            sb.end();
+            if (showDebug) {
+                debugRenderer.setProjectionMatrix(cam.combined);
+                debugRenderer.begin(ShapeRenderer.ShapeType.Line);
+                debugRenderer.setColor(1, 1, 1, 1);
+                bkgdButton.drawDebug(debugRenderer);
+                bkgdButtonTwo.drawDebug(debugRenderer);
+                //bkgdButtonThree.drawDebug(debugRenderer);
+                female.drawDebug(debugRenderer);
+                bookshelfButton.drawDebug(debugRenderer);
+                safeButton.drawDebug(debugRenderer);
+            }
+            debugRenderer.end();
 
-        TextureRegion Frame = BookShelfAnimation.getFrame();
-        sb.draw(Frame,589,115, 163, 169);
-        sb.end();
-        if(showDebug) {
-            debugRenderer.setProjectionMatrix(cam.combined);
-            debugRenderer.begin(ShapeRenderer.ShapeType.Line);
-            debugRenderer.setColor(1, 1, 1, 1);
-            bkgdButton.drawDebug(debugRenderer);
-            bkgdButtonTwo.drawDebug(debugRenderer);
-            //bkgdButtonThree.drawDebug(debugRenderer);
-            female.drawDebug(debugRenderer);
         }
-        debugRenderer.end();
 
+
+    public void mapBounds(Vector3 touchPos){
+        //bounds for char movement
+        //bkgdbutton bounds
+        if (female.getTargetLoc().y > 100 && female.getCharPos().x < 800) {
+            female.setTargetLoc((int) touchPos.x, 90);
+        }
+        //bkgdbutton2 bounds
+        else if (female.getTargetLoc().y > 400 && female.getCharPos().x >= 800) {
+            female.setTargetLoc((int) touchPos.x, 400);
+
+        }
     }
 
     @Override
-    public void dispose() {
+    public void dispose(){
         female.dispose();
         bkgrd.dispose();
     }
 }
+
+
