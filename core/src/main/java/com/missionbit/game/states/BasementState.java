@@ -5,10 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector3;
 import com.missionbit.game.Animations;
 import com.missionbit.game.Button;
 import com.missionbit.game.Needle;
+import com.missionbit.game.PolygonButton;
 import com.missionbit.game.characters.Female;
 
 public class BasementState extends State{
@@ -17,10 +19,13 @@ public class BasementState extends State{
     private Texture bkgrd;
     private float camOffset;
     private Button bkgdButton, bkgdButtonTwo, bkgdButtonThree;
-    private Button bookshelfButton, safeButton;
+    private Button bookshelfButton;
     private ShapeRenderer debugRenderer = new ShapeRenderer();
     private boolean showDebug = true;
     private Animations BookShelfAnimation;
+    private PolygonButton safeButton;
+    private float[] safevertices = {776, 100, 777, 186, 796, 142, 796, 58 };
+
 
 
 
@@ -35,9 +40,10 @@ public class BasementState extends State{
         BookShelfAnimation = new Animations(new TextureRegion(book),28,2f);
         bkgdButton = new Button(0,0,800,130,"1");
         bkgdButtonTwo = new Button(800,0,160,400,"2");
+        safeButton = new PolygonButton(safevertices);
         bookshelfButton = new Button(589,115,115,164, "bookshelf");
-        safeButton = new Button(770,80,40,60,"safe");
         //bkgdButtonThree = new Button(470,0,60,50, "3");
+
     }
 
     @Override
@@ -48,12 +54,10 @@ public class BasementState extends State{
             Vector3 touchPos = new Vector3();
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             cam.unproject(touchPos);
+            System.out.println("Click" + touchPos.x + " " + touchPos.y);
             female.setTargetLoc((int) touchPos.x, (int) touchPos.y);
 
             System.out.println(touchPos.x + ", " + touchPos.y);
-
-            female.setTargetLoc((int) touchPos.x, 400);
-
             mapBounds(touchPos);
 
 //            if (touchPos.x > 200) {
@@ -61,13 +65,19 @@ public class BasementState extends State{
 //
 //            }
 
-                //switch to first person bookshelf if touched
-                if (bookshelfButton.handleClick(touchPos)) {
-                    gsm.push(new BookshelfState(gsm));
-                }
-
+            //switch to first person bookshelf if touched
+            if(bookshelfButton.handleClick(touchPos)){
+                gsm.push(new BookshelfState(gsm));
             }
+            else if(safeButton.handleClick(touchPos)){
+                gsm.push(new SafeState(gsm));
+            }
+            else{
+                female.setTargetLoc((int) touchPos.x, (int) touchPos.y);
+            }
+
         }
+    }
 
         @Override
         public void update ( float dt){
