@@ -57,7 +57,7 @@ public class BasementState extends State {
             System.out.println(touchPos.x + ", " + touchPos.y);
 
             //switch to first person bookshelf if touched
-            if (bookshelfButton.handleClick(touchPos)) {
+            if (bookshelf.getButton().handleClick(touchPos)) {
                 gsm.push(new BookshelfState(gsm));
             }
             //switch to safe
