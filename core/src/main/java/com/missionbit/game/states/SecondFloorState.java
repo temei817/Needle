@@ -15,7 +15,7 @@ public class SecondFloorState extends State{
 
     public SecondFloorState(GameStateManager gsm) {
         super(gsm);
-        cam.setToOrtho(false, Needle.WIDTH/1.5f , Needle.HEIGHT/1.5f);
+        cam.setToOrtho(false, Needle.WIDTH/1.5f, Needle.HEIGHT/1.5f);
         bkgd = new Texture("images/Secondfloor.png");
         female = new Female(50, 50);
 
@@ -55,6 +55,7 @@ public class SecondFloorState extends State{
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
+        sb.setProjectionMatrix(cam.combined);
         sb.draw(bkgd,0,0,Needle.WIDTH,Needle.HEIGHT);
 
         //draw the character
