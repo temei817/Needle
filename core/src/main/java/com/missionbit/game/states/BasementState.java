@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.missionbit.game.Animations;
 import com.missionbit.game.Button;
 import com.missionbit.game.Interactables;
@@ -14,18 +15,22 @@ import com.missionbit.game.Needle;
 import com.missionbit.game.PolygonButton;
 import com.missionbit.game.characters.Female;
 
+import java.sql.Time;
+
 public class BasementState extends State {
 
     private Female female;
     private Texture bkgrd;
     private Button bkgdButton, bkgdButtonTwo;
     private Button bookshelfButton;
+    private Button doorButton;
     private ShapeRenderer debugRenderer = new ShapeRenderer();
     private boolean showDebug = true;
     private Animations BookShelfAnimation;
     private PolygonButton safeButton;
     private float[] safevertices = {776, 100, 777, 186, 796, 142, 796, 58};
     private Interactables hangingBody, bleedingBody, bookshelf;
+    private long startTime;
 
 
     public BasementState(GameStateManager gsm) {
@@ -37,12 +42,14 @@ public class BasementState extends State {
         //BookShelfAnimation = new Animations(new TextureRegion(book),28,2f);
         bkgdButton = new Button(0, 0, 800, 130, "1");
         bkgdButtonTwo = new Button(800, 0, 160, 400, "2");
+        doorButton = new Button(830,300,70,100,"door");
         safeButton = new PolygonButton(safevertices);
         //bookshelfButton = new Button(589, 115, 115, 164, "bookshelf");
         hangingBody = new Interactables(new Texture("images/Hanging.png"), 150, 175, 70, 130, 8, 1f);
         bleedingBody = new Interactables(new Texture("images/Bleeding.png"), 400, 100, 58, 82, 8, 1f);
         bookshelf = new Interactables(new Texture("images/BOOKSHELF.png"), 589, 115, 163, 169, 28, 2f);
-
+        startTime = TimeUtils.nanoTime();
+        TimeUtils.nanosToMillis(startTime);
     }
 
     @Override
@@ -91,6 +98,10 @@ public class BasementState extends State {
             cam.position.x = female.getCharPos().x;
         }
 
+        if(TimeUtils.timeSinceMillis(startTime)>10000){
+            gsm.set(new SafeState(gsm));
+        }
+
         cam.update();
 
     }
@@ -135,6 +146,7 @@ public class BasementState extends State {
             hangingBody.getButton().drawDebug(debugRenderer);
             bookshelf.getButton().drawDebug(debugRenderer);
             bleedingBody.getButton().drawDebug(debugRenderer);
+            doorButton.drawDebug(debugRenderer);
         }
         debugRenderer.end();
 
@@ -143,7 +155,12 @@ public class BasementState extends State {
 
     public void mapBounds(Vector3 touchPos) {
         //bounds for char movement
-        if ((!bkgdButton.handleClick(touchPos) && (!bkgdButtonTwo.handleClick(touchPos))) && female.getTargetLoc().y > 100) {
+        /*
+        if ((!bkgdButton.handleClick(touchPos) && (!bkgdButtonTwo.handleClick(touchPos))) && ((female.getTargetLoc().y > 100) &&female.getCharPos().x<800)){
+            female.setTargetLoc((int) touchPos.x, 90);
+        }
+        */
+        if (female.getTargetLoc().y > 100 && female.getCharPos().x < 800) {
             female.setTargetLoc((int) touchPos.x, 90);
         }
         else if ((!bkgdButtonTwo.handleClick(touchPos)) && female.getTargetLoc().y > 100) {
