@@ -10,7 +10,7 @@ public class MenuState extends State{
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
-        bkgd = new Texture("images/basement.png");
+        bkgd = new Texture("images/titleImg.png");
 
     }
 
@@ -31,7 +31,9 @@ public class MenuState extends State{
 
     @Override
     public void render(SpriteBatch sb) {
-
+        sb.begin();
+        sb.draw(bkgd,100,-50);
+        sb.end();
     }
 
     @Override
