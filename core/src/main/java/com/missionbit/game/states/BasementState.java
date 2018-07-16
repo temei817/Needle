@@ -71,6 +71,9 @@ public class BasementState extends State {
             else if (safeButton.handleClick(touchPos)) {
                 gsm.push(new SafeState(gsm));
             }
+            else if(doorButton.handleClick(touchPos)){
+                gsm.push(new SecondFloorState(gsm));
+            }
             else {
                 female.setTargetLoc((int) touchPos.x, (int) touchPos.y);
             }
