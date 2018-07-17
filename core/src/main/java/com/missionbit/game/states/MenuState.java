@@ -21,6 +21,7 @@ public class MenuState extends State{
             //gsm.set(basementstate);
             System.out.println(gsm);
             gsm.set(new BasementState(gsm));
+            //gsm.set(new KeypadState(gsm));
         }
     }
 
