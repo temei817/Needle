@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.missionbit.game.Animations;
+import com.missionbit.game.PolygonButton;
+
+import java.util.ArrayList;
 
 public abstract class Character {
     protected Texture character;
@@ -19,7 +22,7 @@ public abstract class Character {
     protected  Animations charWalkL;
     protected  Texture charWalkLeft;
 
-    protected abstract void update(float dt);
+    protected abstract void update(float dt, ArrayList<PolygonButton> wall);
     protected abstract void dispose();
     protected abstract Texture getChar();
     protected abstract Vector3 getCharPos();

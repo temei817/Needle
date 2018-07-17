@@ -2,6 +2,7 @@ package com.missionbit.game;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 public class PolygonButton{
@@ -15,6 +16,11 @@ public class PolygonButton{
     }
 
     public boolean handleClick(Vector3 touchPos){
+        boolean hit = shape.contains(touchPos.x, touchPos.y);
+        return hit;
+
+    }
+    public boolean handleClick(Vector2 touchPos){
         boolean hit = shape.contains(touchPos.x, touchPos.y);
         return hit;
 
