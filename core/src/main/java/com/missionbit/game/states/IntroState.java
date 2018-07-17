@@ -13,7 +13,7 @@ public class IntroState extends State{
     public IntroState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
-        intro = new Texture("images/Intro.png");
+        intro = new Texture("images/IntroA.png");
         introAni = new Animations(new TextureRegion(intro),75,1f);
 
     }
@@ -33,8 +33,8 @@ public class IntroState extends State{
     public void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(intro,0,0);
-        sb.draw(introAni.getFrame(),0,0);
+        //sb.draw(intro,0,0);
+        sb.draw(introAni.getFrame(),0,0,Needle.WIDTH,Needle.HEIGHT);
         sb.end();
 
     }
