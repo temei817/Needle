@@ -28,6 +28,7 @@ public class SafeState extends State {
     private Boolean open = false;
     private Boolean gotKey = false;
     private Interactables key;
+    private Button back;
     public SafeState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
@@ -35,6 +36,8 @@ public class SafeState extends State {
         safeOpen = new Texture("images/OpenSafe.png");
         box = new Animations(new TextureRegion(new Texture("images/box.png")),21,1f);
         key = new Interactables(new Texture("images/key.png"),450,80,183,309,21,1f);
+
+        back = new Button(856, 4, 105,73, "Back");
         Button b = new Button(513,256,67,44, "1");
         buttons.add(b);
         b = new Button(588,256, 64, 44, "2");
@@ -58,8 +61,6 @@ public class SafeState extends State {
         b = new Button(587, 91, 64, 44, "0");
         buttons.add(b);
         b = new Button(657, 91, 67, 44, "Check");
-        buttons.add(b);
-        b = new Button(856, 4, 105,73, "Back");
         buttons.add(b);
 
 
@@ -102,17 +103,26 @@ public class SafeState extends State {
                         //gsm.set(new BasementState(gsm));
                     }
 
+
                     System.out.println(touchPos.x + " " + touchPos.y + " " + Combo);
+                }
+                if (back.handleClick(touchPos)) {
+                    gsm.pop();
                 }
             }
             if(open) {
-                if (key.getButton().handleClick(touchPos)) {
+                if (back.handleClick(touchPos)) {
                     //gotKey = true;
-                    gsm.getInventory().setKey(true);
                     gsm.pop();
+                }
+                else if(key.getButton().handleClick(touchPos)){
+                    gsm.getInventory().setKey(true);
                 }
 
             }
+            /*if(){
+
+            }*/
 
         }
     }
@@ -149,10 +159,12 @@ public class SafeState extends State {
             if(!open) {
                 for (Button b : buttons) {
                     b.drawDebug(debugRenderer);
+                    back.drawDebug(debugRenderer);
                 }
             }
             else{
                 key.getButton().drawDebug(debugRenderer);
+                back.drawDebug(debugRenderer);
             }
             debugRenderer.end();
         }
