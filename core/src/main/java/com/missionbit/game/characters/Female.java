@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.missionbit.game.Animations;
+import com.missionbit.game.PolygonButton;
+
+import java.util.ArrayList;
 
 public class Female extends Character{
 
@@ -34,7 +37,7 @@ public class Female extends Character{
     }
 
     @Override
-    public void update(float dt) {
+    public void update(float dt, ArrayList<PolygonButton> wall) {
         charAnimation.update(dt);
         charStill.update(dt);
         charStillL.update(dt);
@@ -46,6 +49,15 @@ public class Female extends Character{
             movingL = direction.x < 0;
             charPos.x += direction.x * velocity.x * dt;
             charPos.y += direction.y * velocity.x * dt;
+            for(PolygonButton walls:wall){
+                if(walls.handleClick(charPos)){
+                    System.out.println("wall");
+                    charPos.x -= direction.x * velocity.x * dt;
+                    charPos.y -= direction.y * velocity.x * dt;
+                    movingR = false;
+                    movingL = false;
+                }
+            }
 
         } else{
             movingR = false;

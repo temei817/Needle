@@ -1,8 +1,12 @@
 package com.missionbit.game.characters;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.missionbit.game.PolygonButton;
+
+import java.util.ArrayList;
 
 public class Male extends Character{
 
@@ -11,7 +15,7 @@ public class Male extends Character{
     }
 
     @Override
-    public void update(float dt) {
+    public void update(float dt, ArrayList<PolygonButton> wall) {
 
     }
 

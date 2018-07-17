@@ -6,9 +6,12 @@ import java.util.Stack;
 
 public class GameStateManager {
     private Stack<State> states;
+    private Inventory inventory;
 
     public GameStateManager() {
+
         states = new Stack<State>();
+        inventory = new Inventory();
     }
 
     public void push(State state) {
@@ -30,6 +33,10 @@ public class GameStateManager {
 
     public void render(SpriteBatch sb) {
         states.peek().render(sb);
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 }
 

@@ -4,25 +4,37 @@ package com.missionbit.game.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.missionbit.game.Animations;
 import com.missionbit.game.Button;
+import com.missionbit.game.Interactables;
 import com.missionbit.game.Needle;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.ArrayList;
 
 
 public class SafeState extends State {
     private Texture safe;
+    private Texture safeOpen;
+    private Animations box;
     private ShapeRenderer debugRenderer = new ShapeRenderer();
     private boolean showDebug = true;
     private ArrayList<Button> buttons = new ArrayList<Button>();
     private String Combo = "";
     private String Answer = "6197";
+    private Boolean open = false;
+    private Boolean gotKey = false;
+    private Interactables key;
     public SafeState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
         safe = new Texture("images/Safe Box.png");
+        safeOpen = new Texture("images/OpenSafe.png");
+        box = new Animations(new TextureRegion(new Texture("images/box.png")),21,1f);
+        key = new Interactables(new Texture("images/key.png"),450,80,183,309,21,1f);
         Button b = new Button(513,256,67,44, "1");
         buttons.add(b);
         b = new Button(588,256, 64, 44, "2");
@@ -66,33 +78,40 @@ public class SafeState extends State {
             Vector3 touchPos = new Vector3();
             touchPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
             cam.unproject(touchPos);
-            for(Button b: buttons){
-                boolean hit = b.handleClick(touchPos);
-                if (hit){
-                    if(b.getValue().equals("X")){
-                        Combo = "";
-                    }
-                    else if(b.getValue().equals("Check")){
-                        if(Combo.equals(Answer)){
-                            System.out.println("Unlocked");
+            if(!open) {
+                for (Button b : buttons) {
+                    boolean hit = b.handleClick(touchPos);
+                    if (hit) {
+                        if (b.getValue().equals("X")) {
                             Combo = "";
+                        } else if (b.getValue().equals("Check")) {
+                            if (Combo.equals(Answer)) {
+                                System.out.println("Unlocked");
+                                Combo = "";
+                                open = true;
+                            } else {
+                                Combo = "";
+                                System.out.println("Wrong! Try Again");
+                            }
+                        } else if (b.getValue().equals("Back")) {
+                            gsm.pop();
+                        } else {
+                            Combo += b.getValue();
                         }
-                        else{
-                            Combo = "";
-                            System.out.println("Wrong! Try Again");
-                        }
+                        System.out.println(b.getValue());
+                        //gsm.set(new BasementState(gsm));
                     }
-                    else if(b.getValue().equals("Back")){
-                        gsm.pop();
-                    }
-                    else{
-                        Combo += b.getValue();
-                    }
-                    System.out.println(b.getValue());
-                    //gsm.set(new BasementState(gsm));
+
+                    System.out.println(touchPos.x + " " + touchPos.y + " " + Combo);
+                }
+            }
+            if(open) {
+                if (key.getButton().handleClick(touchPos)) {
+                    //gotKey = true;
+                    gsm.getInventory().setKey(true);
+                    gsm.pop();
                 }
 
-                System.out.println(touchPos.x + " " + touchPos.y + " " + Combo);
             }
 
         }
@@ -102,6 +121,8 @@ public class SafeState extends State {
     public void update(float dt) {
         cam.update();
         handleInput();
+        key.update(dt);
+        box.update(dt);
 
 
     }
@@ -110,21 +131,39 @@ public class SafeState extends State {
     public void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(safe,0,0);
+        if(!open) {
+            sb.draw(safe, 0, 0);
+        }
+        else{
+            sb.draw(safeOpen,0,0);
+            if(!gsm.getInventory().getKey()) {
+                sb.draw(key.getFrame(), key.getXLoc(), key.getYLoc());
+                sb.draw(box.getFrame(),260,75);
+            }
+        }
         sb.end();
         if(showDebug){
             debugRenderer.setProjectionMatrix(cam.combined);
             debugRenderer.begin(ShapeRenderer.ShapeType.Line);
             debugRenderer.setColor(0,1,0,1);
-            for(Button b: buttons){
-                b.drawDebug(debugRenderer);
+            if(!open) {
+                for (Button b : buttons) {
+                    b.drawDebug(debugRenderer);
+                }
+            }
+            else{
+                key.getButton().drawDebug(debugRenderer);
             }
             debugRenderer.end();
         }
     }
 
+
     @Override
     public void dispose(){
+        safeOpen.dispose();
+        safe.dispose();
+        key.dispose();
 
     }
 

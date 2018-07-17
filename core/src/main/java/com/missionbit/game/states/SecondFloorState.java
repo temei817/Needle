@@ -35,7 +35,7 @@ public class SecondFloorState extends State{
     @Override
     public void update(float dt) {
         handleInput();
-        female.update(dt);
+        //female.update(dt);
 
         //camera bounds
         float minX = cam.viewportWidth / 2, maxX = bkgd.getWidth() - cam.viewportWidth / 2;
