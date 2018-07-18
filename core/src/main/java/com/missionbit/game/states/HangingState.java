@@ -6,15 +6,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.missionbit.game.Animations;
 
-public class DeadBodiesState extends State{
+public class HangingState extends State{
 
-    private Texture dead;
-    private Animations deadAni;
+    private Texture hanging;
+    private Animations hangingAni;
 
-    public DeadBodiesState(GameStateManager gsm) {
+    public HangingState(GameStateManager gsm) {
         super(gsm);
-        dead = new Texture("images/dead.png");
-        deadAni = new Animations(new TextureRegion(dead),8,1f);
+        hanging = new Texture("images/hung.png");
+        hangingAni = new Animations(new TextureRegion(hanging),8,1f);
     }
 
     @Override
@@ -28,21 +28,21 @@ public class DeadBodiesState extends State{
     @Override
     public void update(float dt) {
         handleInput();
-        deadAni.update(dt);
+        hangingAni.update(dt);
 
     }
 
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-        sb.draw(deadAni.getFrame(),90,0);
+        sb.draw(hangingAni.getFrame(),90,-130);
         sb.end();
 
     }
 
     @Override
     public void dispose() {
-        dead.dispose();
+        hanging.dispose();
 
     }
 }
