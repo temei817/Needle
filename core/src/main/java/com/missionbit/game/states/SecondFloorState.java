@@ -43,7 +43,7 @@ public class SecondFloorState extends State{
         table = new Texture("images/table.png");
         //labStuffAni = new Animations(new TextureRegion(new Texture("images/lab.png")),34,1f);
         female = new Female(50, 50);
-        labStuffAni = new Animations("images/lab.png", 4,9,34,5f);
+        labStuffAni = new Animations("images/lab.png", 4,9,34,5f,true);
 
         //walls
         walls = new ArrayList<PolygonButton>();
