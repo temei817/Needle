@@ -21,6 +21,10 @@ public class Button {
         return hit;
 
     }
+
+    public Rectangle getRect(){
+        return rect;
+    }
     public String getValue(){
         return value;
     }

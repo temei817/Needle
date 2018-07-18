@@ -12,7 +12,8 @@ public class Animations{
     float currentFrameTime; //how long the animation has been in the current frame
     int frameCount; //number of frames in our animation
     int frame; //the current frame we're in
-    public Animations(String path, int cols, int rows, int framecount, float cycleTime){
+    private boolean looping,done;
+    public Animations(String path, int cols, int rows, int framecount, float cycleTime, boolean looping){
         frames = new Array<TextureRegion>();
         Texture Sheet = new Texture(Gdx.files.internal(path));
         TextureRegion[][] tmp = TextureRegion.split(Sheet,
@@ -32,6 +33,7 @@ public class Animations{
         this.frameCount = framecount;
         maxFrameTime = cycleTime / frameCount;
         frame = 0;
+        this.looping = looping;
     }
     public Animations(TextureRegion region, int frameCount, float cycleTime){
         frames = new Array<TextureRegion>();
@@ -44,17 +46,30 @@ public class Animations{
         this.frameCount = frameCount;
         maxFrameTime = cycleTime / frameCount;
         frame = 0;
+        looping = true;
     }
 
     public void update(float dt){
         currentFrameTime += dt;
-        if(currentFrameTime > maxFrameTime){
+        if (currentFrameTime > maxFrameTime) {
             frame++;
             currentFrameTime = 0;
         }
-        if(frame >= frameCount)
-            frame = 0;
+        if(looping) {
+            if (frame >= frameCount)
+                frame = 0;
+        }
+        else {
+            if (frame >= frameCount) {
+                frame = frameCount - 1;
+                done = true;
+            }
+        }
 
+    }
+
+    public boolean getDone(){
+        return done;
     }
 
     public TextureRegion getFrame(){

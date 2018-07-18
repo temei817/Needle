@@ -11,13 +11,21 @@ public class IntroState extends State{
     private Animations introAni;
     private Texture intro;
     private Animations ortniAni;
+    private boolean boardAni, needleAni;
+    private long needleStartTime,boardStartTime;
+
     public IntroState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
         //intro = new Texture("images/IntroA.png");
        // introAni = new Animations(new TextureRegion(intro),75,10f);
-        ortniAni = new Animations("images/ORTNI.png",5,11,51, 5f);
-        introAni = new Animations("images/IntroA.png",9,9,75, 5f);
+        ortniAni = new Animations("images/ORTNI.png",5,11,51, 5f,false);
+        introAni = new Animations("images/IntroA.png",9,9,75, 5f,false);
+
+        //timer stuff
+        needleAni = true;
+        boardAni=false;
+        needleStartTime = System.currentTimeMillis();
 
     }
 
@@ -28,7 +36,33 @@ public class IntroState extends State{
 
     @Override
     public void update(float dt) {
-        introAni.update(dt);
+        //introAni.update(dt);
+        //ortniAni.update(dt);
+
+        //timer for animations
+        if(needleAni) {
+            if (System.currentTimeMillis() - needleStartTime > 5100) {
+                needleAni = false;
+                boardAni = true;
+                boardStartTime = System.currentTimeMillis();
+            }
+        }
+        else if(boardAni){
+            if(System.currentTimeMillis()-boardStartTime>5800){
+                introAni.update(dt);
+                boardAni = false;
+                gsm.push(new BasementState(gsm));
+            }
+        }
+
+        if(!ortniAni.getDone()){
+            ortniAni.update(dt);
+        }
+        else if(!introAni.getDone()){
+            introAni.update(dt);
+        }
+
+
 
     }
 
@@ -37,7 +71,12 @@ public class IntroState extends State{
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
         //sb.draw(intro,0,0);
-        sb.draw(introAni.getFrame(),0,0,Needle.WIDTH,Needle.HEIGHT);
+        if(!ortniAni.getDone()){
+            sb.draw(ortniAni.getFrame(),0,0,Needle.WIDTH,Needle.HEIGHT);
+        }
+        else if(!introAni.getDone()) {
+            sb.draw(introAni.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+        }
         //System.out.println(introAni.getFrame());
         //System.out.println(introAni.getFrame().getRegionHeight() + ""+introAni.getFrame().getRegionWidth());
         sb.end();

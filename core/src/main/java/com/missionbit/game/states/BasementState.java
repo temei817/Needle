@@ -26,7 +26,7 @@ public class BasementState extends State {
     private Texture bkgrd;
     private Button doorButton;
     private ShapeRenderer debugRenderer = new ShapeRenderer();
-    private boolean showDebug = true;
+    private boolean showDebug = false;
     private PolygonButton safeButton;
     private float[] safevertices = {776, 100, 777, 186, 796, 142, 796, 58};
     private Interactables hangingBody, bleedingBody, bookshelf;

@@ -35,7 +35,7 @@ public class HangingState extends State{
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-        sb.draw(hangingAni.getFrame(),90,-130);
+        sb.draw(hangingAni.getFrame(),100,-130);
         sb.end();
 
     }

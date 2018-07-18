@@ -16,6 +16,7 @@ public class Female extends Character{
     private Vector3 direction;
     private Animations charAnimation;
     private boolean movingR, movingL;
+    private Rectangle bounds;
 
     public Female(int x, int y) {
         character = new Texture("images/femaleWalk.png");
@@ -34,6 +35,7 @@ public class Female extends Character{
         movingR = false;
         movingL = false;
         velocity = new Vector3(100,0,0);
+        bounds = new Rectangle(charPos.x,charPos.y,49,98);
     }
 
     @Override
@@ -51,7 +53,7 @@ public class Female extends Character{
             charPos.y += direction.y * velocity.x * dt;
             for(PolygonButton walls:wall){
                 if(walls.handleClick(charPos)){
-                    System.out.println("wall");
+                    //System.out.println("wall");
                     charPos.x -= direction.x * velocity.x * dt;
                     charPos.y -= direction.y * velocity.x * dt;
                     movingR = false;

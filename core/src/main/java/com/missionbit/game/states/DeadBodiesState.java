@@ -35,7 +35,7 @@ public class DeadBodiesState extends State{
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-        sb.draw(deadAni.getFrame(),90,0);
+        sb.draw(deadAni.getFrame(),100,0);
         sb.end();
 
     }
