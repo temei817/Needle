@@ -92,6 +92,12 @@ public class BasementState extends State {
                     gsm.push(new SecondFloorState(gsm));
             }
             }
+            else if(bleedingBody.getButton().handleClick(touchPos)){
+                gsm.push(new DeadBodiesState(gsm));
+            }
+            else if(hangingBody.getButton().handleClick(touchPos)){
+                gsm.push(new HangingState(gsm));
+            }
             else {
                 female.setTargetLoc((int) touchPos.x, (int) touchPos.y);
             }
