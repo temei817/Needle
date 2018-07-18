@@ -22,14 +22,14 @@ public class Animations{
         int index = 0;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if (index < frame) {
+                if (index < framecount) {
                     frames.add(tmp[i][j]);
 
                 }
             }
 
         }
-        this.frameCount = frameCount;
+        this.frameCount = framecount;
         maxFrameTime = cycleTime / frameCount;
         frame = 0;
     }
@@ -54,7 +54,6 @@ public class Animations{
         }
         if(frame >= frameCount)
             frame = 0;
-        System.out.println(frame);
 
     }
 

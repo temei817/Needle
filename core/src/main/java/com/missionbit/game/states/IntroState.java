@@ -13,8 +13,9 @@ public class IntroState extends State{
     public IntroState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
-        intro = new Texture("images/IntroA.png");
-        introAni = new Animations(new TextureRegion(intro),75,10f);
+        //intro = new Texture("images/IntroA.png");
+       // introAni = new Animations(new TextureRegion(intro),75,10f);
+        introAni = new Animations("images/IntroA.png",75,1,75, 1f);
 
     }
 
