@@ -41,8 +41,9 @@ public class SecondFloorState extends State{
         cam.setToOrtho(false, Needle.WIDTH/1.5f, Needle.HEIGHT/1.5f);
         bkgd = new Texture("images/Secondfloor.png");
         table = new Texture("images/table.png");
-        labStuffAni = new Animations(new TextureRegion(new Texture("images/lab.png")),34,1f);
+        //labStuffAni = new Animations(new TextureRegion(new Texture("images/lab.png")),34,1f);
         female = new Female(50, 50);
+        labStuffAni = new Animations("images/lab.png", 4,9,34,5f);
 
         //walls
         walls = new ArrayList<PolygonButton>();
@@ -88,6 +89,7 @@ public class SecondFloorState extends State{
         }
 
         cam.update();
+        labStuffAni.update(dt);
 
     }
 
@@ -110,7 +112,7 @@ public class SecondFloorState extends State{
         }
 
         sb.draw(table,160,0,800,76);
-        //sb.draw(labStuffAni.getFrame(),50,0,100,100);
+        sb.draw(labStuffAni.getFrame(),50,0,900,475);
 
         sb.end();
 
