@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.missionbit.game.Animations;
+import com.missionbit.game.Interactables;
 import com.missionbit.game.Needle;
 import com.missionbit.game.PolygonButton;
 import com.missionbit.game.characters.Female;
@@ -17,8 +18,11 @@ public class SecondFloorState extends State{
 
     private Texture bkgd;
     private Texture table;
+    private Texture cureGone;
+    private Interactables cure;
     private Female female;
     private Animations labStuffAni;
+    private Animations cureAni;
     private float[][] wall = new float[][]{
             {33.0f, 98.0f, 2.0f, 64.0f, 3.0f, 232.0f, 28.0f, 261.0f, 33.0f, 94.999985f, },
             {32.0f, 265.0f, 148.0f, 264.0f, 149.0f, 98.0f, 164.0f, 98.0f, 232.0f, 175.0f, 825.0f, 176.0f, 825.0f, 339.0f, 914.0f, 338.0f, 912.0f, 176.0f, 958.0f, 176.0f, 958.0f, 376.0f, 3.0f, 381.0f, 2.0f, 235.0f, 29.0f, 264.0f, },
@@ -32,6 +36,7 @@ public class SecondFloorState extends State{
 
 
     private ShapeRenderer debugRenderer = new ShapeRenderer();
+    private boolean gotCure = false;
 
 
 
@@ -41,9 +46,12 @@ public class SecondFloorState extends State{
         cam.setToOrtho(false, Needle.WIDTH/1.5f, Needle.HEIGHT/1.5f);
         bkgd = new Texture("images/Secondfloor.png");
         table = new Texture("images/table.png");
+        cureGone = new Texture("images/gone.png");
+        cure = new Interactables(new Texture("images/cureA.png"),810,40,30,51);
+        cureAni = new Animations("images/cure.png",5,11,55,5f,false);
         //labStuffAni = new Animations(new TextureRegion(new Texture("images/lab.png")),34,1f);
         female = new Female(50, 50);
-        labStuffAni = new Animations("images/lab.png", 4,9,34,5f);
+        labStuffAni = new Animations("images/lab.png", 4,9,34,5f,true);
 
         //walls
         walls = new ArrayList<PolygonButton>();
@@ -65,6 +73,9 @@ public class SecondFloorState extends State{
             if(basementDoor.handleClick(touchPos)){
                 gsm.pop();
             }
+            else if(cure.getButton().handleClick(touchPos)){
+                gotCure = true;
+            }
             else{
                 female.setTargetLoc((int) touchPos.x, (int) touchPos.y);
             }
@@ -76,6 +87,13 @@ public class SecondFloorState extends State{
     public void update(float dt) {
         handleInput();
         female.update(dt,walls);
+        if(gotCure && !cureAni.getDone()) {
+            cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
+            cureAni.update(dt);
+        }else if( cureAni.getDone()){
+            cam.setToOrtho(false, Needle.WIDTH/1.5f, Needle.HEIGHT/1.5f);
+
+        }
 
         //camera bounds
         float minX = cam.viewportWidth / 2, maxX = bkgd.getWidth() - cam.viewportWidth / 2;
@@ -113,6 +131,15 @@ public class SecondFloorState extends State{
 
         sb.draw(table,160,0,800,76);
         sb.draw(labStuffAni.getFrame(),50,0,900,475);
+        if(!gotCure) {
+            sb.draw(cure.getTexture(), cure.getXLoc(), cure.getYLoc(), cure.getWidth(), cure.getHeight());
+        }
+        else if(gotCure && !cureAni.getDone()){
+            sb.draw(cureAni.getFrame(),0,0,Needle.WIDTH,Needle.HEIGHT);
+        }
+        else if(cureAni.getDone()) {
+            sb.draw(cureGone, cure.getXLoc(), cure.getYLoc(), 40, 50);
+        }
 
         sb.end();
 
@@ -124,6 +151,7 @@ public class SecondFloorState extends State{
                 wall.drawDebug(debugRenderer);
             }
             basementDoor.drawDebug(debugRenderer);
+            cure.getButton().drawDebug(debugRenderer);
         }
         debugRenderer.end();
 
@@ -134,5 +162,6 @@ public class SecondFloorState extends State{
     public void dispose() {
         bkgd.dispose();
         female.dispose();
+        cure.dispose();
     }
 }

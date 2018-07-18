@@ -38,5 +38,6 @@ public class GameStateManager {
     public Inventory getInventory() {
         return inventory;
     }
+
 }
 

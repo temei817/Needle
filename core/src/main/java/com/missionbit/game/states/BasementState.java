@@ -42,7 +42,6 @@ public class BasementState extends State {
     BitmapFont font;
 
 
-
     public BasementState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, Needle.WIDTH / 1.5f, Needle.HEIGHT / 1.5f);
@@ -112,7 +111,6 @@ public class BasementState extends State {
         hangingBody.update(dt);
         bleedingBody.update(dt);
         bookshelf.update(dt);
-
         //camera bounds
         float minX = cam.viewportWidth / 2, maxX = bkgrd.getWidth() - cam.viewportWidth / 2;
         cam.position.x = female.getCharPos().x;
@@ -163,6 +161,7 @@ public class BasementState extends State {
         font.setColor(Color.WHITE);
         font.getData().setScale(2, 2);
         font.draw(sb, ((181000 - (System.currentTimeMillis() - startTime)) / 1000) + " ", cam.position.x, Needle.HEIGHT/1.5f);
+
 
         sb.end();
 
