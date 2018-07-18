@@ -3,8 +3,10 @@ package com.missionbit.game.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.missionbit.game.Animations;
 import com.missionbit.game.Needle;
 import com.missionbit.game.PolygonButton;
 import com.missionbit.game.characters.Female;
@@ -14,11 +16,15 @@ import java.util.ArrayList;
 public class SecondFloorState extends State{
 
     private Texture bkgd;
+    private Texture table;
     private Female female;
+    private Animations labStuffAni;
     private float[][] wall = new float[][]{
             {33.0f, 98.0f, 2.0f, 64.0f, 3.0f, 232.0f, 28.0f, 261.0f, 33.0f, 94.999985f, },
             {32.0f, 265.0f, 148.0f, 264.0f, 149.0f, 98.0f, 164.0f, 98.0f, 232.0f, 175.0f, 825.0f, 176.0f, 825.0f, 339.0f, 914.0f, 338.0f, 912.0f, 176.0f, 958.0f, 176.0f, 958.0f, 376.0f, 3.0f, 381.0f, 2.0f, 235.0f, 29.0f, 264.0f, },
+            {162.0f, 3.0f, 208.0f, 51.0f, 941.0f, 48.0f, 962.0f, 27.0f, 961.0f, 4.0f, 160.0f, 3.0f, },
     };
+
     private ArrayList<PolygonButton> walls;
     private boolean showDebug = true;
     private PolygonButton basementDoor;
@@ -34,6 +40,8 @@ public class SecondFloorState extends State{
         super(gsm);
         cam.setToOrtho(false, Needle.WIDTH/1.5f, Needle.HEIGHT/1.5f);
         bkgd = new Texture("images/Secondfloor.png");
+        table = new Texture("images/table.png");
+        labStuffAni = new Animations(new TextureRegion(new Texture("images/lab.png")),34,1f);
         female = new Female(50, 50);
 
         //walls
@@ -100,6 +108,9 @@ public class SecondFloorState extends State{
             sb.draw(female.getAniStill(), female.getCharPos().x, female.getCharPos().y, 50, 98);
             System.out.println("still");
         }
+
+        sb.draw(table,160,0,800,76);
+        //sb.draw(labStuffAni.getFrame(),50,0,100,100);
 
         sb.end();
 

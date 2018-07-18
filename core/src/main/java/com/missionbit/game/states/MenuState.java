@@ -3,16 +3,22 @@ package com.missionbit.game.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.missionbit.game.Animations;
 import com.missionbit.game.Needle;
 
 public class MenuState extends State{
 
     private Texture bkgd;
+    private Animations bkgdAni;
+    private Texture tsp;
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
         bkgd = new Texture("images/titleImg.png");
+        tsp = new Texture("images/TSP.png");
+        bkgdAni = new Animations(new TextureRegion(bkgd),10,1f);
 
     }
 
@@ -22,9 +28,9 @@ public class MenuState extends State{
             //BasementState basementstate = new BasementState(gsm);
             //gsm.set(basementstate);
             System.out.println(gsm);
-            gsm.set(new BasementState(gsm));
-            //gsm.set(new IntroState(gsm));
             //gsm.set(new BasementState(gsm));
+            //gsm.set(new IntroState(gsm));
+            gsm.set(new BasementState(gsm));
             //gsm.set(new KeypadState(gsm));
             //gsm.set(new SecondFloorState(gsm));
         }
@@ -33,12 +39,13 @@ public class MenuState extends State{
     @Override
     public void update(float dt) {
         handleInput();
+        bkgdAni.update(dt);
     }
 
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-        sb.draw(bkgd,100,-50);
+        sb.draw(bkgdAni.getFrame(),350,150, 300, 300);
         sb.end();
     }
 
