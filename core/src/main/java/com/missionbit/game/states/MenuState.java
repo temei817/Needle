@@ -18,7 +18,8 @@ public class MenuState extends State{
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
         bkgd = new Texture("images/titleImg.png");
         tsp = new Texture("images/TSP.png");
-        bkgdAni = new Animations(new TextureRegion(bkgd),10,1f);
+        //bkgdAni = new Animations(new TextureRegion(bkgd),10,1f);
+        bkgdAni = new Animations("images/titleImg.png",10, 1, 10,1f);
 
     }
 
