@@ -46,7 +46,8 @@ public class MenuState extends State{
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-        sb.draw(bkgdAni.getFrame(),350,150, 300, 300);
+        sb.draw(bkgdAni.getFrame(),295,70, 400, 400);
+        sb.draw(tsp,110,-70);
         sb.end();
     }
 
