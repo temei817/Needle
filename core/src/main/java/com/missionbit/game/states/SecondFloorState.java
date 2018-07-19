@@ -33,8 +33,9 @@ public class SecondFloorState extends State{
 
     private ArrayList<PolygonButton> walls;
     private boolean showDebug = true;
-    private PolygonButton basementDoor;
+    private PolygonButton basementDoor, labDoor;
     private float[] basementDoorVertices ={33.0f, 260.0f, 34.0f, 96.0f, 148.0f, 97.0f, 148.0f, 264.0f, 33.0f, 263.0f};
+    private float[] labDoorVertices = {826.0f, 313.0f, 826.0f, 177.0f, 913.0f, 177.0f, 912.0f, 312.0f, 825.0f, 311.0f, };
 
 
     private ShapeRenderer debugRenderer = new ShapeRenderer();
@@ -65,6 +66,7 @@ public class SecondFloorState extends State{
 
         //doors
         basementDoor = new PolygonButton(basementDoorVertices);
+        labDoor = new PolygonButton(labDoorVertices);
 
         //timer
         gameStateManager = gsm;
@@ -80,6 +82,9 @@ public class SecondFloorState extends State{
 
             if(basementDoor.handleClick(touchPos)){
                 gsm.pop();
+            }
+            else if(labDoor.handleClick(touchPos)){
+                gsm.push(new KeypadState(gsm));
             }
             else if(cure.getButton().handleClick(touchPos)){
                 gotCure = true;
@@ -175,6 +180,7 @@ public class SecondFloorState extends State{
                 wall.drawDebug(debugRenderer);
             }
             basementDoor.drawDebug(debugRenderer);
+            labDoor.drawDebug(debugRenderer);
             cure.getButton().drawDebug(debugRenderer);
         }
         debugRenderer.end();
