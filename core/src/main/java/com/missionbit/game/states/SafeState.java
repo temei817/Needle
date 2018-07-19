@@ -20,7 +20,7 @@ public class SafeState extends State {
     private Texture safeOpen;
     private Animations box;
     private ShapeRenderer debugRenderer = new ShapeRenderer();
-    private boolean showDebug = true;
+    private boolean showDebug = false;
     private ArrayList<Button> buttons = new ArrayList<Button>();
     private String Combo = "";
     private String Answer = "6197";
@@ -154,7 +154,7 @@ public class SafeState extends State {
         if(showDebug){
             debugRenderer.setProjectionMatrix(cam.combined);
             debugRenderer.begin(ShapeRenderer.ShapeType.Line);
-            debugRenderer.setColor(0,1,0,1);
+            //debugRenderer.setColor(0,1,0,1);
             if(!open) {
                 for (Button b : buttons) {
                     b.drawDebug(debugRenderer);
