@@ -7,6 +7,8 @@ import java.util.Stack;
 public class GameStateManager {
     private Stack<State> states;
     private Inventory inventory;
+    private long startTime;
+    private boolean stopTimer = false;
 
     public GameStateManager() {
 
@@ -37,6 +39,22 @@ public class GameStateManager {
 
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public void setStartTime(){
+        startTime = System.currentTimeMillis();
+    }
+
+    public long getStartTime(){
+        return startTime;
+    }
+
+    public void setStopTimer(boolean stop){
+        stopTimer = stop;
+    }
+
+    public boolean getStopTimer(){
+        return stopTimer;
     }
 
 }
