@@ -26,12 +26,10 @@ public class BasementState extends State {
     private Texture bkgrd;
     private Button doorButton;
     private ShapeRenderer debugRenderer = new ShapeRenderer();
-    private boolean showDebug = false;
+    private boolean showDebug = true;
     private PolygonButton safeButton;
     private float[] safevertices = {776, 100, 777, 186, 796, 142, 796, 58};
-    private Interactables hangingBody, bleedingBody, bookshelf;
-    private long startTime;
-
+    private Interactables hangingBody, bleedingBody, bookshelf, invButton;
     private float[][] wall = new float[][]{
             {110.0f, 315.0f, 111.0f, 121.0f, 769.0f, 121.0f, 771.0f, 318.0f, 109.0f, 317.0f, },
             {769.0f, 315.0f, 825.0f, 348.0f, 826.0f, 188.0f, 859.0f, 85.0f, 812.0f, 27.0f, 769.0f, 122.0f, },
@@ -41,6 +39,9 @@ public class BasementState extends State {
     private ArrayList<PolygonButton> walls;
     BitmapFont font;
 
+    private boolean clicked = false;
+    private GameStateManager gameStateManager;
+
 
     public BasementState(GameStateManager gsm) {
         super(gsm);
@@ -48,11 +49,11 @@ public class BasementState extends State {
         female = new Female(50, 50);
         bkgrd = new Texture("images/basement.png");
 
-
         //interactables
         hangingBody = new Interactables(new Texture("images/Hanging.png"), 150, 175, 70, 130, 8, 1f);
         bleedingBody = new Interactables(new Texture("images/Bleeding.png"), 220, 85, 362, 110, 8, 1f);
         bookshelf = new Interactables(new Texture("images/BOOKSHELF.png"), 589, 115, 163, 169, 28, 2f);
+        invButton = new Interactables(new Texture("images/Inventory.png"),10,20,40,40);
         doorButton = new Button(830,300,70,100,"door");
         safeButton = new PolygonButton(safevertices);
 
@@ -63,7 +64,8 @@ public class BasementState extends State {
         }
 
         //timer stuff
-        startTime = System.currentTimeMillis();
+        gameStateManager = gsm;
+        gameStateManager.setStartTime();
         font = new BitmapFont();
     }
 
@@ -89,13 +91,16 @@ public class BasementState extends State {
             else if(doorButton.handleClick(touchPos)) {
                 if (gsm.getInventory().getKey()){
                     gsm.push(new SecondFloorState(gsm));
-            }
+                 }
             }
             else if(bleedingBody.getButton().handleClick(touchPos)){
                 gsm.push(new DeadBodiesState(gsm));
             }
             else if(hangingBody.getButton().handleClick(touchPos)){
                 gsm.push(new HangingState(gsm));
+            }
+            else if(invButton.getButton().handleClick(touchPos)){
+                gsm.push(new InventoryState(gsm));
             }
             else {
                 female.setTargetLoc((int) touchPos.x, (int) touchPos.y);
@@ -123,9 +128,11 @@ public class BasementState extends State {
         }
 
         //timer
-        if(System.currentTimeMillis() - startTime>180000){
-            gsm.set(new MenuState(gsm));
-        }
+        if (!gameStateManager.getStopTimer()){
+            if (System.currentTimeMillis() - gameStateManager.getStartTime() > 180000) {
+                gsm.set(new MenuState(gsm));
+            }
+    }
 
         cam.update();
 
@@ -144,6 +151,8 @@ public class BasementState extends State {
         sb.draw(bookshelf.getFrame(), bookshelf.getXLoc(), bookshelf.getYLoc(), bookshelf.getWidth(), bookshelf.getHeight());
         sb.draw(hangingBody.getFrame(), hangingBody.getXLoc(), hangingBody.getYLoc(), hangingBody.getWidth(), hangingBody.getHeight());
         sb.draw(bleedingBody.getFrame(), bleedingBody.getXLoc(), bleedingBody.getYLoc(), bleedingBody.getWidth(), bleedingBody.getHeight());
+        sb.draw(invButton.getTexture(),invButton.getXLoc(),invButton.getYLoc(),invButton.getWidth(),invButton.getHeight());
+
 
         //draw the character
         if (female.getMovingR()) {
@@ -153,14 +162,16 @@ public class BasementState extends State {
             sb.draw(female.getAniWalkLeft(), female.getCharPos().x, female.getCharPos().y, 49, 98);
             //System.out.println("moving left");
         } else if (!female.getMovingR() && !female.getMovingL()) {
-            sb.draw(female.getAniStill(), female.getCharPos().x, female.getCharPos().y, 50, 98);
+            sb.draw(female.getAniStill(), female.getCharPos().x , female.getCharPos().y, 50, 98);
             //System.out.println("still");
         }
 
         //display timer
-        font.setColor(Color.WHITE);
-        font.getData().setScale(2, 2);
-        font.draw(sb, ((181000 - (System.currentTimeMillis() - startTime)) / 1000) + " ", cam.position.x, Needle.HEIGHT/1.5f);
+        if(!gameStateManager.getStopTimer()) {
+            font.setColor(Color.WHITE);
+            font.getData().setScale(2, 2);
+            font.draw(sb, ((181000 - (System.currentTimeMillis() - gameStateManager.getStartTime())) / 1000) + " ", cam.position.x, Needle.HEIGHT / 1.5f);
+        }
 
 
         sb.end();
@@ -176,6 +187,7 @@ public class BasementState extends State {
             bookshelf.getButton().drawDebug(debugRenderer);
             bleedingBody.getButton().drawDebug(debugRenderer);
             doorButton.drawDebug(debugRenderer);
+            invButton.getButton().drawDebug(debugRenderer);
             for(PolygonButton wall:walls){
                 wall.drawDebug(debugRenderer);
             }

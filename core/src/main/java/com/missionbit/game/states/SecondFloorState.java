@@ -1,7 +1,9 @@
 package com.missionbit.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -38,6 +40,8 @@ public class SecondFloorState extends State{
     private ShapeRenderer debugRenderer = new ShapeRenderer();
     private boolean gotCure = false;
 
+    private BitmapFont font;
+    private GameStateManager gameStateManager;
 
 
 
@@ -61,6 +65,10 @@ public class SecondFloorState extends State{
 
         //doors
         basementDoor = new PolygonButton(basementDoorVertices);
+
+        //timer
+        gameStateManager = gsm;
+        font = new BitmapFont();
     }
 
     @Override
@@ -75,6 +83,7 @@ public class SecondFloorState extends State{
             }
             else if(cure.getButton().handleClick(touchPos)){
                 gotCure = true;
+                gameStateManager.setStopTimer(true);
             }
             else{
                 female.setTargetLoc((int) touchPos.x, (int) touchPos.y);
@@ -104,6 +113,13 @@ public class SecondFloorState extends State{
             cam.position.x = maxX;
         } else {
             cam.position.x = female.getCharPos().x;
+        }
+
+        //check the timer
+        if(!gameStateManager.getStopTimer()) {
+            if (System.currentTimeMillis() - gameStateManager.getStartTime() > 180000) {
+                gsm.set(new MenuState(gsm));
+            }
         }
 
         cam.update();
@@ -140,6 +156,14 @@ public class SecondFloorState extends State{
         else if(cureAni.getDone()) {
             sb.draw(cureGone, cure.getXLoc(), cure.getYLoc(), 40, 50);
         }
+
+        //timer
+        if(!gameStateManager.getStopTimer()) {
+            font.setColor(Color.WHITE);
+            font.getData().setScale(2, 2);
+            font.draw(sb, ((181000 - (System.currentTimeMillis() - gameStateManager.getStartTime())) / 1000) + " ", cam.position.x, Needle.HEIGHT / 1.5f);
+        }
+
 
         sb.end();
 
