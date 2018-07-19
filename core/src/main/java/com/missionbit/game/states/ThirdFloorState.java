@@ -5,16 +5,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.missionbit.game.Animations;
 import com.missionbit.game.Needle;
 import com.missionbit.game.PolygonButton;
 import com.missionbit.game.characters.Female;
 
 import java.util.ArrayList;
 
+import javax.xml.soap.Text;
+
 public class ThirdFloorState extends State{
 
     private Texture bkgd;
     private Female female;
+    private Animations issac;
+    private Texture props;
 
     private boolean showDebug = true;
     private ShapeRenderer debugRenderer = new ShapeRenderer();
@@ -38,6 +43,8 @@ public class ThirdFloorState extends State{
         cam.setToOrtho(false, Needle.WIDTH/1.5f, Needle.HEIGHT/1.5f);
         bkgd = new Texture("images/Thirdroom.png");
         female = new Female(50, 50);
+        issac = new Animations("images/Isaac.png",4,3,11,3f,true);
+        props = new Texture("images/thirdprop.png");
 
         //walls
         walls = new ArrayList<PolygonButton>();
@@ -70,6 +77,7 @@ public class ThirdFloorState extends State{
     public void update(float dt) {
         handleInput();
         female.update(dt,walls);
+        issac.update(dt);
 
         //camera bounds
         float minX = cam.viewportWidth / 2, maxX = bkgd.getWidth() - cam.viewportWidth / 2;
@@ -91,6 +99,7 @@ public class ThirdFloorState extends State{
         sb.begin();
         sb.setProjectionMatrix(cam.combined);
         sb.draw(bkgd,0,0, Needle.WIDTH,Needle.HEIGHT);
+        sb.draw(issac.getFrame(),340,145);
 
         //draw the character
         if (female.getMovingR()) {
@@ -103,6 +112,8 @@ public class ThirdFloorState extends State{
             sb.draw(female.getAniStill(), female.getCharPos().x, female.getCharPos().y, 50, 98);
             System.out.println("still");
         }
+
+        sb.draw(props,50,0);
 
         sb.end();
 
@@ -125,6 +136,7 @@ public class ThirdFloorState extends State{
     public void dispose() {
         bkgd.dispose();
         female.dispose();
+        props.dispose();
 
     }
 }
