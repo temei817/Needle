@@ -18,7 +18,7 @@ public class ThirdFloorState extends State{
 
     private Texture bkgd;
     private Female female;
-    private Animations issac;
+    private Animations issac,bunny;
     private Texture props;
 
     private boolean showDebug = true;
@@ -45,6 +45,7 @@ public class ThirdFloorState extends State{
         female = new Female(50, 50);
         issac = new Animations("images/Isaac.png",4,3,11,3f,true);
         props = new Texture("images/thirdprop.png");
+        bunny = new Animations("images/bunnysad.png",7,6,42,5f,true);
 
         //walls
         walls = new ArrayList<PolygonButton>();
@@ -78,6 +79,7 @@ public class ThirdFloorState extends State{
         handleInput();
         female.update(dt,walls);
         issac.update(dt);
+        bunny.update(dt);
 
         //camera bounds
         float minX = cam.viewportWidth / 2, maxX = bkgd.getWidth() - cam.viewportWidth / 2;
@@ -100,18 +102,10 @@ public class ThirdFloorState extends State{
         sb.setProjectionMatrix(cam.combined);
         sb.draw(bkgd,0,0, Needle.WIDTH,Needle.HEIGHT);
         sb.draw(issac.getFrame(),340,145);
+        sb.draw(bunny.getFrame(),750,145);
 
         //draw the character
-        if (female.getMovingR()) {
-            sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, 49, 98);
-            System.out.println("moving right");
-        } else if (female.getMovingL()) {
-            sb.draw(female.getAniWalkLeft(), female.getCharPos().x, female.getCharPos().y, 49, 98);
-            System.out.println("moving left");
-        } else if (!female.getMovingR() && !female.getMovingL()) {
-            sb.draw(female.getAniStill(), female.getCharPos().x, female.getCharPos().y, 50, 98);
-            System.out.println("still");
-        }
+        female.draw(sb);
 
         sb.draw(props,50,0);
 

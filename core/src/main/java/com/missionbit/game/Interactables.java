@@ -56,6 +56,11 @@ public class Interactables {
 
     public void update(float dt){
         textureAni.update(dt);
+
+    }
+
+    public void setxLoc(int x){
+        xLoc = x;
     }
 
     public void dispose(){

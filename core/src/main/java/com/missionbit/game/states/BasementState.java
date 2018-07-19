@@ -67,6 +67,7 @@ public class BasementState extends State {
         gameStateManager = gsm;
         gameStateManager.setStartTime();
         font = new BitmapFont();
+
     }
 
     @Override
@@ -132,7 +133,9 @@ public class BasementState extends State {
             if (System.currentTimeMillis() - gameStateManager.getStartTime() > 180000) {
                 gsm.set(new MenuState(gsm));
             }
-    }
+        }
+
+        gsm.getInventory().update(cam);
 
         cam.update();
 
@@ -151,8 +154,7 @@ public class BasementState extends State {
         sb.draw(bookshelf.getFrame(), bookshelf.getXLoc(), bookshelf.getYLoc(), bookshelf.getWidth(), bookshelf.getHeight());
         sb.draw(hangingBody.getFrame(), hangingBody.getXLoc(), hangingBody.getYLoc(), hangingBody.getWidth(), hangingBody.getHeight());
         sb.draw(bleedingBody.getFrame(), bleedingBody.getXLoc(), bleedingBody.getYLoc(), bleedingBody.getWidth(), bleedingBody.getHeight());
-        sb.draw(invButton.getTexture(),invButton.getXLoc(),invButton.getYLoc(),invButton.getWidth(),invButton.getHeight());
-
+        gsm.getInventory().draw(sb);
 
         //draw the character
         if (female.getMovingR()) {
@@ -162,7 +164,7 @@ public class BasementState extends State {
             sb.draw(female.getAniWalkLeft(), female.getCharPos().x, female.getCharPos().y, 49, 98);
             //System.out.println("moving left");
         } else if (!female.getMovingR() && !female.getMovingL()) {
-            sb.draw(female.getAniStill(), female.getCharPos().x , female.getCharPos().y, 50, 98);
+            sb.draw(female.getAniStill(), female.getCharPos().x, female.getCharPos().y, 50, 98);
             //System.out.println("still");
         }
 
