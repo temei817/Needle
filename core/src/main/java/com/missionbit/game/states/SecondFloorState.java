@@ -185,6 +185,8 @@ public class SecondFloorState extends State{
         }
         debugRenderer.end();
 
+        gsm.getInventory().draw(sb);
+
 
     }
 
