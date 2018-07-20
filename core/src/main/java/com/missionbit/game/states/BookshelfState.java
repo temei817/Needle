@@ -20,7 +20,7 @@ public class BookshelfState extends State {
         super(gsm);
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
         Texture book = new Texture("images/BOOKSHELF.png");
-        BookShelfAnimation = new Animations(new TextureRegion(book),28,2f);
+        BookShelfAnimation = new Animations("images/BOOKSHELF.png",5,6,28,2f,true);
     }
 
     @Override
@@ -42,8 +42,8 @@ public class BookshelfState extends State {
     public void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        TextureRegion Frame = BookShelfAnimation.getFrame();
-        sb.draw(Frame,270,-75,648,656);
+        //TextureRegion Frame = BookShelfAnimation.getFrame();
+        sb.draw(BookShelfAnimation.getFrame(),270,-75,648,656);
         sb.end();
     }
 

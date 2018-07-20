@@ -53,7 +53,7 @@ public class BasementState extends State {
         //interactables
         hangingBody = new Interactables(new Texture("images/Hanging.png"), 150, 175, 70, 130, 8, 1f);
         bleedingBody = new Interactables(new Texture("images/Bleeding.png"), 220, 85, 362, 110, 8, 1f);
-        bookshelf = new Interactables(new Texture("images/BOOKSHELF.png"), 589, 115, 163, 169, 28, 2f);
+        bookshelf = new Interactables("images/BOOKSHELF.png", 589, 115, 163, 169, 5,6,28, 2f);
         invButton = new Interactables(new Texture("images/Inventory.png"),10,20,40,40);
         doorButton = new Button(830,300,70,100,"door");
         safeButton = new PolygonButton(safevertices);
@@ -124,6 +124,7 @@ public class BasementState extends State {
         hangingBody.update(dt);
         bleedingBody.update(dt);
         bookshelf.update(dt);
+
         //camera bounds
         float minX = cam.viewportWidth / 2, maxX = bkgrd.getWidth() - cam.viewportWidth / 2;
         cam.position.x = female.getCharPos().x;
@@ -158,22 +159,13 @@ public class BasementState extends State {
         sb.draw(bkgrd, 0, 0, Needle.WIDTH, Needle.HEIGHT);
 
         //draw the interactables
-        //sb.draw(bookshelf.getFrame(), bookshelf.getXLoc(), bookshelf.getYLoc(), bookshelf.getWidth(), bookshelf.getHeight());
+        sb.draw(bookshelf.getFrame(), bookshelf.getXLoc(), bookshelf.getYLoc(), bookshelf.getWidth(), bookshelf.getHeight());
         sb.draw(hangingBody.getFrame(), hangingBody.getXLoc(), hangingBody.getYLoc(), hangingBody.getWidth(), hangingBody.getHeight());
         sb.draw(bleedingBody.getFrame(), bleedingBody.getXLoc(), bleedingBody.getYLoc(), bleedingBody.getWidth(), bleedingBody.getHeight());
         //gsm.getInventory().draw(sb);
 
         //draw the character
-        if (female.getMovingR()) {
-            sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, 49, 98);
-            //System.out.println("moving right");
-        } else if (female.getMovingL()) {
-            sb.draw(female.getAniWalkLeft(), female.getCharPos().x, female.getCharPos().y, 49, 98);
-            //System.out.println("moving left");
-        } else if (!female.getMovingR() && !female.getMovingL()) {
-            sb.draw(female.getAniStill(), female.getCharPos().x, female.getCharPos().y, 50, 98);
-            //System.out.println("still");
-        }
+        female.draw(sb);
 
         //display timer
         if(!gameStateManager.getStopTimer()) {

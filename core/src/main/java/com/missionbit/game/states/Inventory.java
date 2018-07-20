@@ -11,24 +11,24 @@ import com.missionbit.game.Needle;
 import java.util.ArrayList;
 
 public class Inventory {
-    private boolean key;
-    private ArrayList<Interactables> inv;
+    private boolean key, bunKey, carKey, bun;
+    private ArrayList<Texture> inv;
     private Interactables invButton;
     private OrthographicCamera cam;
 
     public Inventory(){
-        inv = new ArrayList<Interactables>();
+        inv = new ArrayList<Texture>();
         invButton = new Interactables(new Texture("images/Inventory.png"),10,20,40,40);
         cam = new OrthographicCamera();
         cam.setToOrtho(false, Needle.WIDTH / 1.5f, Needle.HEIGHT / 1.5f);
 
     }
 
-    public void setInv(Interactables a){
+    public void setInv(Texture a){
         inv.add(a);
     }
 
-    public ArrayList<Interactables> getInv() {
+    public ArrayList<Texture> getInv() {
         return inv;
     }
 
@@ -61,9 +61,6 @@ public class Inventory {
     public void update(){
         cam.position.x = cam.viewportWidth/2;
         cam.update();
-        //invButton.setxLoc((int)(cam.position.x-cam.viewportWidth/2));
-        //invButton.getButton().getRect().setX(cam.position.x-cam.viewportWidth/2);
-        //System.out.println(cam.position.x-cam.viewportWidth/2);
     }
     public void draw(SpriteBatch sb){
         sb.setProjectionMatrix(cam.combined);
@@ -74,5 +71,27 @@ public class Inventory {
 
     public Interactables getInvButton() {
         return invButton;
+    }
+
+    public void setBunKey(boolean bunKey) {
+        this.bunKey = bunKey;
+    }
+
+    public boolean getBunKey(){
+        return bunKey;
+    }
+
+    public void setCarKey(boolean carKey){this.carKey = carKey;}
+
+    public boolean getCarKey(){
+        return carKey;
+    }
+
+    public void setBun(boolean bun){
+        this.bun = bun;
+    }
+
+    public boolean getBun(){
+        return bun;
     }
 }

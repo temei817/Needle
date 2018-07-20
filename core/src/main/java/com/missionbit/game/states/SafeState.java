@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class SafeState extends State {
     private Texture safe;
     private Texture safeOpen;
+    private Texture keyInv;
     private Animations box;
     private ShapeRenderer debugRenderer = new ShapeRenderer();
     private boolean showDebug = false;
@@ -35,7 +36,7 @@ public class SafeState extends State {
         safeOpen = new Texture("images/OpenSafe.png");
         box = new Animations(new TextureRegion(new Texture("images/box.png")),21,1f);
         key = new Interactables(new Texture("images/key.png"),450,80,183,309,21,1f);
-
+        keyInv = new Texture("images/keybut.png");
         back = new Button(856, 4, 105,73, "Back");
         Button b = new Button(513,256,67,44, "1");
         buttons.add(b);
@@ -116,7 +117,7 @@ public class SafeState extends State {
                 }
                 else if(key.getButton().handleClick(touchPos)){
                     gsm.getInventory().setKey(true);
-                    gsm.getInventory().setInv(key);
+                    gsm.getInventory().setInv(keyInv);
                 }
 
             }

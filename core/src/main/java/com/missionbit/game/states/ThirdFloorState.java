@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.missionbit.game.Animations;
+import com.missionbit.game.Interactables;
 import com.missionbit.game.Needle;
 import com.missionbit.game.PolygonButton;
 import com.missionbit.game.characters.Female;
@@ -19,7 +20,8 @@ public class ThirdFloorState extends State{
     private Texture bkgd;
     private Female female;
     private Animations issac,bunny;
-    private Texture props;
+    private Texture props, carKeyInv, bunInv;
+    private Interactables bun, carKey,bunKey;
 
     private boolean showDebug = true;
     private ShapeRenderer debugRenderer = new ShapeRenderer();
@@ -46,6 +48,7 @@ public class ThirdFloorState extends State{
         issac = new Animations("images/Isaac.png",4,3,11,3f,true);
         props = new Texture("images/thirdprop.png");
         bunny = new Animations("images/bunnysad.png",7,6,42,5f,true);
+        carKeyInv = new Texture("images/carkeyin.png");
 
         //walls
         walls = new ArrayList<PolygonButton>();
@@ -57,6 +60,14 @@ public class ThirdFloorState extends State{
         labDoor = new PolygonButton(labDoorVertices);
         exitDoor = new PolygonButton(exitDoorVertices);
 
+        bun = new Interactables("images/bunnysad.png",750,145,127,163,7,6,42,5f);
+        carKey = new Interactables(new Texture("images/carkeys.png"),280,210,24,24);
+        //invButton = new Interactables(new Texture("images/Inventory.png"),10,20,40,40);
+        bunKey = new Interactables(new Texture("images/bunnykeyclose.png"),50,50,92,20);
+        bunInv = new Texture("images/bunin.png");
+
+
+
     }
 
     @Override
@@ -65,8 +76,25 @@ public class ThirdFloorState extends State{
             Vector3 touchPos = new Vector3();
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             cam.unproject(touchPos);
-            if(labDoor.handleClick(touchPos)){
+
+            if(gsm.getInventory().handleInput()){
+                gsm.push(new InventoryState(gsm));
+            }
+            else if(labDoor.handleClick(touchPos)){
                 gsm.pop();
+            }
+            else if(bun.getButton().handleClick(touchPos)){
+                if(gsm.getInventory().getKey()){
+
+                }
+                else if(gsm.getInventory().getKey() && gsm.getInventory().getBunKey()){
+                    gsm.getInventory().setBunKey(true);
+                    gsm.getInventory().getInv().add(bunInv);
+                }
+            }
+            else if(carKey.getButton().handleClick(touchPos)){
+                gsm.getInventory().setInv(carKeyInv);
+                gsm.getInventory().setCarKey(true);
             }
             else {
                 female.setTargetLoc((int) touchPos.x, (int) touchPos.y);
@@ -92,6 +120,8 @@ public class ThirdFloorState extends State{
             cam.position.x = female.getCharPos().x;
         }
 
+        gsm.getInventory().update();
+
         cam.update();
 
     }
@@ -102,7 +132,10 @@ public class ThirdFloorState extends State{
         sb.setProjectionMatrix(cam.combined);
         sb.draw(bkgd,0,0, Needle.WIDTH,Needle.HEIGHT);
         sb.draw(issac.getFrame(),340,145);
-        sb.draw(bunny.getFrame(),750,145);
+        sb.draw(bun.getFrame(),bun.getXLoc(),bun.getYLoc(),bun.getWidth(),bun.getHeight());
+        if(!gsm.getInventory().getCarKey()) {
+            sb.draw(carKey.getTexture(), carKey.getXLoc(), carKey.getYLoc(), carKey.getWidth(), carKey.getHeight());
+        }
 
         //draw the character
         female.draw(sb);
@@ -120,9 +153,13 @@ public class ThirdFloorState extends State{
             }
             labDoor.drawDebug(debugRenderer);
             exitDoor.drawDebug(debugRenderer);
+            bun.getButton().drawDebug(debugRenderer);
+            carKey.getButton().drawDebug(debugRenderer);
+            bunKey.getButton().drawDebug(debugRenderer);
         }
         debugRenderer.end();
 
+        gsm.getInventory().draw(sb);
 
     }
 

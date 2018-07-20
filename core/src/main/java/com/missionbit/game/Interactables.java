@@ -27,6 +27,15 @@ public class Interactables {
         heightY = height;
         button = new Button(xLoc,yLoc,width,height, "button");
     }
+    public Interactables(String path, int x,int y,int width,int height, int row, int col, int frames, float cycle){
+        //this.texture = texture;
+        textureAni = new Animations(path, row,col,frames,cycle,true);
+        xLoc = x;
+        yLoc = y;
+        widthX = width;
+        heightY = height;
+        button = new Button(xLoc,yLoc,width,height, "button");
+    }
 
     public Texture getTexture(){
         return texture;
@@ -39,6 +48,7 @@ public class Interactables {
     public int getHeight(){
         return heightY;
     }
+
     public TextureRegion getFrame(){
         return textureAni.getFrame();
     }
