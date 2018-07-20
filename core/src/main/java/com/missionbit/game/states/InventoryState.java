@@ -9,14 +9,14 @@ import java.lang.reflect.Array;
 
 public class InventoryState extends State{
 
-    private int h = 0;
+    private int h = 50;
     private int [] loc;
     public InventoryState(GameStateManager gsm) {
         super(gsm);
         loc=new int[gsm.getInventory().getInv().size()];
         for(int i=0;i<gsm.getInventory().getInv().size();i++){
             loc[i]= h;
-            h+=100;
+            h+=155;
 
         }
     }
@@ -40,7 +40,7 @@ public class InventoryState extends State{
 
 
         for(int x = 0; x<gsm.getInventory().getInv().size();x++) {
-           sb.draw(gsm.getInventory().getInv().get(x),loc[x],50);
+           sb.draw(gsm.getInventory().getInv().get(x),loc[x],50,135,135);
         }
 
         sb.end();
