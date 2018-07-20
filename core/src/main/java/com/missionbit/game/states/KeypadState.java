@@ -17,7 +17,7 @@ public class KeypadState extends State {
     private boolean showDebug = true;
     private ArrayList<Button> buttons = new ArrayList<Button>();
     private String Combo = "";
-    private String Answer = "4760";
+    private String Answer = "4260";
     public KeypadState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);

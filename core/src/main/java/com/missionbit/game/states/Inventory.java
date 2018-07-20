@@ -1,9 +1,12 @@
 package com.missionbit.game.states;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.missionbit.game.Interactables;
+import com.missionbit.game.Needle;
 
 import java.util.ArrayList;
 
@@ -11,10 +14,14 @@ public class Inventory {
     private boolean key;
     private ArrayList<Interactables> inv;
     private Interactables invButton;
+    private OrthographicCamera cam;
 
     public Inventory(){
         inv = new ArrayList<Interactables>();
         invButton = new Interactables(new Texture("images/Inventory.png"),10,20,40,40);
+        cam = new OrthographicCamera();
+        cam.setToOrtho(false, Needle.WIDTH / 1.5f, Needle.HEIGHT / 1.5f);
+
     }
 
     public void setInv(Interactables a){
@@ -33,13 +40,36 @@ public class Inventory {
         return key;
     }
 
-    public void update(OrthographicCamera cam){
-        invButton.setxLoc((int)(cam.position.x-cam.viewportWidth/2));
-        invButton.getButton().getRect().setX(cam.position.x-cam.viewportWidth/2);
-        System.out.println(cam.position.x-cam.viewportWidth/2);
+    public boolean handleInput(){
+        boolean clicked = false;
+        if (Gdx.input.justTouched()) {
+            Vector3 touchPos = new Vector3();
+            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            cam.unproject(touchPos);
+            System.out.println(touchPos);
+            //System.out.println(gsm.getInventory().getInvButton().getButton().getRect());
+            if (invButton.getButton().handleClick(touchPos)) {
+                clicked = true;
+                System.out.println("clicked");
+               // gsm.push(new InventoryState(gsm));
+            }
+        }
+        return clicked;
+
+    }
+
+    public void update(){
+        cam.position.x = cam.viewportWidth/2;
+        cam.update();
+        //invButton.setxLoc((int)(cam.position.x-cam.viewportWidth/2));
+        //invButton.getButton().getRect().setX(cam.position.x-cam.viewportWidth/2);
+        //System.out.println(cam.position.x-cam.viewportWidth/2);
     }
     public void draw(SpriteBatch sb){
+        sb.setProjectionMatrix(cam.combined);
+        sb.begin();
         sb.draw(invButton.getTexture(),invButton.getXLoc(),invButton.getYLoc(),invButton.getWidth(),invButton.getHeight());
+        sb.end();
     }
 
     public Interactables getInvButton() {

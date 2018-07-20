@@ -2,6 +2,7 @@ package com.missionbit.game.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.missionbit.game.Animations;
 import com.missionbit.game.Button;
@@ -17,6 +19,7 @@ import com.missionbit.game.Needle;
 import com.missionbit.game.PolygonButton;
 import com.missionbit.game.characters.Female;
 
+import java.nio.IntBuffer;
 import java.sql.Time;
 import java.util.ArrayList;
 
@@ -38,8 +41,6 @@ public class BasementState extends State {
 
     private ArrayList<PolygonButton> walls;
     BitmapFont font;
-
-    private boolean clicked = false;
     private GameStateManager gameStateManager;
 
 
@@ -68,6 +69,11 @@ public class BasementState extends State {
         gameStateManager.setStartTime();
         font = new BitmapFont();
 
+        System.out.println("texture");
+        IntBuffer intBuffer = BufferUtils.newIntBuffer(16);
+        Gdx.gl20.glGetIntegerv(GL20.GL_MAX_TEXTURE_SIZE, intBuffer);
+        System.out.println(intBuffer.get());
+
     }
 
     @Override
@@ -81,8 +87,11 @@ public class BasementState extends State {
             System.out.println("Click" + touchPos.x + " " + touchPos.y);
             System.out.println(touchPos.x + ", " + touchPos.y);
 
+            if(gsm.getInventory().handleInput()){
+                gsm.push(new InventoryState(gsm));
+            }
             //switch to first person bookshelf if touched
-            if (bookshelf.getButton().handleClick(touchPos)) {
+            else if (bookshelf.getButton().handleClick(touchPos)) {
                 gsm.push(new BookshelfState(gsm));
             }
             //switch to safe
@@ -100,12 +109,10 @@ public class BasementState extends State {
             else if(hangingBody.getButton().handleClick(touchPos)){
                 gsm.push(new HangingState(gsm));
             }
-            else if(invButton.getButton().handleClick(touchPos)){
-                gsm.push(new InventoryState(gsm));
-            }
             else {
                 female.setTargetLoc((int) touchPos.x, (int) touchPos.y);
             }
+
 
         }
     }
@@ -135,7 +142,7 @@ public class BasementState extends State {
             }
         }
 
-        gsm.getInventory().update(cam);
+        gsm.getInventory().update();
 
         cam.update();
 
@@ -151,10 +158,10 @@ public class BasementState extends State {
         sb.draw(bkgrd, 0, 0, Needle.WIDTH, Needle.HEIGHT);
 
         //draw the interactables
-        sb.draw(bookshelf.getFrame(), bookshelf.getXLoc(), bookshelf.getYLoc(), bookshelf.getWidth(), bookshelf.getHeight());
+        //sb.draw(bookshelf.getFrame(), bookshelf.getXLoc(), bookshelf.getYLoc(), bookshelf.getWidth(), bookshelf.getHeight());
         sb.draw(hangingBody.getFrame(), hangingBody.getXLoc(), hangingBody.getYLoc(), hangingBody.getWidth(), hangingBody.getHeight());
         sb.draw(bleedingBody.getFrame(), bleedingBody.getXLoc(), bleedingBody.getYLoc(), bleedingBody.getWidth(), bleedingBody.getHeight());
-        gsm.getInventory().draw(sb);
+        //gsm.getInventory().draw(sb);
 
         //draw the character
         if (female.getMovingR()) {
@@ -195,6 +202,10 @@ public class BasementState extends State {
             }
         }
         debugRenderer.end();
+
+        gsm.getInventory().draw(sb);
+
+
 
     }
 
