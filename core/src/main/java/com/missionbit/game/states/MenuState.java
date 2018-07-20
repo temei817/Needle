@@ -19,7 +19,7 @@ public class MenuState extends State{
         bkgd = new Texture("images/titleImg.png");
         tsp = new Texture("images/TSP.png");
         //bkgdAni = new Animations(new TextureRegion(bkgd),10,1f);
-        bkgdAni = new Animations("images/titleImg.png",10, 1, 10,1f,true);
+        bkgdAni = new Animations("images/titleImg.png",3,4, 10,1f,true);
 
     }
 
@@ -29,14 +29,12 @@ public class MenuState extends State{
             //BasementState basementstate = new BasementState(gsm);
             //gsm.set(basementstate);
             System.out.println(gsm);
-            //gsm.set(new BasementState(gsm));
+            gsm.set(new BasementState(gsm));
             //gsm.set(new IntroState(gsm));
-            //gsm.set(new BasementState(gsm));
-            gsm.set(new IntroState(gsm));
-            //gsm.set(new BasementState(gsm));
             //gsm.set(new KeypadState(gsm));
             //gsm.set(new SecondFloorState(gsm));
             //gsm.set(new SafeState(gsm));
+            //gsm.set(new ThirdFloorState(gsm));
 
         }
     }
