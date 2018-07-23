@@ -43,12 +43,16 @@ public class BasementState extends State {
     BitmapFont font;
     private GameStateManager gameStateManager;
 
+    private boolean locked;
+    private Animations lockedAni;
+
 
     public BasementState(GameStateManager gsm) {
         super(gsm,"Music/The_Binding_of_Isaac_Rebirth_Soundtrack_The_Calm_HQ_.mp3");
         cam.setToOrtho(false, Needle.WIDTH / 1.5f, Needle.HEIGHT / 1.5f);
         female = new Female(50, 50);
         bkgrd = new Texture("images/basement.png");
+        lockedAni = new Animations("images/LOCKED.png",3,4,11,3f,false);
 
         //interactables
         hangingBody = new Interactables(new Texture("images/Hanging.png"), 150, 175, 70, 130, 8, 1f);
@@ -102,6 +106,9 @@ public class BasementState extends State {
                 if (gsm.getInventory().getKey()){
                     gsm.set(new SecondFloorState(gsm));
                  }
+                 else{
+                    locked = true;
+                }
             }
             else if(bleedingBody.getButton().handleClick(touchPos)){
                 gsm.push(new DeadBodiesState(gsm));
@@ -143,6 +150,13 @@ public class BasementState extends State {
             }
         }
 
+        if(locked){
+            lockedAni.update(dt);
+        }
+        else if(lockedAni.getDone()){
+            locked = false;
+        }
+
         gsm.getInventory().update();
 
         cam.update();
@@ -165,7 +179,16 @@ public class BasementState extends State {
         //gsm.getInventory().draw(sb);
 
         //draw the character
-        female.draw(sb);
+        if(!female.getGetUp().getDone()){
+            sb.draw(female.getGetUp().getFrame(),-28,-18,200,200);
+        }
+        else {
+            female.draw(sb);
+        }
+
+        if(locked && !lockedAni.getDone()){
+            sb.draw(lockedAni.getFrame(),815,290);
+        }
 
         //display timer
         if(!gameStateManager.getStopTimer()) {

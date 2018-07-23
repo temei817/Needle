@@ -15,7 +15,7 @@ public class Female extends Character{
 
     private int charSize;
     private Vector3 direction;
-    private Animations charAnimation;
+    private Animations charAnimation, getUp;
     private boolean movingR, movingL;
     private Rectangle bounds;
 
@@ -33,6 +33,7 @@ public class Female extends Character{
         charStill = new Animations(new TextureRegion(characterStill),21,1f);
         charStillL = new Animations(new TextureRegion(charStillLeft), 21,1f);
         charWalkL = new Animations(new TextureRegion(charWalkLeft), 16,1f);
+        getUp = new Animations("images/getup.png",4,4,14,1f,false);
         movingR = false;
         movingL = false;
         velocity = new Vector3(100,0,0);
@@ -45,6 +46,7 @@ public class Female extends Character{
         charStill.update(dt);
         charStillL.update(dt);
         charWalkL.update(dt);
+        getUp.update(dt);
 
 
         if( charPos.dst2(targetLoc) >= 1) {
@@ -90,6 +92,11 @@ public class Female extends Character{
             System.out.println("still");
         }
     }
+
+    public Animations getGetUp() {
+        return getUp;
+    }
+
 
     public Vector3 getTargetLoc(){
         return targetLoc;

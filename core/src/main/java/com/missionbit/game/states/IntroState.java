@@ -35,25 +35,6 @@ public class IntroState extends State{
 
     @Override
     public void update(float dt) {
-        //introAni.update(dt);
-        //ortniAni.update(dt);
-
-        //timer for animations
-        if(needleAni) {
-            if (System.currentTimeMillis() - needleStartTime > 5100) {
-                needleAni = false;
-                boardAni = true;
-                boardStartTime = System.currentTimeMillis();
-            }
-        }
-        else if(boardAni){
-            if(System.currentTimeMillis()-boardStartTime>5800){
-                introAni.update(dt);
-                boardAni = false;
-                gsm.set(new BasementState(gsm));
-            }
-        }
-
         if(!ortniAni.getDone()){
             ortniAni.update(dt);
         }
