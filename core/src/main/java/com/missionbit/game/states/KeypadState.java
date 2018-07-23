@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class KeypadState extends State {
     private Texture keypad;
     private ShapeRenderer debugRenderer = new ShapeRenderer();
-    private boolean showDebug = true;
+    private boolean showDebug = false;
     private ArrayList<Button> buttons = new ArrayList<Button>();
     private String Combo = "";
     private String Answer = "4260";
