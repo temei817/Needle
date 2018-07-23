@@ -145,7 +145,7 @@ public class BasementState extends State {
 
         //timer
         if (!gameStateManager.getStopTimer()){
-            if (System.currentTimeMillis() - gameStateManager.getStartTime() > 5000) {
+            if (System.currentTimeMillis() - gameStateManager.getStartTime() > 180000) {
                 female.setDead(true);
             }
         }
