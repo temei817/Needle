@@ -76,7 +76,7 @@ public class IntroState extends State{
             sb.draw(ortniAni.getFrame(),0,0,Needle.WIDTH,Needle.HEIGHT);
         }
         else if(!introAni.getDone()) {
-            sb.draw(introAni.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+            sb.draw(introAni.getFrame(), 175, 0, 600, 600);
         }
         //System.out.println(introAni.getFrame());
         //System.out.println(introAni.getFrame().getRegionHeight() + ""+introAni.getFrame().getRegionWidth());
