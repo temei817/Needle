@@ -19,9 +19,10 @@ public class ThirdFloorState extends State{
 
     private Texture bkgd;
     private Female female;
-    private Animations issac,bunny;
-    private Texture props, carKeyInv, bunInv;
+    private Animations issac,bunny, unlock, fullUnlock, oneLock, bunOneLock;
+    private Texture props, carKeyInv, bunInv, bunOpen;
     private Interactables bun, carKey,bunKey;
+    private boolean playUnlock, playFullUnlock;
 
     private boolean showDebug = true;
     private ShapeRenderer debugRenderer = new ShapeRenderer();
@@ -47,8 +48,15 @@ public class ThirdFloorState extends State{
         female = new Female(50, 50);
         issac = new Animations("images/Isaac.png",4,3,11,3f,true);
         props = new Texture("images/thirdprop.png");
-        bunny = new Animations("images/bunnysad.png",7,6,42,5f,true);
+        //bunny = new Animations("images/bunnysad.png",7,6,42,5f,true);
         carKeyInv = new Texture("images/carkeyin.png");
+
+        //bunny lock animations
+        unlock = new Animations("images/unlock.png",4,5,19,3f,false);
+        fullUnlock = new Animations("images/fullunlock.png",4,4,16,3f,false);
+        oneLock = new Animations("images/buncut.png",7,6,12,3f,true);
+        bunOpen = new Texture("images/bunopen.png");
+        bunOneLock = new Animations("images/Bunnykeycut.png",3,4,12,3f,true);
 
         //walls
         walls = new ArrayList<PolygonButton>();
@@ -63,8 +71,8 @@ public class ThirdFloorState extends State{
         bun = new Interactables("images/bunnysad.png",750,145,127,163,7,6,42,5f);
         carKey = new Interactables(new Texture("images/carkeys.png"),280,210,24,24);
         //invButton = new Interactables(new Texture("images/Inventory.png"),10,20,40,40);
-        bunKey = new Interactables(new Texture("images/bunnykeyclose.png"),50,50,92,20);
-        bunInv = new Texture("images/bunin.png");
+        //bunKey = new Interactables(new Texture("images/bunnykeyclose.png"),50,50,92,20);
+        bunInv = new Texture("images/bunnyin.png");
 
 
 
@@ -84,17 +92,26 @@ public class ThirdFloorState extends State{
                 gsm.pop();
             }
             else if(bun.getButton().handleClick(touchPos)){
-                if(gsm.getInventory().getKey()){
-
-                }
-                else if(gsm.getInventory().getKey() && gsm.getInventory().getBunKey()){
-                    gsm.getInventory().setBunKey(true);
+                if(gsm.getInventory().getKey() && gsm.getInventory().getBunKey()){
+                    playFullUnlock = true;
+                    gsm.push(new BunUnlockState(gsm));
                     gsm.getInventory().getInv().add(bunInv);
+                    gsm.getInventory().setBun(true);
+                }
+                else{
+                    playUnlock = true;
+                    gsm.push(new BunUnlockState(gsm));
+
                 }
             }
             else if(carKey.getButton().handleClick(touchPos)){
                 gsm.getInventory().setInv(carKeyInv);
                 gsm.getInventory().setCarKey(true);
+            }
+            else if(exitDoor.handleClick(touchPos)){
+                if(gsm.getInventory().getCarKey()){
+                     gsm.push(new GameOverState(gsm));
+                }
             }
             else {
                 female.setTargetLoc((int) touchPos.x, (int) touchPos.y);
@@ -107,7 +124,8 @@ public class ThirdFloorState extends State{
         handleInput();
         female.update(dt,walls);
         issac.update(dt);
-        bunny.update(dt);
+        bun.update(dt);
+        oneLock.update(dt);
 
         //camera bounds
         float minX = cam.viewportWidth / 2, maxX = bkgd.getWidth() - cam.viewportWidth / 2;
@@ -133,9 +151,30 @@ public class ThirdFloorState extends State{
         sb.draw(bkgd,0,0, Needle.WIDTH,Needle.HEIGHT);
         sb.draw(issac.getFrame(),340,145);
         sb.draw(bun.getFrame(),bun.getXLoc(),bun.getYLoc(),bun.getWidth(),bun.getHeight());
+        if(playUnlock){
+            sb.draw(oneLock.getFrame(),bun.getXLoc(),bun.getYLoc(),bun.getWidth(),bun.getHeight());
+        }
+        else if(playFullUnlock){
+            sb.draw(bunOpen,bun.getXLoc(),bun.getYLoc(),bun.getWidth(),bun.getHeight());
+        }
+
         if(!gsm.getInventory().getCarKey()) {
             sb.draw(carKey.getTexture(), carKey.getXLoc(), carKey.getYLoc(), carKey.getWidth(), carKey.getHeight());
         }
+
+/*
+        if(playUnlock){
+            sb.draw(bunOneLock.getFrame(),0,0);
+            sb.draw(unlock.getFrame(),128,250);
+        }
+        else if(playUnlock && playFullUnlock){
+            sb.draw(bunOneLock.getFrame(),0,0);
+            sb.draw(unlock.getFrame(),128,250);
+            if(unlock.getDone()){
+                sb.draw(fullUnlock.getFrame(),128,250);
+            }
+        }
+        */
 
         //draw the character
         female.draw(sb);
@@ -155,7 +194,7 @@ public class ThirdFloorState extends State{
             exitDoor.drawDebug(debugRenderer);
             bun.getButton().drawDebug(debugRenderer);
             carKey.getButton().drawDebug(debugRenderer);
-            bunKey.getButton().drawDebug(debugRenderer);
+            //bunKey.getButton().drawDebug(debugRenderer);
         }
         debugRenderer.end();
 

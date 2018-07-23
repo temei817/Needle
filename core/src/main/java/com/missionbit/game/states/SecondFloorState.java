@@ -86,6 +86,9 @@ public class SecondFloorState extends State{
             else if(labDoor.handleClick(touchPos)){
                 gsm.push(new KeypadState(gsm));
             }
+            else if(gsm.getInventory().handleInput()){
+                gsm.push(new InventoryState(gsm));
+            }
             else if(cure.getButton().handleClick(touchPos)){
                 gotCure = true;
                 gameStateManager.setStopTimer(true);
@@ -139,16 +142,7 @@ public class SecondFloorState extends State{
         sb.draw(bkgd,0,0,Needle.WIDTH,Needle.HEIGHT);
 
         //draw the character
-        if (female.getMovingR()) {
-            sb.draw(female.getAni(), female.getCharPos().x, female.getCharPos().y, 49, 98);
-            System.out.println("moving right");
-        } else if (female.getMovingL()) {
-            sb.draw(female.getAniWalkLeft(), female.getCharPos().x, female.getCharPos().y, 49, 98);
-            System.out.println("moving left");
-        } else if (!female.getMovingR() && !female.getMovingL()) {
-            sb.draw(female.getAniStill(), female.getCharPos().x, female.getCharPos().y, 50, 98);
-            System.out.println("still");
-        }
+        female.draw(sb);
 
         sb.draw(table,160,0,800,76);
         sb.draw(labStuffAni.getFrame(),50,0,900,475);
