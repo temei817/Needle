@@ -47,7 +47,7 @@ public class SecondFloorState extends State{
 
 
     public SecondFloorState(GameStateManager gsm) {
-        super(gsm);
+        super(gsm,"Music/Pulso_Profundum_The_Binding_of_Isaac_Afterbirth_OST_.mp3");
         cam.setToOrtho(false, Needle.WIDTH/1.5f, Needle.HEIGHT/1.5f);
         bkgd = new Texture("images/Secondfloor.png");
         table = new Texture("images/table.png");
@@ -81,7 +81,7 @@ public class SecondFloorState extends State{
             cam.unproject(touchPos);
 
             if(basementDoor.handleClick(touchPos)){
-                gsm.pop();
+                gsm.push(new BasementState(gsm));
             }
             else if(labDoor.handleClick(touchPos)){
                 gsm.push(new KeypadState(gsm));
@@ -189,5 +189,7 @@ public class SecondFloorState extends State{
         bkgd.dispose();
         female.dispose();
         cure.dispose();
+        music.stop();
+        music.dispose();
     }
 }

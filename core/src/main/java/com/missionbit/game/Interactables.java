@@ -74,6 +74,8 @@ public class Interactables {
     }
 
     public void dispose(){
-        texture.dispose();
+        if(texture != null){
+            texture.dispose();
+        }
     }
 }
