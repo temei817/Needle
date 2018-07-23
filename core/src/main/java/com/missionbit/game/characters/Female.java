@@ -84,7 +84,10 @@ public class Female extends Character{
     }
 
     public void draw(SpriteBatch sb){
-        if (movingR) {
+        if (dead){
+            sb.draw(death.getFrame(),charPos.x-20,charPos.y,108,112);
+        }
+        else if (movingR) {
             sb.draw(charAnimation.getFrame(), charPos.x, charPos.y, 49, 98);
         //    System.out.println("moving right");
         } else if (movingL) {

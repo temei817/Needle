@@ -43,7 +43,7 @@ public class BasementState extends State {
     BitmapFont font;
     private GameStateManager gameStateManager;
 
-    private boolean locked, dead;
+    private boolean locked;
     private Animations lockedAni;
 
 
@@ -145,9 +145,8 @@ public class BasementState extends State {
 
         //timer
         if (!gameStateManager.getStopTimer()){
-            if (System.currentTimeMillis() - gameStateManager.getStartTime() > 10000) {
+            if (System.currentTimeMillis() - gameStateManager.getStartTime() > 5000) {
                 female.setDead(true);
-                dead = true;
             }
         }
 
@@ -182,9 +181,6 @@ public class BasementState extends State {
         //draw the character
         if(!female.getGetUp().getDone()){
             sb.draw(female.getGetUp().getFrame(),-28,-18,200,200);
-        }
-        else if(dead){
-            sb.draw(female.getDeath().getFrame(),female.getCharPos().x-20,female.getCharPos().y,90,100);
         }
         else {
             female.draw(sb);
