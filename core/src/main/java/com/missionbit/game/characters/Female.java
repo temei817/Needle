@@ -78,7 +78,7 @@ public class Female extends Character{
     public void dispose() {
         character.dispose();
         charWalkLeft.dispose();
-        charStillLeft.dispose();
+        //charStillLeft.dispose();
         characterStill.dispose();
 
     }

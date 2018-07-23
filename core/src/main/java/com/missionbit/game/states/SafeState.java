@@ -115,9 +115,11 @@ public class SafeState extends State {
                     //gotKey = true;
                     gsm.pop();
                 }
-                else if(key.getButton().handleClick(touchPos)){
-                    gsm.getInventory().setKey(true);
-                    gsm.getInventory().setInv(keyInv);
+                else if(key.getButton().handleClick(touchPos)) {
+                    if (!gsm.getInventory().getKey()){
+                        gsm.getInventory().setKey(true);
+                        gsm.getInventory().setInv(keyInv);
+                }
                 }
 
             }

@@ -36,9 +36,11 @@ public class DeadBodiesState extends State{
             touchPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
             cam.unproject(touchPos);
             if(bunKey.getButton().handleClick(touchPos)){
-                gsm.getInventory().setInv(bunKeyInv);
-                gsm.getInventory().setBunKey(true);
-                System.out.println("clicked");
+                if(!gsm.getInventory().getBunKey()) {
+                    gsm.getInventory().setInv(bunKeyInv);
+                    gsm.getInventory().setBunKey(true);
+                    System.out.println("clicked");
+                }
             }
             else {
                gsm.pop();
