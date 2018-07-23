@@ -15,14 +15,16 @@ public class Female extends Character{
 
     private int charSize;
     private Vector3 direction;
-    private Animations charAnimation, getUp;
-    private boolean movingR, movingL;
+    private Animations charAnimation, getUp, death;
+    private boolean movingR, movingL,dead;
     private Rectangle bounds;
 
     public Female(int x, int y) {
         character = new Texture("images/femaleWalk.png");
         characterStill = new Texture("images/femaleIdle.png");
+
         //charStillLeft = new Texture("images/femaleIdleL.png");
+
         charWalkLeft = new Texture("images/femaleWalkL.png");
         charSize = 150;
         charPos = new Vector3(x,y,0);
@@ -30,10 +32,15 @@ public class Female extends Character{
         direction = new Vector3();
         bounds = new Rectangle(x,y,charSize,charSize);
         charAnimation = new Animations(new TextureRegion(character),16,1f);
+
         charStill = new Animations(new TextureRegion(characterStill),21,1f);
+
+        charStill = new Animations("images/femaleIdle.png",6,4,21,1f,true);
+
         //charStillL = new Animations(new TextureRegion(charStillLeft), 21,1f);
         charWalkL = new Animations(new TextureRegion(charWalkLeft), 16,1f);
         getUp = new Animations("images/getup.png",4,4,14,1f,false);
+        death = new Animations("images/death.png",4,6,22,1f,false);
         movingR = false;
         movingL = false;
         velocity = new Vector3(100,0,0);
@@ -47,6 +54,9 @@ public class Female extends Character{
         //charStillL.update(dt);
         charWalkL.update(dt);
         getUp.update(dt);
+        if(dead) {
+            death.update(dt);
+        }
 
 
         if( charPos.dst2(targetLoc) >= 1) {
@@ -81,7 +91,10 @@ public class Female extends Character{
     }
 
     public void draw(SpriteBatch sb){
-        if (movingR) {
+        if (dead){
+            sb.draw(death.getFrame(),charPos.x-20,charPos.y,108,112);
+        }
+        else if (movingR) {
             sb.draw(charAnimation.getFrame(), charPos.x, charPos.y, 49, 98);
         //    System.out.println("moving right");
         } else if (movingL) {
@@ -93,10 +106,16 @@ public class Female extends Character{
         }
     }
 
+    public void setDead(boolean x){
+        dead = x;
+    }
     public Animations getGetUp() {
         return getUp;
     }
 
+    public Animations getDeath() {
+        return death;
+    }
 
     public Vector3 getTargetLoc(){
         return targetLoc;
