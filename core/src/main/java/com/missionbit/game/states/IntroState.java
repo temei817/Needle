@@ -13,8 +13,9 @@ public class IntroState extends State{
     private boolean boardAni, needleAni;
     private long needleStartTime,boardStartTime;
 
+
     public IntroState(GameStateManager gsm) {
-        super(gsm,"Music/Layers_Of_Fear_Soundtrack_The_End_feat_Penelopa_Willmann_Szynalik_.mp3");
+        super(gsm);
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
         //intro = new Texture("images/IntroA.png");
        // introAni = new Animations(new TextureRegion(intro),75,10f);
@@ -50,6 +51,7 @@ public class IntroState extends State{
             if(System.currentTimeMillis()-boardStartTime>5800){
                 introAni.update(dt);
                 boardAni = false;
+                MenuState.stopmusic();
                 gsm.set(new BasementState(gsm));
             }
         }
@@ -84,7 +86,7 @@ public class IntroState extends State{
 
     @Override
     public void dispose() {
-        music.stop();
-        music.dispose();
+        System.out.println("Disposing of IntroState");
+
     }
 }
