@@ -42,6 +42,9 @@ public class IntroState extends State{
         else if(!introAni.getDone()){
             introAni.update(dt);
         }
+        else{
+            gsm.set(new BasementState(gsm));
+        }
 
 
 
