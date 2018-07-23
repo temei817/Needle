@@ -51,8 +51,9 @@ public class IntroState extends State{
             if(System.currentTimeMillis()-boardStartTime>5800){
                 introAni.update(dt);
                 boardAni = false;
-                MenuState.stopmusic();
-                gsm.set(new BasementState(gsm));
+                //MenuState.stopmusic();
+                gsm.clear();
+                gsm.push(new BasementState(gsm));
             }
         }
 

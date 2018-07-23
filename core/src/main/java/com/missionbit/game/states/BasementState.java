@@ -211,6 +211,7 @@ public class BasementState extends State {
         bookshelf.dispose();
         music.stop();
         music.dispose();
+        System.out.println("dispose");
     }
 }
 

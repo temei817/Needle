@@ -64,7 +64,7 @@ public class MenuState extends State{
 
     }
 
-    public static void stopmusic(){
+    public void stopmusic(){
         music.stop();
         music.dispose();
     }

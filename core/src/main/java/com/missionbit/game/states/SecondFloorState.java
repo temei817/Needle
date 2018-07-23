@@ -81,7 +81,7 @@ public class SecondFloorState extends State{
             cam.unproject(touchPos);
 
             if(basementDoor.handleClick(touchPos)){
-                gsm.push(new BasementState(gsm));
+                gsm.set(new BasementState(gsm));
             }
             else if(labDoor.handleClick(touchPos)){
                 gsm.push(new KeypadState(gsm));
