@@ -14,7 +14,7 @@ public class BunUnlockState extends State{
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
         unlock = new Animations("images/unlock.png",4,5,19,3f,false);
         fullUnlock = new Animations("images/fullunlock.png",4,4,16,3f,false);
-        bunOneLock = new Animations("images/Bunnykeycut.png",3,4,12,3f,true);
+        bunOneLock = new Animations("images/Bunnykeycut.png",3,4,12,1f,true);
     }
 
     @Override

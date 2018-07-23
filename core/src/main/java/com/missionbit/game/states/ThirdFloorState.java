@@ -95,8 +95,10 @@ public class ThirdFloorState extends State{
                 if(gsm.getInventory().getKey() && gsm.getInventory().getBunKey()){
                     playFullUnlock = true;
                     gsm.push(new BunUnlockState(gsm));
-                    gsm.getInventory().getInv().add(bunInv);
-                    gsm.getInventory().setBun(true);
+                    if(!gsm.getInventory().getBun()) {
+                        gsm.getInventory().getInv().add(bunInv);
+                        gsm.getInventory().setBun(true);
+                    }
                 }
                 else{
                     playUnlock = true;
@@ -105,8 +107,10 @@ public class ThirdFloorState extends State{
                 }
             }
             else if(carKey.getButton().handleClick(touchPos)){
-                gsm.getInventory().setInv(carKeyInv);
-                gsm.getInventory().setCarKey(true);
+                if(!gsm.getInventory().getCarKey()) {
+                    gsm.getInventory().setInv(carKeyInv);
+                    gsm.getInventory().setCarKey(true);
+                }
             }
             else if(exitDoor.handleClick(touchPos)){
                 if(gsm.getInventory().getCarKey()){
