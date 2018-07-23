@@ -31,6 +31,13 @@ public class GameStateManager {
 
     }
 
+    public void clear(){
+        while(!states.empty()){
+            State tmp = states.pop();
+            tmp.dispose();
+        }
+    }
+
     public void update(float dt) {
         states.peek().update(dt);
     }

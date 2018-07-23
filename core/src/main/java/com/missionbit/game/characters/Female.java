@@ -83,13 +83,13 @@ public class Female extends Character{
     public void draw(SpriteBatch sb){
         if (movingR) {
             sb.draw(charAnimation.getFrame(), charPos.x, charPos.y, 49, 98);
-            System.out.println("moving right");
+        //    System.out.println("moving right");
         } else if (movingL) {
             sb.draw(charWalkL.getFrame(), charPos.x, charPos.y, 49, 98);
-            System.out.println("moving left");
+        //    System.out.println("moving left");
         } else if (!movingR && !movingL) {
             sb.draw(charStill.getFrame(), charPos.x, charPos.y, 50, 98);
-            System.out.println("still");
+        //    System.out.println("still");
         }
     }
 

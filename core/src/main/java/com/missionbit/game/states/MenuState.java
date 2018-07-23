@@ -14,7 +14,7 @@ public class MenuState extends State{
     private Texture tsp;
 
     public MenuState(GameStateManager gsm) {
-        super(gsm);
+        super(gsm, "Music/Layers_Of_Fear_Soundtrack_The_End_feat_Penelopa_Willmann_Szynalik_.mp3");
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
         bkgd = new Texture("images/titleImg.png");
         tsp = new Texture("images/TSP.png");
@@ -58,6 +58,14 @@ public class MenuState extends State{
     @Override
     public void dispose() {
        bkgd.dispose();
+       music.stop();
+       music.dispose();
+        System.out.println("Disposing of MenuState");
 
+    }
+
+    public void stopmusic(){
+        music.stop();
+        music.dispose();
     }
 }

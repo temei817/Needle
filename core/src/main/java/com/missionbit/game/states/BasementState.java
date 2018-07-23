@@ -48,7 +48,7 @@ public class BasementState extends State {
 
 
     public BasementState(GameStateManager gsm) {
-        super(gsm,"Music/The_Binding_of_Isaac_Rebirth_Soundtrack_The_Calm_HQ_.mp3");
+        super(gsm ,"Music/The_Binding_of_Isaac_Rebirth_Soundtrack_The_Calm_HQ_.mp3");
         cam.setToOrtho(false, Needle.WIDTH / 1.5f, Needle.HEIGHT / 1.5f);
         female = new Female(50, 50);
         bkgrd = new Texture("images/basement.png");
@@ -234,6 +234,7 @@ public class BasementState extends State {
         bookshelf.dispose();
         music.stop();
         music.dispose();
+        System.out.println("dispose");
     }
 }
 
