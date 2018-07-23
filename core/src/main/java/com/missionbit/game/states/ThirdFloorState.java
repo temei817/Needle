@@ -114,6 +114,7 @@ public class ThirdFloorState extends State{
             }
             else if(exitDoor.handleClick(touchPos)){
                 if(gsm.getInventory().getCarKey()){
+                    gsm.clear();
                      gsm.push(new GameOverState(gsm));
                 }
             }
