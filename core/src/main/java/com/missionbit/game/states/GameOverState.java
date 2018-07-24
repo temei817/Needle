@@ -157,6 +157,8 @@ public class GameOverState extends State {
             //bunny
             else if (!badEnding2.getDone()) {
                 sb.draw(badEnding2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+                badendmusic.stop();
+                bunnymusic.play();
             }
         }
 
