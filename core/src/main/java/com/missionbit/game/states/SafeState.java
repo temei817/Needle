@@ -2,6 +2,7 @@ package com.missionbit.game.states;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -29,6 +30,8 @@ public class SafeState extends State {
     private Boolean gotKey = false;
     private Interactables key;
     private Button back;
+    private Sound keysound;
+    private boolean keyplayed;
     public SafeState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
@@ -62,6 +65,8 @@ public class SafeState extends State {
         buttons.add(b);
         b = new Button(657, 91, 67, 44, "Check");
         buttons.add(b);
+
+        keysound = Gdx.audio.newSound(Gdx.files.internal("Music/keyy.wav"));
 
 
 
@@ -115,6 +120,7 @@ public class SafeState extends State {
                     gsm.pop();
                 }
                 else if(key.getButton().handleClick(touchPos)) {
+                    keysound.play();
                     if (!gsm.getInventory().getKey()){
                         gsm.getInventory().setKey(true);
                         gsm.getInventory().setInv(keyInv);

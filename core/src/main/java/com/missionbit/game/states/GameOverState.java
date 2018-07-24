@@ -9,7 +9,7 @@ import com.badlogic.gdx.audio.Music;
 
 public class GameOverState extends State {
     private boolean goodEnd, badEnd;
-    private Animations goodEnding, badEnding, badEnding2, goodEnding2, badEnding3;
+    private Animations goodEnding, badEnding, badEnding2, goodEnding2, badEnding3, goodEnding3;
     private Animations escape0, escape1, escape2, escape3;
     private Music goodendmusic;
     private Music badendmusic;
@@ -22,10 +22,11 @@ public class GameOverState extends State {
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
         goodEnding = new Animations("images/goodending.png",3,6,18,3f,false);
         goodEnding2 = new Animations("images/buncure.png",5,10,47,3f,false);
+        goodEnding3 = new Animations("images/Goodlast.png",2,6,11,1f,false);
         badEnding = new Animations("images/badending1.png",4,7,28,1f,false);
         badEnding2 = new Animations("images/badending2.png",2,6,11,2f,false);
         badEnding3 = new Animations("images/Badendng.png",3,7,20,3f,false);
-        escape0 = new Animations("images/escape0.png",3,6,17,5f,false);
+        escape0 = new Animations("images/escape0.png",3,6,17,2f,false);
         escape1 = new Animations("images/escape1.png",3,5,15,0.3f,false);
         escape2 = new Animations("images/escape2.png",3,8,24,0.6f,false);
         escape3 = new Animations("images/escape3.png",4,8,30,1f,false);
@@ -63,12 +64,15 @@ public class GameOverState extends State {
             else if (!escape2.getDone()) {
                 escape2.update(dt);
             }
-            else if (goodEnd && !goodEnding.getDone()) {
+            else if (!goodEnding.getDone()) {
                 goodEnding.update(dt);
             }
             //cure
-            else if (goodEnding.getDone() && goodEnd) {
+            else if (!goodEnding2.getDone()) {
                 goodEnding2.update(dt);
+            }
+            else if(!goodEnding3.getDone()){
+                goodEnding3.update(dt);
             }
 
         }
@@ -122,6 +126,9 @@ public class GameOverState extends State {
             else if (!goodEnding2.getDone()) {
                 sb.draw(goodEnding2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
             }
+            else if(!goodEnding3.getDone()){
+                sb.draw(goodEnding3.getFrame(),0,20,Needle.WIDTH,500);
+            }
         }
 
         if (badEnd) {
@@ -150,6 +157,8 @@ public class GameOverState extends State {
             //bunny
             else if (!badEnding2.getDone()) {
                 sb.draw(badEnding2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+                badendmusic.stop();
+                bunnymusic.play();
             }
         }
 

@@ -1,6 +1,7 @@
 package com.missionbit.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -16,8 +17,10 @@ public class DeadBodiesState extends State{
     private Animations deadAni;
     private Interactables bunKey;
     private Texture bunKeyInv;
-    private boolean showDebug = true;
+    private boolean showDebug = false;
     private ShapeRenderer debugRenderer = new ShapeRenderer();
+    private Sound keysound;
+    boolean Keyplayed;
 
     public DeadBodiesState(GameStateManager gsm) {
         super(gsm);
@@ -26,6 +29,7 @@ public class DeadBodiesState extends State{
         deadAni = new Animations(new TextureRegion(dead),8,1f);
         bunKey = new Interactables(new Texture("images/bunnykeyclose.png"),350,25,46,10);
         bunKeyInv = new Texture("images/bunkeyin.png");
+        keysound = Gdx.audio.newSound(Gdx.files.internal("Music/keyy.wav"));
     }
 
     @Override
@@ -43,6 +47,7 @@ public class DeadBodiesState extends State{
                     gsm.getInventory().setBunKey(true);
                     System.out.println("clicked");
                 }
+                keysound.play();
             }
 
             else {
