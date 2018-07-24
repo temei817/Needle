@@ -35,7 +35,7 @@ public class GameOverState extends State {
         //gsm.getInventory().setBun(true);
         bunnymusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Layers_Of_Fear_Soundtrack_The_End_feat_Penelopa_Willmann_Szynalik_.mp3"));
         explosion = Gdx.audio.newSound(Gdx.files.internal("Music/explosion.wav"));
-        explosion2 = Gdx.audio.newSound(Gdx.files.internal("Music/OWO.ogg"));
+        explosion2 = Gdx.audio.newSound(Gdx.files.internal("Music/explosion2.ogg"));
         carsound2 = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
     }
 
@@ -140,6 +140,7 @@ public class GameOverState extends State {
                 sb.draw(escape0.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
             } else if (!escape1.getDone()) {
                 sb.draw(escape1.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+                if(!)
             } else if (!escape2.getDone()) {
                 sb.draw(escape2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
                 if(/*escape2.getcurrentRunTime() < 0.2 && */!carsound2played){
