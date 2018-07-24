@@ -14,8 +14,8 @@ public class GameOverState extends State {
     private Music goodendmusic;
     private Music badendmusic;
     private Music bunnymusic;
-    private Sound explosion, explosion2,carsound2, carr;
-    private boolean explosionplayed, explosion2played, carsound2played, carrplayed ;
+    private Sound explosion, explosion2,carsound2, carsound1, carsound3, dying  ;
+    private boolean explosionplayed, explosion2played, carsound2played, carsound1played, carsound3played, dyingplayed;
 
     public GameOverState(GameStateManager gsm) {
         super(gsm);
@@ -27,7 +27,7 @@ public class GameOverState extends State {
         badEnding2 = new Animations("images/badending2.png",2,6,11,2f,false);
         badEnding3 = new Animations("images/Badendng.png",3,7,20,3f,false);
         escape0 = new Animations("images/escape0.png",3,6,17,2f,false);
-        escape1 = new Animations("images/escape1.png",3,5,15,0.3f,false);
+        escape1 = new Animations("images/escape1.png",3,5,15,0.5f,false);
         escape2 = new Animations("images/escape2.png",3,8,24,1f,false);
         escape3 = new Animations("images/escape3.png",4,8,30,1f,false);
         goodendmusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Hollow_Knight_OST_White_Palace.mp3"));
@@ -37,6 +37,9 @@ public class GameOverState extends State {
         explosion = Gdx.audio.newSound(Gdx.files.internal("Music/explosion.wav"));
         explosion2 = Gdx.audio.newSound(Gdx.files.internal("Music/explosion2.ogg"));
         carsound2 = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
+        carsound1 = Gdx.audio.newSound(Gdx.files.internal("Music/burnout.ogg"));
+        dying = Gdx.audio.newSound(Gdx.files.internal("Music/infected.ogg"));
+        carsound3 = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
     }
 
     @Override
@@ -140,9 +143,13 @@ public class GameOverState extends State {
                 sb.draw(escape0.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
             } else if (!escape1.getDone()) {
                 sb.draw(escape1.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
-                if(!)
+                if(!carsound1played){
+                    carsound1.play();
+                    carsound1played = true;
+                }
             } else if (!escape2.getDone()) {
                 sb.draw(escape2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+                carsound1.stop();
                 if(/*escape2.getcurrentRunTime() < 0.2 && */!carsound2played){
                     carsound2.play();
                     carsound2played = true;
@@ -152,19 +159,29 @@ public class GameOverState extends State {
             else if (!badEnding3.getDone()) {
                 sb.draw(badEnding3.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
                 carsound2.stop();
+                if(!dyingplayed && dying.play() <3){
+                    dying.play(0.5f,0.25f,0);
+                    dyingplayed = true;
+                }
             } else if (!escape3.getDone()) {
                 sb.draw(escape3.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+                if(!carsound3played){
+                    carsound3.play();
+                    carsound3played = true;
+                }
             }
             //crash
             else if (!badEnding.getDone()) {
                 sb.draw(badEnding.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
-                if(/*badEnding.getcurrentRunTime() > 1  && */!explosionplayed){
+                if(badEnding.getcurrentRunTime() > 1  && !explosionplayed){
                     explosion.play(1f);
                     explosionplayed = true;
+                    carsound3.stop();
                 }
                 if(badEnding.getcurrentRunTime() > 1 && !explosion2played){
                     explosion2played = true;
                     explosion2.play(1f);
+                    carsound3.stop();
                 }
 
             }
