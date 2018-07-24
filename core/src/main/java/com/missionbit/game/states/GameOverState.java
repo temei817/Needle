@@ -98,6 +98,8 @@ public class GameOverState extends State {
             //bunny
             else if (!badEnding2.getDone()) {
                 badEnding2.update(dt);
+                badendmusic.stop();
+                bunnymusic.play();
             }
         }
 
