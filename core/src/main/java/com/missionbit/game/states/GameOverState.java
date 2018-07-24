@@ -14,8 +14,8 @@ public class GameOverState extends State {
     private Music goodendmusic;
     private Music badendmusic;
     private Music bunnymusic;
-    private Sound explosion;
-    private boolean explosionplayed;
+    private Sound explosion, explosion2;
+    private boolean explosionplayed, explosion2played;
 
     public GameOverState(GameStateManager gsm) {
         super(gsm);
@@ -35,6 +35,7 @@ public class GameOverState extends State {
         //gsm.getInventory().setBun(true);
         bunnymusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Layers_Of_Fear_Soundtrack_The_End_feat_Penelopa_Willmann_Szynalik_.mp3"));
         explosion = Gdx.audio.newSound(Gdx.files.internal("Music/explosion.wav"));
+        explosion2 = Gdx.audio.newSound(Gdx.files.internal("Music/OWO.ogg"));
     }
 
     @Override
@@ -153,6 +154,10 @@ public class GameOverState extends State {
                 if(badEnding.getcurrentRunTime() > 1  && !explosionplayed){
                     explosion.play(1f);
                     explosionplayed = true;
+                }
+                if(badEnding.getcurrentRunTime() > 1 && !explosion2played){
+                    explosion2played = true;
+                    explosion2.play(1f);
                 }
 
             }
