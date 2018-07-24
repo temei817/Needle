@@ -30,7 +30,7 @@ public class BasementState extends State {
     private Texture bkgrd;
     private Button doorButton;
     private ShapeRenderer debugRenderer = new ShapeRenderer();
-    private boolean showDebug = true;
+    private boolean showDebug = false;
     private PolygonButton safeButton;
     private float[] safevertices = {776, 100, 777, 186, 796, 142, 796, 58};
     private Interactables hangingBody, bleedingBody, bookshelf, invButton;
@@ -52,13 +52,14 @@ public class BasementState extends State {
     public BasementState(GameStateManager gsm) {
         super(gsm ,"Music/The_Binding_of_Isaac_Rebirth_Soundtrack_The_Calm_HQ_.mp3");
         cam.setToOrtho(false, Needle.WIDTH / 1.5f, Needle.HEIGHT / 1.5f);
+
         female = new Female(50, 50);
         bkgrd = new Texture("images/basement.png");
         lockedAni = new Animations("images/LOCKED.png",3,4,11,3f,false);
 
         //interactables
         hangingBody = new Interactables(new Texture("images/Hanging.png"), 150, 175, 70, 130, 8, 1f);
-        bleedingBody = new Interactables(new Texture("images/Bleeding.png"), 220, 85, 362, 110, 8, 1f);
+        bleedingBody = new Interactables(new Texture("images/Bleeding.png"), 220, 85, 70, 110, 8, 1f);
         bookshelf = new Interactables("images/BOOKSHELF.png", 589, 115, 163, 169, 5,6,28, 2f);
         invButton = new Interactables(new Texture("images/Inventory.png"),10,20,40,40);
         doorButton = new Button(830,300,70,100,"door");
@@ -85,7 +86,6 @@ public class BasementState extends State {
     @Override
     protected void handleInput() {
 
-        //move char if player taps
         if (Gdx.input.justTouched()) {
             Vector3 touchPos = new Vector3();
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -93,13 +93,14 @@ public class BasementState extends State {
             System.out.println("Click" + touchPos.x + " " + touchPos.y);
             System.out.println(touchPos.x + ", " + touchPos.y);
 
+            //switch to inventory
             if(gsm.getInventory().handleInput()){
                 gsm.push(new InventoryState(gsm));
             }
             //switch to first person bookshelf if touched
             else if (bookshelf.getButton().handleClick(touchPos)) {
                 gsm.push(new BookshelfState(gsm));
-                sound.play();
+                //sound.play();
             }
             //switch to safe
             else if (safeButton.handleClick(touchPos)) {
@@ -107,6 +108,7 @@ public class BasementState extends State {
 
             }
             else if(doorButton.handleClick(touchPos)) {
+                //switch to second floor
                 if (gsm.getInventory().getKey()){
                     gsm.push(new SecondFloorState(gsm));
                  }
@@ -114,12 +116,15 @@ public class BasementState extends State {
                     locked = true;
                 }
             }
+            //switch to close up
             else if(bleedingBody.getButton().handleClick(touchPos)){
                 gsm.push(new DeadBodiesState(gsm));
             }
+            //switch to close up
             else if(hangingBody.getButton().handleClick(touchPos)){
                 gsm.push(new HangingState(gsm));
             }
+            //move char
             else {
                 female.setTargetLoc((int) touchPos.x, (int) touchPos.y);
             }
@@ -131,6 +136,8 @@ public class BasementState extends State {
     @Override
     public void update(float dt) {
         handleInput();
+
+        //update the animations
         female.update(dt, walls);
         hangingBody.update(dt);
         bleedingBody.update(dt);
@@ -154,6 +161,7 @@ public class BasementState extends State {
             }
         }
 
+        //update lock ani if door is touched
         if(locked){
             lockedAni.update(dt);
         }
@@ -161,8 +169,10 @@ public class BasementState extends State {
             locked = false;
         }
 
+        //update the inventory
         gsm.getInventory().update();
 
+        //update camera
         cam.update();
 
     }
@@ -179,8 +189,7 @@ public class BasementState extends State {
         //draw the interactables
         sb.draw(bookshelf.getFrame(), bookshelf.getXLoc(), bookshelf.getYLoc(), bookshelf.getWidth(), bookshelf.getHeight());
         sb.draw(hangingBody.getFrame(), hangingBody.getXLoc(), hangingBody.getYLoc(), hangingBody.getWidth(), hangingBody.getHeight());
-        sb.draw(bleedingBody.getFrame(), bleedingBody.getXLoc(), bleedingBody.getYLoc(), bleedingBody.getWidth(), bleedingBody.getHeight());
-        //gsm.getInventory().draw(sb);
+        sb.draw(bleedingBody.getFrame(), bleedingBody.getXLoc(), bleedingBody.getYLoc(), 362, 110);
 
         //draw the character
         if(!female.getGetUp().getDone()){
@@ -190,6 +199,7 @@ public class BasementState extends State {
             female.draw(sb);
         }
 
+        //locked animation
         if(locked && !lockedAni.getDone()){
             sb.draw(lockedAni.getFrame(),815,290);
         }
@@ -204,12 +214,12 @@ public class BasementState extends State {
 
         sb.end();
 
+        //draw debug lines
         if (showDebug) {
             debugRenderer.setProjectionMatrix(cam.combined);
             debugRenderer.begin(ShapeRenderer.ShapeType.Line);
             debugRenderer.setColor(1, 1, 1, 1);
             female.drawDebug(debugRenderer);
-            //bookshelfButton.drawDebug(debugRenderer);
             safeButton.drawDebug(debugRenderer);
             hangingBody.getButton().drawDebug(debugRenderer);
             bookshelf.getButton().drawDebug(debugRenderer);
@@ -222,6 +232,7 @@ public class BasementState extends State {
         }
         debugRenderer.end();
 
+        //draw the inventory
         gsm.getInventory().draw(sb);
 
 
