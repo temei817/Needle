@@ -17,7 +17,7 @@ public class DeadBodiesState extends State{
     private Animations deadAni;
     private Interactables bunKey;
     private Texture bunKeyInv;
-    private boolean showDebug = true;
+    private boolean showDebug = false;
     private ShapeRenderer debugRenderer = new ShapeRenderer();
     private Sound keysound;
     boolean Keyplayed;
