@@ -34,10 +34,10 @@ public class MenuState extends State{
             //gsm.set(new BasementState(gsm));
             gsm.push(new IntroState(gsm));
 
-            gsm.set(new BasementState(gsm));
+            //gsm.set(new BasementState(gsm));
             //gsm.push(new IntroState(gsm));
             //gsm.set(new BasementState(gsm));
-            gsm.push(new IntroState(gsm));
+            //gsm.push(new IntroState(gsm));
             //gsm.set(new KeypadState(gsm));
             //gsm.set(new SecondFloorState(gsm));
             //gsm.set(new SafeState(gsm));

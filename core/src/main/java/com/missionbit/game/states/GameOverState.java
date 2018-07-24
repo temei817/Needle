@@ -12,6 +12,7 @@ public class GameOverState extends State{
     private Animations escape0, escape1,escape2,escape3;
     private Music goodendmusic;
     private Music badendmusic;
+    private Music bunnymusic;
     public GameOverState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
@@ -26,6 +27,7 @@ public class GameOverState extends State{
         escape3 = new Animations("images/escape3.png",4,8,30,1f,false);
         goodendmusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Hollow_Knight_OST_White_Palace.mp3"));
         badendmusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Rain_World_Threat_Chimney_Canopy_Soundtrack_OST_.mp3"));
+        bunnymusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Layers_Of_Fear_Soundtrack_The_End_feat_Penelopa_Willmann_Szynalik_.mp3"));
     }
 
     @Override
@@ -73,6 +75,8 @@ public class GameOverState extends State{
         //bunny
         else if (badEnding.getDone() && badEnd) {
             badEnding2.update(dt);
+            badendmusic.stop();
+            bunnymusic.play();
         }
         //cure
         else if (goodEnding.getDone() && goodEnd) {
@@ -114,6 +118,7 @@ public class GameOverState extends State{
         //bunny
         else if (badEnding.getDone()) {
             sb.draw(badEnding2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+
         }
         //cure
         else if (goodEnd && goodEnding.getDone()) {
@@ -129,5 +134,6 @@ public class GameOverState extends State{
     public void dispose() {
         goodendmusic.dispose();
         badendmusic.dispose();
+        bunnymusic.dispose();
     }
 }
