@@ -82,7 +82,7 @@ public class BasementState extends State {
         Gdx.gl20.glGetIntegerv(GL20.GL_MAX_TEXTURE_SIZE, intBuffer);
         System.out.println(intBuffer.get());
 
-        pickupsound = Gdx.audio.newSound(Gdx.files.internal("Music/pickup.wav"));
+        pickupsound = Gdx.audio.newSound(Gdx.files.internal("Music/pickup.mp3"));
 
 
     }
