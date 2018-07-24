@@ -12,6 +12,7 @@ public class GameOverState extends State {
     private Animations escape0, escape1, escape2, escape3;
     private Music goodendmusic;
     private Music badendmusic;
+    private Music bunnymusic;
 
     public GameOverState(GameStateManager gsm) {
         super(gsm);
@@ -28,6 +29,7 @@ public class GameOverState extends State {
         goodendmusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Hollow_Knight_OST_White_Palace.mp3"));
         badendmusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Rain_World_Threat_Chimney_Canopy_Soundtrack_OST_.mp3"));
         //gsm.getInventory().setBun(true);
+        bunnymusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Layers_Of_Fear_Soundtrack_The_End_feat_Penelopa_Willmann_Szynalik_.mp3"));
     }
 
     @Override
@@ -78,8 +80,7 @@ public class GameOverState extends State {
             //infection
             else if (!badEnding3.getDone()) {
                 badEnding3.update(dt);
-            }
-            else if (!escape3.getDone()) {
+            } else if (!escape3.getDone()) {
                 escape3.update(dt);
             }
             //crash
@@ -100,7 +101,6 @@ public class GameOverState extends State {
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.setProjectionMatrix(cam.combined);
-
 
         if (goodEnd) {
             if (!escape0.getDone()) {
@@ -123,18 +123,15 @@ public class GameOverState extends State {
         if (badEnd) {
             if (!escape0.getDone()) {
                 sb.draw(escape0.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
-            }
-            else if (!escape1.getDone()) {
+            } else if (!escape1.getDone()) {
                 sb.draw(escape1.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
-            }
-            else if (!escape2.getDone()) {
+            } else if (!escape2.getDone()) {
                 sb.draw(escape2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
             }
             //infection
             else if (!badEnding3.getDone()) {
                 sb.draw(badEnding3.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
-            }
-            else if (!escape3.getDone()) {
+            } else if (!escape3.getDone()) {
                 sb.draw(escape3.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
             }
             //crash
@@ -147,7 +144,6 @@ public class GameOverState extends State {
             }
         }
 
-
         sb.end();
 
     }
@@ -156,5 +152,6 @@ public class GameOverState extends State {
     public void dispose() {
         goodendmusic.dispose();
         badendmusic.dispose();
+        bunnymusic.dispose();
     }
 }

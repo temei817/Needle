@@ -19,7 +19,7 @@ public class Inventory {
 
     public Inventory(){
         inv = new ArrayList<Texture>();
-        knife = new Texture("images/knife.png");
+        knife = new Texture("images/knifee.png");
         inv.add(knife);
         invButton = new Interactables(new Texture("images/Inventory.png"),10,20,40,40);
         cam = new OrthographicCamera();

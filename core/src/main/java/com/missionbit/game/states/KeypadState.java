@@ -76,7 +76,7 @@ public class KeypadState extends State {
                         if(Combo.equals(Answer)){
                             System.out.println("Unlocked");
                             Combo = "";
-                            gsm.set(new ThirdFloorState(gsm));
+                            gsm.push(new ThirdFloorState(gsm));
                         }
                         else{
                             Combo = "";
