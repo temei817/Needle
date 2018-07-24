@@ -15,7 +15,7 @@ public class InventoryState extends State{
 
     public InventoryState(GameStateManager gsm) {
         super(gsm);
-        //title = new Texture("inventorys.png");
+        title = new Texture("images/inventorys.png");
         loc=new int[gsm.getInventory().getInv().size()];
         for(int i=0;i<gsm.getInventory().getInv().size();i++){
             loc[i]= h;
@@ -41,7 +41,7 @@ public class InventoryState extends State{
     public void render(SpriteBatch sb) {
         sb.begin();
 
-        //sb.draw(title,200,350,350,350);
+        sb.draw(title,100,260,429,84);
         for(int x = 0; x<gsm.getInventory().getInv().size();x++) {
            sb.draw(gsm.getInventory().getInv().get(x),loc[x],50,135,135);
         }
