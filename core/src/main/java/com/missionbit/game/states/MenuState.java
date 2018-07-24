@@ -28,7 +28,7 @@ public class MenuState extends State {
             //BasementState basementstate = new BasementState(gsm);
             //gsm.set(basementstate);
             System.out.println(gsm);
-            //gsm.set(new BasementState(gsm));
+            gsm.set(new BasementState(gsm));
 
            // gsm.push(new IntroState(gsm));
 
@@ -38,7 +38,7 @@ public class MenuState extends State {
             //gsm.set(new SecondFloorState(gsm));
             //gsm.set(new SafeState(gsm));
             //gsm.set(new ThirdFloorState(gsm));
-            gsm.set(new GameOverState(gsm));
+            //gsm.set(new GameOverState(gsm));
             //gsm.set(new BunUnlockState(gsm));
 
         }

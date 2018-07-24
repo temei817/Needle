@@ -82,7 +82,7 @@ public class SecondFloorState extends State{
 
             //back to basement
             if(basementDoor.handleClick(touchPos)){
-                gsm.set(new BasementState(gsm));
+                gsm.pop();
             }
             //switch to keypad
             else if(labDoor.handleClick(touchPos)){
