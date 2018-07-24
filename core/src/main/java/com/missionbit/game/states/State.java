@@ -13,7 +13,7 @@ public abstract class State {
     protected Vector3 mouse;
     protected GameStateManager gsm;
     protected Music music;
-    protected Sound sound;
+    //protected Sound sound;
 
     public State(GameStateManager gsm,String musicpath){
         cam = new OrthographicCamera();
