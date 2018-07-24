@@ -35,6 +35,8 @@ public class DeadBodiesState extends State{
             Vector3 touchPos = new Vector3();
             touchPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
             cam.unproject(touchPos);
+
+            //put bunny key in inv if touched
             if(bunKey.getButton().handleClick(touchPos)){
                 if(!gsm.getInventory().getBunKey()) {
                     gsm.getInventory().setInv(bunKeyInv);
@@ -42,6 +44,7 @@ public class DeadBodiesState extends State{
                     System.out.println("clicked");
                 }
             }
+
             else {
                gsm.pop();
             }
@@ -63,9 +66,12 @@ public class DeadBodiesState extends State{
         sb.begin();
         sb.setProjectionMatrix(cam.combined);
         sb.draw(deadAni.getFrame(),100,0);
+
+        //draw bunny key if key isnt in inventory
         if(!gsm.getInventory().getBunKey()) {
             sb.draw(bunKey.getTexture(), bunKey.getXLoc(), bunKey.getYLoc(), bunKey.getWidth(), bunKey.getHeight());
         }
+
         sb.end();
 
         if (showDebug) {

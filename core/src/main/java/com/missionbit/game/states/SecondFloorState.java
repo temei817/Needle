@@ -32,7 +32,7 @@ public class SecondFloorState extends State{
     };
 
     private ArrayList<PolygonButton> walls;
-    private boolean showDebug = true;
+    private boolean showDebug = false;
     private PolygonButton basementDoor, labDoor;
     private float[] basementDoorVertices ={33.0f, 260.0f, 34.0f, 96.0f, 148.0f, 97.0f, 148.0f, 264.0f, 33.0f, 263.0f};
     private float[] labDoorVertices = {826.0f, 313.0f, 826.0f, 177.0f, 913.0f, 177.0f, 912.0f, 312.0f, 825.0f, 311.0f, };
@@ -49,12 +49,12 @@ public class SecondFloorState extends State{
     public SecondFloorState(GameStateManager gsm) {
         super(gsm/*,"Music/Pulso_Profundum_The_Binding_of_Isaac_Afterbirth_OST_.mp3"*/);
         cam.setToOrtho(false, Needle.WIDTH/1.5f, Needle.HEIGHT/1.5f);
+
         bkgd = new Texture("images/Secondfloor.png");
         table = new Texture("images/table.png");
         cureGone = new Texture("images/gone.png");
         cure = new Interactables(new Texture("images/cureA.png"),810,40,30,51);
         cureAni = new Animations("images/cure.png",5,11,55,5f,false);
-        //labStuffAni = new Animations(new TextureRegion(new Texture("images/lab.png")),34,1f);
         female = new Female(50, 50);
         labStuffAni = new Animations("images/lab.png", 4,9,34,5f,true);
 
@@ -80,19 +80,24 @@ public class SecondFloorState extends State{
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             cam.unproject(touchPos);
 
+            //back to basement
             if(basementDoor.handleClick(touchPos)){
                 gsm.set(new BasementState(gsm));
             }
+            //switch to keypad
             else if(labDoor.handleClick(touchPos)){
                 gsm.push(new KeypadState(gsm));
             }
+            //switch to inventory
             else if(gsm.getInventory().handleInput()){
                 gsm.push(new InventoryState(gsm));
             }
+            //stop timer if got cure
             else if(cure.getButton().handleClick(touchPos)){
                 gotCure = true;
                 gameStateManager.setStopTimer(true);
             }
+            //move char
             else{
                 female.setTargetLoc((int) touchPos.x, (int) touchPos.y);
             }
@@ -103,7 +108,12 @@ public class SecondFloorState extends State{
     @Override
     public void update(float dt) {
         handleInput();
+
+        //update animations
         female.update(dt,walls);
+        labStuffAni.update(dt);
+
+        //update cure animation if cure is touched
         if(gotCure && !cureAni.getDone()) {
             cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
             cureAni.update(dt);
@@ -126,12 +136,12 @@ public class SecondFloorState extends State{
         //check the timer
         if(!gameStateManager.getStopTimer()) {
             if (System.currentTimeMillis() - gameStateManager.getStartTime() > 180000) {
-                gsm.set(new MenuState(gsm));
+                female.setDead(true);
             }
         }
 
+        //update camera
         cam.update();
-        labStuffAni.update(dt);
 
     }
 
@@ -139,24 +149,31 @@ public class SecondFloorState extends State{
     public void render(SpriteBatch sb) {
         sb.begin();
         sb.setProjectionMatrix(cam.combined);
+
+        //draw the background
         sb.draw(bkgd,0,0,Needle.WIDTH,Needle.HEIGHT);
 
         //draw the character
         female.draw(sb);
 
+        //draw background stuff
         sb.draw(table,160,0,800,76);
         sb.draw(labStuffAni.getFrame(),50,0,900,475);
+
+        //draw the cure
         if(!gotCure) {
             sb.draw(cure.getTexture(), cure.getXLoc(), cure.getYLoc(), cure.getWidth(), cure.getHeight());
         }
+        //draw cure injection animation if cure is touched
         else if(gotCure && !cureAni.getDone()){
             sb.draw(cureAni.getFrame(),0,0,Needle.WIDTH,Needle.HEIGHT);
         }
+        //draw empty cure if cure animation is done
         else if(cureAni.getDone()) {
             sb.draw(cureGone, cure.getXLoc(), cure.getYLoc(), 40, 50);
         }
 
-        //timer
+        //display timer
         if(!gameStateManager.getStopTimer()) {
             font.setColor(Color.WHITE);
             font.getData().setScale(2, 2);
@@ -166,6 +183,7 @@ public class SecondFloorState extends State{
 
         sb.end();
 
+        //draw debug lines
         if (showDebug) {
             debugRenderer.setProjectionMatrix(cam.combined);
             debugRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -179,6 +197,7 @@ public class SecondFloorState extends State{
         }
         debugRenderer.end();
 
+        //draw inventory
         gsm.getInventory().draw(sb);
 
 

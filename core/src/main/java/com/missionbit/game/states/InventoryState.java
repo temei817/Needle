@@ -40,7 +40,7 @@ public class InventoryState extends State {
     public void render(SpriteBatch sb) {
         sb.begin();
 
-        sb.draw(title, 210, 300, 214, 42);
+        sb.draw(title, 210, 310, 214, 42);
         sb.draw(gsm.getInventory().getInv().get(0), 20, 10, 135, 135);
         for (int x = 1; x < gsm.getInventory().getInv().size(); x++) {
             sb.draw(gsm.getInventory().getInv().get(x), loc[x], 155, 135, 135);
