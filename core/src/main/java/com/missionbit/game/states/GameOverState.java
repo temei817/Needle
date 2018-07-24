@@ -16,15 +16,15 @@ public class GameOverState extends State {
     public GameOverState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
-        goodEnding = new Animations("images/goodending.png", 3, 6, 18, 3f, false);
-        goodEnding2 = new Animations("images/buncure.png", 5, 10, 47, 3f, false);
-        badEnding = new Animations("images/badending1.png", 4, 7, 28, 1f, false);
-        badEnding2 = new Animations("images/badending2.png", 2, 6, 11, 1f, false);
-        badEnding3 = new Animations("images/Badendng.png", 3, 7, 20, 1f, false);
-        escape0 = new Animations("images/escape0.png", 3, 6, 17, 1f, false);
-        escape1 = new Animations("images/escape1.png", 3, 5, 15, 1f, false);
-        escape2 = new Animations("images/escape2.png", 3, 6, 16, 0.3f, false);
-        escape3 = new Animations("images/escape3.png", 4, 8, 30, 1f, false);
+        goodEnding = new Animations("images/goodending.png",3,6,18,3f,false);
+        goodEnding2 = new Animations("images/buncure.png",5,10,47,3f,false);
+        badEnding = new Animations("images/badending1.png",4,7,28,1f,false);
+        badEnding2 = new Animations("images/badending2.png",2,6,11,1f,false);
+        badEnding3 = new Animations("images/Badendng.png",3,7,20,1f,false);
+        escape0 = new Animations("images/escape0.png",3,6,17,1f,false);
+        escape1 = new Animations("images/escape1.png",3,5,15,0.3f,false);
+        escape2 = new Animations("images/escape2.png",3,6,16,0.3f,false);
+        escape3 = new Animations("images/escape3.png",4,8,30,1f,false);
         goodendmusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Hollow_Knight_OST_White_Palace.mp3"));
         badendmusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Rain_World_Threat_Chimney_Canopy_Soundtrack_OST_.mp3"));
         //gsm.getInventory().setBun(true);
