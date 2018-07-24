@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.missionbit.game.Animations;
 import com.missionbit.game.Needle;
 
-public class MenuState extends State{
+public class MenuState extends State {
 
     private Texture bkgd;
     private Animations bkgdAni;
@@ -18,19 +18,22 @@ public class MenuState extends State{
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
         bkgd = new Texture("images/titleImg.png");
         tsp = new Texture("images/TSP.png");
-        //bkgdAni = new Animations(new TextureRegion(bkgd),10,1f);
-        bkgdAni = new Animations("images/titleImg.png",3,4, 10,1f,true);
+        bkgdAni = new Animations("images/titleImg.png", 3, 4, 10, 1f, true);
 
     }
 
     @Override
     protected void handleInput() {
-        if(Gdx.input.justTouched()){
+        if (Gdx.input.justTouched()) {
             //BasementState basementstate = new BasementState(gsm);
             //gsm.set(basementstate);
             System.out.println(gsm);
             //gsm.set(new BasementState(gsm));
+
            // gsm.push(new IntroState(gsm));
+
+            //gsm.push(new IntroState(gsm));
+
             //gsm.set(new KeypadState(gsm));
             //gsm.set(new SecondFloorState(gsm));
             //gsm.set(new SafeState(gsm));
@@ -50,21 +53,21 @@ public class MenuState extends State{
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-        sb.draw(bkgdAni.getFrame(),295,70, 400, 400);
-        sb.draw(tsp,110,-70);
+        sb.draw(bkgdAni.getFrame(), 295, 70, 400, 400);
+        sb.draw(tsp, 110, -70);
         sb.end();
     }
 
     @Override
     public void dispose() {
-       bkgd.dispose();
-       music.stop();
-       music.dispose();
+        bkgd.dispose();
+        music.stop();
+        music.dispose();
         System.out.println("Disposing of MenuState");
 
     }
 
-    public void stopmusic(){
+    public void stopmusic() {
         music.stop();
         music.dispose();
     }
