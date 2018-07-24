@@ -25,7 +25,7 @@ public class GameOverState extends State {
         badEnding = new Animations("images/badending1.png",4,7,28,1f,false);
         badEnding2 = new Animations("images/badending2.png",2,6,11,2f,false);
         badEnding3 = new Animations("images/Badendng.png",3,7,20,3f,false);
-        escape0 = new Animations("images/escape0.png",3,6,17,1f,false);
+        escape0 = new Animations("images/escape0.png",3,6,17,5f,false);
         escape1 = new Animations("images/escape1.png",3,5,15,0.3f,false);
         escape2 = new Animations("images/escape2.png",3,8,24,0.6f,false);
         escape3 = new Animations("images/escape3.png",4,8,30,1f,false);
