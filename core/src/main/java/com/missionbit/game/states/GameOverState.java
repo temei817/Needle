@@ -6,12 +6,14 @@ import com.missionbit.game.Animations;
 import com.missionbit.game.Needle;
 import com.badlogic.gdx.audio.Music;
 
-public class GameOverState extends State{
-    private boolean goodEnd,badEnd;
-    private Animations goodEnding,badEnding,badEnding2,goodEnding2,badEnding3;
-    private Animations escape0, escape1,escape2,escape3;
+public class GameOverState extends State {
+    private boolean goodEnd, badEnd;
+    private Animations goodEnding, badEnding, badEnding2, goodEnding2, badEnding3;
+    private Animations escape0, escape1, escape2, escape3;
     private Music goodendmusic;
     private Music badendmusic;
+    private Music bunnymusic;
+
     public GameOverState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
@@ -26,15 +28,16 @@ public class GameOverState extends State{
         escape3 = new Animations("images/escape3.png",4,8,30,1f,false);
         goodendmusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Hollow_Knight_OST_White_Palace.mp3"));
         badendmusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Rain_World_Threat_Chimney_Canopy_Soundtrack_OST_.mp3"));
+        //gsm.getInventory().setBun(true);
+        bunnymusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Layers_Of_Fear_Soundtrack_The_End_feat_Penelopa_Willmann_Szynalik_.mp3"));
     }
 
     @Override
     protected void handleInput() {
-        if(gsm.getInventory().getBun()){
+        if (gsm.getInventory().getBun()) {
             goodEnd = true;
             goodendmusic.play();
-        }
-        else{
+        } else {
             badEnd = true;
             badendmusic.play();
         }
@@ -45,38 +48,49 @@ public class GameOverState extends State{
     public void update(float dt) {
         handleInput();
 
-        if(!escape0.getDone()){
-            escape0.update(dt);
-        }
-        else if(!escape1.getDone()){
-            escape1.update(dt);
-        }
-        else if(!escape2.getDone()){
-            escape2.update(dt);
-        }
-        //infection
-        else if (badEnd && !badEnding3.getDone()) {
-            badEnding3.update(dt);
-        }
-        else if (goodEnd && !goodEnding.getDone()) {
-            goodEnding.update(dt);
+        if (goodEnd) {
 
+            if (!escape0.getDone()) {
+                escape0.update(dt);
+            }
+            else if (!escape1.getDone()) {
+                escape1.update(dt);
+            }
+            else if (!escape2.getDone()) {
+                escape2.update(dt);
+            }
+            else if (goodEnd && !goodEnding.getDone()) {
+                goodEnding.update(dt);
+            }
+            //cure
+            else if (goodEnding.getDone() && goodEnd) {
+                goodEnding2.update(dt);
+            }
 
         }
-        else if(!escape3.getDone()){
-            escape3.update(dt);
-        }
-        //crash
-        else if (badEnd && !badEnding.getDone()) {
-            badEnding.update(dt);
-        }
-        //bunny
-        else if (badEnding.getDone() && badEnd) {
-            badEnding2.update(dt);
-        }
-        //cure
-        else if (goodEnding.getDone() && goodEnd) {
-            goodEnding2.update(dt);
+
+        if (badEnd) {
+            if (!escape0.getDone()) {
+                escape0.update(dt);
+            } else if (!escape1.getDone()) {
+                escape1.update(dt);
+            } else if (!escape2.getDone()) {
+                escape2.update(dt);
+            }
+            //infection
+            else if (!badEnding3.getDone()) {
+                badEnding3.update(dt);
+            } else if (!escape3.getDone()) {
+                escape3.update(dt);
+            }
+            //crash
+            else if (!badEnding.getDone()) {
+                badEnding.update(dt);
+            }
+            //bunny
+            else if (!badEnding2.getDone()) {
+                badEnding2.update(dt);
+            }
         }
 
         cam.update();
@@ -88,38 +102,47 @@ public class GameOverState extends State{
         sb.begin();
         sb.setProjectionMatrix(cam.combined);
 
-        if (!escape0.getDone()){
-            sb.draw(escape0.getFrame(),0,0,Needle.WIDTH,Needle.HEIGHT);
-        }
-        else if(!escape1.getDone()){
-            sb.draw(escape1.getFrame(),0,0,Needle.WIDTH,Needle.HEIGHT);
-        }
-        else if(!escape2.getDone()){
-            sb.draw(escape2.getFrame(),0,0,Needle.WIDTH,Needle.HEIGHT);
-        }
-        //infection
-        else if (badEnd && !badEnding3.getDone()) {
-            sb.draw(badEnding3.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
-        }
-        else if (goodEnd && !goodEnding.getDone()) {
-            sb.draw(goodEnding.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
-        }
-        else if(!escape3.getDone()){
-            sb.draw(escape3.getFrame(),0,0,Needle.WIDTH,Needle.HEIGHT);
-        }
-        //crash
-        else if (badEnd && !badEnding.getDone()) {
-            sb.draw(badEnding.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
-        }
-        //bunny
-        else if (badEnding.getDone()) {
-            sb.draw(badEnding2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
-        }
-        //cure
-        else if (goodEnd && goodEnding.getDone()) {
-            sb.draw(goodEnding2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+        if (goodEnd) {
+            if (!escape0.getDone()) {
+                sb.draw(escape0.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+            } else if (!escape1.getDone()) {
+                sb.draw(escape1.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+            } else if (!escape2.getDone()) {
+                sb.draw(escape2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+            }
+            //GOOD END
+            else if (!goodEnding.getDone()) {
+                sb.draw(goodEnding.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+            }
+            //cure
+            else if (!goodEnding2.getDone()) {
+                sb.draw(goodEnding2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+            }
         }
 
+        if (badEnd) {
+            if (!escape0.getDone()) {
+                sb.draw(escape0.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+            } else if (!escape1.getDone()) {
+                sb.draw(escape1.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+            } else if (!escape2.getDone()) {
+                sb.draw(escape2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+            }
+            //infection
+            else if (!badEnding3.getDone()) {
+                sb.draw(badEnding3.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+            } else if (!escape3.getDone()) {
+                sb.draw(escape3.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+            }
+            //crash
+            else if (!badEnding.getDone()) {
+                sb.draw(badEnding.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+            }
+            //bunny
+            else if (!badEnding2.getDone()) {
+                sb.draw(badEnding2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+            }
+        }
 
         sb.end();
 
@@ -129,5 +152,6 @@ public class GameOverState extends State{
     public void dispose() {
         goodendmusic.dispose();
         badendmusic.dispose();
+        bunnymusic.dispose();
     }
 }

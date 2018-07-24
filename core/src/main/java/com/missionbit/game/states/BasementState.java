@@ -1,6 +1,7 @@
 package com.missionbit.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -33,6 +34,7 @@ public class BasementState extends State {
     private PolygonButton safeButton;
     private float[] safevertices = {776, 100, 777, 186, 796, 142, 796, 58};
     private Interactables hangingBody, bleedingBody, bookshelf, invButton;
+    private Sound sound;
     private float[][] wall = new float[][]{
             {110.0f, 315.0f, 111.0f, 121.0f, 769.0f, 121.0f, 771.0f, 318.0f, 109.0f, 317.0f, },
             {769.0f, 315.0f, 825.0f, 348.0f, 826.0f, 188.0f, 859.0f, 85.0f, 812.0f, 27.0f, 769.0f, 122.0f, },
@@ -97,14 +99,16 @@ public class BasementState extends State {
             //switch to first person bookshelf if touched
             else if (bookshelf.getButton().handleClick(touchPos)) {
                 gsm.push(new BookshelfState(gsm));
+                sound.play();
             }
             //switch to safe
             else if (safeButton.handleClick(touchPos)) {
                 gsm.push(new SafeState(gsm));
+
             }
             else if(doorButton.handleClick(touchPos)) {
                 if (gsm.getInventory().getKey()){
-                    gsm.set(new SecondFloorState(gsm));
+                    gsm.push(new SecondFloorState(gsm));
                  }
                  else{
                     locked = true;

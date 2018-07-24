@@ -112,7 +112,6 @@ public class SafeState extends State {
             }
             if(open) {
                 if (back.handleClick(touchPos)) {
-                    //gotKey = true;
                     gsm.pop();
                 }
                 else if(key.getButton().handleClick(touchPos)) {
@@ -123,9 +122,6 @@ public class SafeState extends State {
                 }
 
             }
-            /*if(){
-
-            }*/
 
         }
     }

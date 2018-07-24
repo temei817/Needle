@@ -7,26 +7,25 @@ import com.missionbit.game.Interactables;
 
 import java.lang.reflect.Array;
 
-public class InventoryState extends State{
+public class InventoryState extends State {
 
-    private int h = 30;
-    private int [] loc;
+    private int h = 20;
+    private int[] loc;
     private Texture title;
 
     public InventoryState(GameStateManager gsm) {
         super(gsm);
-        //title = new Texture("inventorys.png");
-        loc=new int[gsm.getInventory().getInv().size()];
-        for(int i=0;i<gsm.getInventory().getInv().size();i++){
-            loc[i]= h;
-            h+=155;
-
+        title = new Texture("images/inventorys.png");
+        loc = new int[gsm.getInventory().getInv().size()];
+        for (int i = 1; i < gsm.getInventory().getInv().size(); i++) {
+            loc[i] = h;
+            h += 155;
         }
     }
 
     @Override
     protected void handleInput() {
-        if(Gdx.input.justTouched()){
+        if (Gdx.input.justTouched()) {
             gsm.pop();
         }
 
@@ -41,9 +40,10 @@ public class InventoryState extends State{
     public void render(SpriteBatch sb) {
         sb.begin();
 
-        //sb.draw(title,200,350,350,350);
-        for(int x = 0; x<gsm.getInventory().getInv().size();x++) {
-           sb.draw(gsm.getInventory().getInv().get(x),loc[x],50,135,135);
+        sb.draw(title, 210, 300, 214, 42);
+        sb.draw(gsm.getInventory().getInv().get(0), 20, 10, 135, 135);
+        for (int x = 1; x < gsm.getInventory().getInv().size(); x++) {
+            sb.draw(gsm.getInventory().getInv().get(x), loc[x], 155, 135, 135);
         }
 
         sb.end();

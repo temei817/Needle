@@ -15,9 +15,12 @@ public class Inventory {
     private ArrayList<Texture> inv;
     private Interactables invButton;
     private OrthographicCamera cam;
+    private Texture knife;
 
     public Inventory(){
         inv = new ArrayList<Texture>();
+        knife = new Texture("images/knifee.png");
+        inv.add(knife);
         invButton = new Interactables(new Texture("images/Inventory.png"),10,20,40,40);
         cam = new OrthographicCamera();
         cam.setToOrtho(false, Needle.WIDTH / 1.5f, Needle.HEIGHT / 1.5f);
