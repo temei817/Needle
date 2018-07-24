@@ -8,13 +8,14 @@ import com.missionbit.game.Needle;
 import com.badlogic.gdx.audio.Music;
 
 public class GameOverState extends State {
-    private boolean goodEnd, badEnd;
+    private boolean goodEnd, badEnd, deadEnd;
     private Animations goodEnding, badEnding, badEnding2, goodEnding2, badEnding3, goodEnding3;
     private Animations escape0, escape1, escape2, escape3;
+    private Animations deadLine;
     private Music goodendmusic;
     private Music badendmusic;
     private Music bunnymusic;
-    private Sound explosion, explosion2;
+    private Sound explosion, explosion2, flatline;
     private boolean explosionplayed, explosion2played;
 
     public GameOverState(GameStateManager gsm) {
@@ -30,12 +31,15 @@ public class GameOverState extends State {
         escape1 = new Animations("images/escape1.png",3,5,15,0.6f,false);
         escape2 = new Animations("images/escape2.png",3,8,24,0.6f,false);
         escape3 = new Animations("images/escape3.png",4,8,30,1f,false);
+        deadLine = new Animations("images/DEADLINE.png",3,6,16,1f,false);
         goodendmusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Hollow_Knight_OST_White_Palace.mp3"));
         badendmusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Rain_World_Threat_Chimney_Canopy_Soundtrack_OST_.mp3"));
         //gsm.getInventory().setBun(true);
+        //gsm.getInventory().setCarKey(true);
         bunnymusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Layers_Of_Fear_Soundtrack_The_End_feat_Penelopa_Willmann_Szynalik_.mp3"));
         explosion = Gdx.audio.newSound(Gdx.files.internal("Music/explosion.wav"));
         explosion2 = Gdx.audio.newSound(Gdx.files.internal("Music/OWO.ogg"));
+        flatline = Gdx.audio.newSound(Gdx.files.internal("flatline.mp3"));
     }
 
     @Override
@@ -43,9 +47,18 @@ public class GameOverState extends State {
         if (gsm.getInventory().getBun()) {
             goodEnd = true;
             goodendmusic.play();
-        } else {
+        } else if(gsm.getInventory().getCarKey() && !gsm.getInventory().getBunKey()){
             badEnd = true;
             badendmusic.play();
+        }
+        else{
+            deadEnd = true;
+        }
+
+        if(Gdx.input.justTouched()){
+            if(deadEnd && deadLine.getDone()){
+                gsm.set(new BasementState(gsm));
+            }
         }
 
     }
@@ -102,6 +115,10 @@ public class GameOverState extends State {
                 badendmusic.stop();
                 bunnymusic.play();
             }
+        }
+
+        if(deadEnd){
+            deadLine.update(dt);
         }
 
         cam.update();
@@ -167,6 +184,10 @@ public class GameOverState extends State {
                 badendmusic.stop();
                 bunnymusic.play();
             }
+        }
+
+        if(deadEnd){
+            sb.draw(deadLine.getFrame(),0,0,Needle.WIDTH,Needle.HEIGHT);
         }
 
         sb.end();
