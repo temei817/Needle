@@ -13,6 +13,7 @@ public class Animations{
     int frameCount; //number of frames in our animation
     int frame; //the current frame we're in
     private boolean looping,done;
+    float currentRunTime = 0;
     public Animations(String path, int cols, int rows, int framecount, float cycleTime, boolean looping){
         frames = new Array<TextureRegion>();
         Texture Sheet = new Texture(Gdx.files.internal(path));
@@ -65,6 +66,7 @@ public class Animations{
                 done = true;
             }
         }
+        currentRunTime += dt;
 
     }
 
@@ -74,6 +76,13 @@ public class Animations{
 
     public TextureRegion getFrame(){
         return frames.get(frame);
+    }
+
+    public float getCurrentFrameTime(){
+        return currentFrameTime;
+    }
+    public float getcurrentRunTime(){
+        return currentRunTime;
     }
 
 }

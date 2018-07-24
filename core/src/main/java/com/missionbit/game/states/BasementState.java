@@ -20,6 +20,7 @@ import com.missionbit.game.Needle;
 import com.missionbit.game.PolygonButton;
 import com.missionbit.game.characters.Female;
 
+
 import java.nio.IntBuffer;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -80,6 +81,9 @@ public class BasementState extends State {
         IntBuffer intBuffer = BufferUtils.newIntBuffer(16);
         Gdx.gl20.glGetIntegerv(GL20.GL_MAX_TEXTURE_SIZE, intBuffer);
         System.out.println(intBuffer.get());
+
+        sound = Gdx.audio.newSound(Gdx.files.internal("Music/gamesound.wav"));
+
 
     }
 

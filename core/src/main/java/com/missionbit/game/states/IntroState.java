@@ -1,5 +1,7 @@
 package com.missionbit.game.states;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,6 +14,8 @@ public class IntroState extends State{
     private Animations ortniAni;
     private boolean boardAni, needleAni;
     private long needleStartTime,boardStartTime;
+    private Sound splatter, stamp;
+    private boolean splatterplayed,stampplayed;
 
 
     public IntroState(GameStateManager gsm) {
@@ -26,6 +30,9 @@ public class IntroState extends State{
         needleAni = true;
         boardAni=false;
         needleStartTime = System.currentTimeMillis();
+        splatter = Gdx.audio.newSound(Gdx.files.internal("Music/splatter.wav"));
+        stamp = Gdx.audio.newSound(Gdx.files.internal("Music/Stamp.wav"));
+
 
     }
 
@@ -62,6 +69,19 @@ public class IntroState extends State{
         }
         else if(!introAni.getDone()) {
             sb.draw(introAni.getFrame(), 175, 0, 600, 600);
+
+            System.out.println(introAni.getcurrentRunTime());
+            if(introAni.getcurrentRunTime() > 1.55 && !stampplayed){
+                stampplayed = true;
+                stamp.play(1f);
+                System.out.println("playing sound");
+            }
+            if(introAni.getcurrentRunTime() > 2 && !splatterplayed){
+                splatterplayed = true;
+                splatter.play(1f);
+
+
+            }
         }
         //System.out.println(introAni.getFrame());
         //System.out.println(introAni.getFrame().getRegionHeight() + ""+introAni.getFrame().getRegionWidth());
