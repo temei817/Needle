@@ -14,9 +14,9 @@ public class GameOverState extends State {
     private Animations deadLine;
     private Music goodendmusic;
     private Music badendmusic;
-    private Music bunnymusic;
+    private Music bunnymusic, flatline;
 
-    private Sound explosion, explosion2,carsound2, carsound1, carsound3, dying, carkeysound, flatline, carsound2good, carsound3good, carkeysound2;
+    private Sound explosion, explosion2,carsound2, carsound1, carsound3, dying, carkeysound, carsound2good, carsound3good, carkeysound2;
     private boolean explosionplayed, explosion2played, carsound2played, carsound1played, carsound3played, dyingplayed, carkeysoundplayed, flatlineplayed, carsound2goodplayed, carsound3goodplayed, carkeysound2played;
 
 
@@ -42,7 +42,7 @@ public class GameOverState extends State {
         //gsm.getInventory().setCarKey(true);
         bunnymusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Layers_Of_Fear_Soundtrack_The_End_feat_Penelopa_Willmann_Szynalik_.mp3"));
         explosion = Gdx.audio.newSound(Gdx.files.internal("Music/explosion.wav"));
-        flatline = Gdx.audio.newSound(Gdx.files.internal("flatline.mp3"));
+        flatline = Gdx.audio.newMusic(Gdx.files.internal("Music/flatline.wav"));
         explosion2 = Gdx.audio.newSound(Gdx.files.internal("Music/explosion2.ogg"));
         carsound2 = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
         carsound1 = Gdx.audio.newSound(Gdx.files.internal("Music/burnout.ogg"));
@@ -77,6 +77,8 @@ public class GameOverState extends State {
         if(Gdx.input.justTouched()){
             if(deadEnd && deadLine.getDone()){
                 gsm.set(new BasementState(gsm));
+                flatline.stop();
+                flatline.dispose();
             }
         }
 
@@ -251,8 +253,9 @@ public class GameOverState extends State {
 
         if(deadEnd){
             sb.draw(deadLine.getFrame(),0,0,Needle.WIDTH,Needle.HEIGHT);
-            if(!flatlineplayed){
+            if(/*deadLine.getcurrentRunTime() < 1 && */!flatlineplayed){
                 flatline.play();
+                flatline.setPosition(4f);
             flatlineplayed = true;
             }
         }
