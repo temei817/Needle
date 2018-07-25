@@ -42,7 +42,7 @@ public class GameOverState extends State {
         //gsm.getInventory().setCarKey(true);
         bunnymusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Layers_Of_Fear_Soundtrack_The_End_feat_Penelopa_Willmann_Szynalik_.mp3"));
         explosion = Gdx.audio.newSound(Gdx.files.internal("Music/explosion.wav"));
-        flatline = Gdx.audio.newSound(Gdx.files.internal("flatlinee.wav"));
+        //flatline = Gdx.audio.newSound(Gdx.files.internal("flatlinee.wav"));
         explosion2 = Gdx.audio.newSound(Gdx.files.internal("Music/explosion2.ogg"));
         carsound2 = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
         carsound1 = Gdx.audio.newSound(Gdx.files.internal("Music/burnout.ogg"));
@@ -192,37 +192,37 @@ public class GameOverState extends State {
 
             } else if (!escape1.getDone()) {
                 sb.draw(escape1.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
-                /*if(!carsound1played){
+                if(!carsound1played){
                     carsound1.play();
                     carsound1played = true;
-                }*/
+                }
             } else if (!escape2.getDone()) {
                 sb.draw(escape2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
                 carsound1.stop();
-                /*if(!carsound2played){
+                if(!carsound2played){
                     carsound2.play();
                     carsound2played = true;
-                } */
+                }
             }
             //infection
             else if (!badEnding3.getDone()) {
                 sb.draw(badEnding3.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
                 carsound2.stop();
-               /* if(!dyingplayed && dying.play() <3){
+                if(!dyingplayed){
                     dying.play(0.5f,0.25f,0);
                     dyingplayed = true;
-                }*/
+                }
             } else if (!escape3.getDone()) {
                 sb.draw(escape3.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
-               /* if(!carsound3played){
+                if(!carsound3played){
                     carsound3.play();
                     carsound3played = true;
-                }*/
+                }
             }
             //crash
             else if (!badEnding.getDone()) {
                 sb.draw(badEnding.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
-               /* if(badEnding.getcurrentRunTime() > 1  && !explosionplayed){
+                if(badEnding.getcurrentRunTime() > 1  && !explosionplayed){
                     explosion.play(1f);
                     explosionplayed = true;
                     carsound3.stop();
@@ -231,7 +231,7 @@ public class GameOverState extends State {
                     explosion2played = true;
                     explosion2.play(1f);
                     carsound3.stop();
-                }*/
+                }
 
             }
             //bunny
