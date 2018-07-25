@@ -16,8 +16,8 @@ public class GameOverState extends State {
     private Music badendmusic;
     private Music bunnymusic;
 
-    private Sound explosion, explosion2,carsound2, carsound1, carsound3, dying, carkeysound, flatline;
-    private boolean explosionplayed, explosion2played, carsound2played, carsound1played, carsound3played, dyingplayed, carkeysoundplayed, flatlineplayed;
+    private Sound explosion, explosion2,carsound2, carsound1, carsound3, dying, carkeysound, flatline, carsound2good, carsound3good;
+    private boolean explosionplayed, explosion2played, carsound2played, carsound1played, carsound3played, dyingplayed, carkeysoundplayed, flatlineplayed, carsound2goodplayed, carsound3goodplayed;
 
 
 
@@ -42,13 +42,15 @@ public class GameOverState extends State {
         //gsm.getInventory().setCarKey(true);
         bunnymusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Layers_Of_Fear_Soundtrack_The_End_feat_Penelopa_Willmann_Szynalik_.mp3"));
         explosion = Gdx.audio.newSound(Gdx.files.internal("Music/explosion.wav"));
-        //flatline = Gdx.audio.newSound(Gdx.files.internal("flatlinee.wav"));
+        flatline = Gdx.audio.newSound(Gdx.files.internal("flatlinee.wav"));
         explosion2 = Gdx.audio.newSound(Gdx.files.internal("Music/explosion2.ogg"));
         carsound2 = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
         carsound1 = Gdx.audio.newSound(Gdx.files.internal("Music/burnout.ogg"));
         dying = Gdx.audio.newSound(Gdx.files.internal("Music/infected.ogg"));
         carsound3 = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
         carkeysound = Gdx.audio.newSound(Gdx.files.internal("Music/carkeys.mp3"));
+        carsound2good = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
+        carsound3good = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
     }
 
     @Override
@@ -158,17 +160,29 @@ public class GameOverState extends State {
  //               }
             } else if (!escape2.getDone()) {
                 sb.draw(escape2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+                if(!carsound2goodplayed){
+                    carsound2good.play();
+                    carsound2goodplayed = true;
+                }
             }
             //GOOD END
             else if (!goodEnding.getDone()) {
                 sb.draw(goodEnding.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+                carsound2good.stop();
+                carsound2good.dispose();
             }
             //cure
             else if (!goodEnding2.getDone()) {
                 sb.draw(goodEnding2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+
+
             }
             else if(goodEnding2.getDone()){
                 sb.draw(goodEnding3.getFrame(),0,20,Needle.WIDTH,500);
+                if(!carsound3goodplayed){
+                   carsound3good.play();
+                   carsound3goodplayed = true;
+                }
             }
         }
 
