@@ -66,9 +66,9 @@ public class GameOverState extends State {
                 badendmusic.stop();
                 badendmusic.dispose();
             }
-            /*else{
+            else{
                 badendmusic.play();
-            }*/
+            }
         }
         else{
             deadEnd = true;

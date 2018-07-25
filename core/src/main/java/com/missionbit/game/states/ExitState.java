@@ -3,7 +3,7 @@ package com.missionbit.game.states;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class ExitState extends State{
+public class ExitState extends State {
     private Texture Exit;
 
     public ExitState(GameStateManager gsm) {
@@ -12,7 +12,7 @@ public class ExitState extends State{
 
     @Override
     protected void handleInput() {
-        
+
     }
 
     @Override
