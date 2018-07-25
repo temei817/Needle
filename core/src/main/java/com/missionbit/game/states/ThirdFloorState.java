@@ -168,6 +168,9 @@ public class ThirdFloorState extends State{
         if (!gameStateManager.getStopTimer()){
             if (System.currentTimeMillis() - gameStateManager.getStartTime() > 180000) {
                 female.setDead(true);
+                if(female.getDeath().getDone()){
+                    gsm.push(new GameOverState(gsm));
+                }
             }
         }
 

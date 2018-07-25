@@ -79,6 +79,10 @@ public class GameOverState extends State {
                 gsm.set(new BasementState(gsm));
                 flatline.stop();
                 flatline.dispose();
+                gsm.getInventory().remove();
+                gsm.clear();
+                gsm.push(new BasementState(gsm));
+
             }
         }
 
