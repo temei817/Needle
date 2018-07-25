@@ -8,33 +8,41 @@ import com.missionbit.game.Needle;
 import com.badlogic.gdx.audio.Music;
 
 public class GameOverState extends State {
-    private boolean goodEnd, badEnd;
+    private boolean goodEnd, badEnd, deadEnd;
     private Animations goodEnding, badEnding, badEnding2, goodEnding2, badEnding3, goodEnding3;
     private Animations escape0, escape1, escape2, escape3;
+    private Animations deadLine;
     private Music goodendmusic;
     private Music badendmusic;
     private Music bunnymusic;
-    private Sound explosion, explosion2,carsound2, carsound1, carsound3, dying, carkeysound ;
+
+    private Sound explosion, explosion2,carsound2, carsound1, carsound3, dying, carkeysound, flatline;
     private boolean explosionplayed, explosion2played, carsound2played, carsound1played, carsound3played, dyingplayed, carkeysoundplayed;
+
+
+
 
     public GameOverState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
         goodEnding = new Animations("images/goodending.png",3,6,18,3f,false);
         goodEnding2 = new Animations("images/buncure.png",5,10,47,3f,false);
-        goodEnding3 = new Animations("images/Goodlast.png",2,6,11,1f,false);
+        goodEnding3 = new Animations("images/Goodlast.png",2,6,12,1f,false);
         badEnding = new Animations("images/badending1.png",4,7,28,1f,false);
         badEnding2 = new Animations("images/badending2.png",2,6,11,2f,false);
         badEnding3 = new Animations("images/Badendng.png",3,7,20,3f,false);
-        escape0 = new Animations("images/escape0.png",3,6,17,2f,false);
-        escape1 = new Animations("images/escape1.png",3,5,15,0.5f,false);
-        escape2 = new Animations("images/escape2.png",3,8,24,1f,false);
+        escape0 = new Animations("images/escape0.png",3,6,17,3f,false);
+        escape1 = new Animations("images/escape1.png",3,5,15,0.6f,false);
+        escape2 = new Animations("images/escape2.png",3,8,24,0.6f,false);
         escape3 = new Animations("images/escape3.png",4,8,30,1f,false);
+        deadLine = new Animations("images/DEADLINE.png",3,6,16,1f,false);
         goodendmusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Hollow_Knight_OST_White_Palace.mp3"));
         badendmusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Rain_World_Threat_Chimney_Canopy_Soundtrack_OST_.mp3"));
         //gsm.getInventory().setBun(true);
+        //gsm.getInventory().setCarKey(true);
         bunnymusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Layers_Of_Fear_Soundtrack_The_End_feat_Penelopa_Willmann_Szynalik_.mp3"));
         explosion = Gdx.audio.newSound(Gdx.files.internal("Music/explosion.wav"));
+        flatline = Gdx.audio.newSound(Gdx.files.internal("flatline.mp3"));
         explosion2 = Gdx.audio.newSound(Gdx.files.internal("Music/explosion2.ogg"));
         carsound2 = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
         carsound1 = Gdx.audio.newSound(Gdx.files.internal("Music/burnout.ogg"));
@@ -48,7 +56,7 @@ public class GameOverState extends State {
         if (gsm.getInventory().getBun()) {
             goodEnd = true;
             goodendmusic.play();
-        } else {
+        } else if(gsm.getInventory().getCarKey() && !gsm.getInventory().getBunKey()){
             badEnd = true;
             if(badEnding2.getDone()){
                 badendmusic.stop();
@@ -57,6 +65,15 @@ public class GameOverState extends State {
             /*else{
                 badendmusic.play();
             }*/
+        }
+        else{
+            deadEnd = true;
+        }
+
+        if(Gdx.input.justTouched()){
+            if(deadEnd && deadLine.getDone()){
+                gsm.set(new BasementState(gsm));
+            }
         }
 
     }
@@ -113,6 +130,10 @@ public class GameOverState extends State {
             }
         }
 
+        if(deadEnd){
+            deadLine.update(dt);
+        }
+
         cam.update();
 
     }
@@ -146,7 +167,7 @@ public class GameOverState extends State {
             else if (!goodEnding2.getDone()) {
                 sb.draw(goodEnding2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
             }
-            else if(!goodEnding3.getDone()){
+            else if(goodEnding2.getDone()){
                 sb.draw(goodEnding3.getFrame(),0,20,Needle.WIDTH,500);
             }
         }
@@ -200,12 +221,16 @@ public class GameOverState extends State {
 
             }
             //bunny
-            else if (!badEnding2.getDone()) {
+            else if (badEnding.getDone()) {
                 sb.draw(badEnding2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
                 badendmusic.stop();
                 badendmusic.dispose();
                 bunnymusic.play();
             }
+        }
+
+        if(deadEnd){
+            sb.draw(deadLine.getFrame(),0,0,Needle.WIDTH,Needle.HEIGHT);
         }
 
         sb.end();

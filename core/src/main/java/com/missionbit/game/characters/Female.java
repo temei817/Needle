@@ -102,6 +102,10 @@ public class Female extends Character {
         }
     }
 
+    public Animations getDeath() {
+        return death;
+    }
+
     public void setDead(boolean x) {
         dead = x;
     }
