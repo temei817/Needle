@@ -31,6 +31,11 @@ public class Inventory {
         inv.add(a);
     }
 
+    public void remove(){
+        inv.clear();
+        inv.add(knife);
+    }
+
     public ArrayList<Texture> getInv() {
         return inv;
     }
