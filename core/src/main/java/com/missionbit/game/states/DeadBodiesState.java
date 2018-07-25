@@ -42,12 +42,14 @@ public class DeadBodiesState extends State{
 
             //put bunny key in inv if touched
             if(bunKey.getButton().handleClick(touchPos)){
-                if(!gsm.getInventory().getBunKey()) {
+                if(!gsm.getInventory().getBunKey() && !Keyplayed) {
+                    keysound.play();
+                    Keyplayed = true;
                     gsm.getInventory().setInv(bunKeyInv);
                     gsm.getInventory().setBunKey(true);
                     System.out.println("clicked");
                 }
-                keysound.play();
+
             }
 
             else {

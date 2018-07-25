@@ -120,8 +120,9 @@ public class SafeState extends State {
                     gsm.pop();
                 }
                 else if(key.getButton().handleClick(touchPos)) {
-                    keysound.play();
-                    if (!gsm.getInventory().getKey()){
+                    if (!gsm.getInventory().getKey() && !keyplayed){
+                        keysound.play();
+                        keyplayed = true;
                         gsm.getInventory().setKey(true);
                         gsm.getInventory().setInv(keyInv);
                 }

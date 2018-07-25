@@ -1,6 +1,7 @@
 package com.missionbit.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -24,7 +25,8 @@ public class ThirdFloorState extends State{
     private Animations issac,oneLock;
     private Texture props, carKeyInv, bunInv, bunOpen;
     private Interactables bun, carKey,bunKey;
-    private boolean playUnlock, playFullUnlock;
+    private boolean playUnlock, playFullUnlock, carkeysoundplayed;
+    private Sound carkeypickupsound;
 
     //debug stuff
     private boolean showDebug = false;
@@ -82,6 +84,8 @@ public class ThirdFloorState extends State{
         labDoor = new PolygonButton(labDoorVertices);
         exitDoor = new PolygonButton(exitDoorVertices);
 
+        carkeypickupsound = Gdx.audio.newSound(Gdx.files.internal("Music/keyy.wav"));
+
 
     }
 
@@ -118,7 +122,9 @@ public class ThirdFloorState extends State{
             }
             //add car key to inv
             else if(carKey.getButton().handleClick(touchPos)){
-                if(!gsm.getInventory().getCarKey()) {
+                if(!gsm.getInventory().getCarKey() && !carkeysoundplayed) {
+                    carkeypickupsound.play();
+                    carkeysoundplayed = true;
                     gsm.getInventory().setInv(carKeyInv);
                     gsm.getInventory().setCarKey(true);
                 }

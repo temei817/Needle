@@ -17,7 +17,7 @@ public class GameOverState extends State {
     private Music bunnymusic;
 
     private Sound explosion, explosion2,carsound2, carsound1, carsound3, dying, carkeysound, flatline;
-    private boolean explosionplayed, explosion2played, carsound2played, carsound1played, carsound3played, dyingplayed, carkeysoundplayed;
+    private boolean explosionplayed, explosion2played, carsound2played, carsound1played, carsound3played, dyingplayed, carkeysoundplayed, flatlineplayed;
 
 
 
@@ -42,7 +42,7 @@ public class GameOverState extends State {
         //gsm.getInventory().setCarKey(true);
         bunnymusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Layers_Of_Fear_Soundtrack_The_End_feat_Penelopa_Willmann_Szynalik_.mp3"));
         explosion = Gdx.audio.newSound(Gdx.files.internal("Music/explosion.wav"));
-        flatline = Gdx.audio.newSound(Gdx.files.internal("flatline.mp3"));
+        //flatline = Gdx.audio.newSound(Gdx.files.internal("flatlinee.wav"));
         explosion2 = Gdx.audio.newSound(Gdx.files.internal("Music/explosion2.ogg"));
         carsound2 = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
         carsound1 = Gdx.audio.newSound(Gdx.files.internal("Music/burnout.ogg"));
@@ -146,7 +146,7 @@ public class GameOverState extends State {
         if (goodEnd) {
             if (!escape0.getDone()) {
                 sb.draw(escape0.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
-                if(/*escape1.getcurrentRunTime() < 1 &&*/ !carkeysoundplayed){
+                if(escape0.getcurrentRunTime() > 2.5 && !carkeysoundplayed){
                     carkeysound.play(1f);
                     carkeysoundplayed = true;
                 }
@@ -231,6 +231,10 @@ public class GameOverState extends State {
 
         if(deadEnd){
             sb.draw(deadLine.getFrame(),0,0,Needle.WIDTH,Needle.HEIGHT);
+            //if(!flatlineplayed){
+              //  flatline.play();
+            //flatlineplayed = true;
+            //}
         }
 
         sb.end();
