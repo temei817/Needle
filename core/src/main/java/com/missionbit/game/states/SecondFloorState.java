@@ -1,6 +1,7 @@
 package com.missionbit.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -44,6 +45,10 @@ public class SecondFloorState extends State{
     private BitmapFont font;
     private GameStateManager gameStateManager;
 
+    private Sound doorsound2;
+    private boolean doorsound2played;
+
+
 
 
     public SecondFloorState(GameStateManager gsm) {
@@ -71,6 +76,8 @@ public class SecondFloorState extends State{
         //timer
         gameStateManager = gsm;
         font = new BitmapFont();
+
+        doorsound2 = Gdx.audio.newSound(Gdx.files.internal("Music/door.wav"));
     }
 
     @Override
@@ -86,7 +93,9 @@ public class SecondFloorState extends State{
             }
             //switch to keypad
             else if(labDoor.handleClick(touchPos)){
+                doorsound2.play();
                 gsm.push(new KeypadState(gsm));
+
             }
             //switch to inventory
             else if(gsm.getInventory().handleInput()){

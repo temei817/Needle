@@ -25,8 +25,9 @@ public class ThirdFloorState extends State{
     private Animations issac,oneLock;
     private Texture props, carKeyInv, bunInv, bunOpen;
     private Interactables bun, carKey,bunKey;
-    private boolean playUnlock, playFullUnlock, carkeysoundplayed;
-    private Sound carkeypickupsound;
+    private boolean playUnlock, playFullUnlock, carkeysoundplayed, doorsound3played;
+    private Sound carkeypickupsound, doorsound3;
+
 
     //debug stuff
     private boolean showDebug = false;
@@ -85,6 +86,7 @@ public class ThirdFloorState extends State{
         exitDoor = new PolygonButton(exitDoorVertices);
 
         carkeypickupsound = Gdx.audio.newSound(Gdx.files.internal("Music/keyy.wav"));
+        doorsound3 = Gdx.audio.newSound(Gdx.files.internal("Music/door.wav"));
 
 
     }
@@ -102,6 +104,7 @@ public class ThirdFloorState extends State{
             }
             //back to second floor
             else if(labDoor.handleClick(touchPos)){
+                doorsound3.play();
                 gsm.pop();
             }
             //switch to bun unlock animation

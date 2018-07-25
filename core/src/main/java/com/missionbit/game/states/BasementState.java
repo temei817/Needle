@@ -49,6 +49,9 @@ public class BasementState extends State {
     private boolean locked;
     private Animations lockedAni;
 
+    private Sound doorsound;
+    private boolean doorsoundplayed;
+
 
     public BasementState(GameStateManager gsm) {
         super(gsm ,"Music/The_Binding_of_Isaac_Rebirth_Soundtrack_The_Calm_HQ_.mp3");
@@ -83,6 +86,7 @@ public class BasementState extends State {
         System.out.println(intBuffer.get());
 
         pickupsound = Gdx.audio.newSound(Gdx.files.internal("Music/pickup.mp3"));
+        doorsound = Gdx.audio.newSound(Gdx.files.internal("Music/door.wav"));
 
 
     }
@@ -113,6 +117,7 @@ public class BasementState extends State {
             }
             else if(doorButton.handleClick(touchPos)) {
                 //switch to second floor
+                doorsound.play();
                 if (gsm.getInventory().getKey()){
                     gsm.push(new SecondFloorState(gsm));
                  }
