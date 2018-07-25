@@ -36,7 +36,7 @@ public class MenuState extends State {
             //gsm.set(new SecondFloorState(gsm));
             //gsm.set(new SafeState(gsm));
             //gsm.set(new ThirdFloorState(gsm));
-            gsm.set(new GameOverState(gsm));
+            //gsm.set(new GameOverState(gsm));
             //gsm.set(new BunUnlockState(gsm));
 
         }
