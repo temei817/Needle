@@ -16,8 +16,8 @@ public class GameOverState extends State {
     private Music badendmusic;
     private Music bunnymusic;
 
-    private Sound explosion, explosion2,carsound2, carsound1, carsound3, dying, carkeysound, flatline, carsound2good, carsound3good;
-    private boolean explosionplayed, explosion2played, carsound2played, carsound1played, carsound3played, dyingplayed, carkeysoundplayed, flatlineplayed, carsound2goodplayed, carsound3goodplayed;
+    private Sound explosion, explosion2,carsound2, carsound1, carsound3, dying, carkeysound, flatline, carsound2good, carsound3good, carkeysound2;
+    private boolean explosionplayed, explosion2played, carsound2played, carsound1played, carsound3played, dyingplayed, carkeysoundplayed, flatlineplayed, carsound2goodplayed, carsound3goodplayed, carkeysound2played;
 
 
 
@@ -42,7 +42,7 @@ public class GameOverState extends State {
         //gsm.getInventory().setCarKey(true);
         bunnymusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Layers_Of_Fear_Soundtrack_The_End_feat_Penelopa_Willmann_Szynalik_.mp3"));
         explosion = Gdx.audio.newSound(Gdx.files.internal("Music/explosion.wav"));
-        //flatline = Gdx.audio.newSound(Gdx.files.internal("flatlinee.wav"));
+        flatline = Gdx.audio.newSound(Gdx.files.internal("flatline.mp3"));
         explosion2 = Gdx.audio.newSound(Gdx.files.internal("Music/explosion2.ogg"));
         carsound2 = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
         carsound1 = Gdx.audio.newSound(Gdx.files.internal("Music/burnout.ogg"));
@@ -51,6 +51,8 @@ public class GameOverState extends State {
         carkeysound = Gdx.audio.newSound(Gdx.files.internal("Music/carkeys.mp3"));
         carsound2good = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
         carsound3good = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
+        carkeysound2 = Gdx.audio.newSound(Gdx.files.internal("Music/carkeys.mp3"));
+
     }
 
     @Override
@@ -191,6 +193,10 @@ public class GameOverState extends State {
         if (badEnd) {
             if (!escape0.getDone()) {
                 sb.draw(escape0.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
+                if(escape0.getcurrentRunTime() > 2.5 && !carkeysound2played){
+                    carkeysound2.play(1f);
+                    carkeysound2played = true;
+                }
 
             } else if (!escape1.getDone()) {
                 sb.draw(escape1.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
@@ -247,10 +253,10 @@ public class GameOverState extends State {
 
         if(deadEnd){
             sb.draw(deadLine.getFrame(),0,0,Needle.WIDTH,Needle.HEIGHT);
-            //if(!flatlineplayed){
-              //  flatline.play();
-            //flatlineplayed = true;
-            //}
+            if(!flatlineplayed){
+                flatline.play();
+            flatlineplayed = true;
+            }
         }
 
         sb.end();
