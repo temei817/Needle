@@ -74,7 +74,9 @@ public class GameOverState extends State {
 
         if(Gdx.input.justTouched()){
             if(deadEnd && deadLine.getDone()){
-                gsm.set(new BasementState(gsm));
+                gsm.getInventory().remove();
+                gsm.clear();
+                gsm.push(new BasementState(gsm));
             }
         }
 
