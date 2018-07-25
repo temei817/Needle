@@ -31,7 +31,7 @@ public class Female extends Character {
         charStill = new Animations("images/femaleIdle.png", 6, 4, 21, 1f, true);
         charWalkL = new Animations(new TextureRegion(charWalkLeft), 16, 1f);
         getUp = new Animations("images/getup.png", 4, 4, 14, 1f, false);
-        death = new Animations("images/death.png", 4, 6, 22, 1f, false);
+        death = new Animations("images/death.png", 4, 6, 22, 1.5f, false);
 
         //movement stuff
         movingR = false;
@@ -89,7 +89,7 @@ public class Female extends Character {
 
     public void draw(SpriteBatch sb) {
         if (dead) {
-            sb.draw(death.getFrame(), charPos.x - 20, charPos.y, 108, 112);
+            sb.draw(death.getFrame(), charPos.x - 20, charPos.y, 163, 112);
         } else if (movingR) {
             sb.draw(charAnimation.getFrame(), charPos.x, charPos.y, 49, 98);
             //    System.out.println("moving right");
