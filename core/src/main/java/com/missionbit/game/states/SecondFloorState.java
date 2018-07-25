@@ -61,7 +61,7 @@ public class SecondFloorState extends State{
         cure = new Interactables(new Texture("images/cureA.png"),810,40,30,51);
         cureAni = new Animations("images/cure.png",5,11,55,5f,false);
         female = new Female(50, 50);
-        labStuffAni = new Animations("images/lab.png", 4,9,34,5f,true);
+        labStuffAni = new Animations("images/lab.png", 6,6,34,5f,true);
 
         //walls
         walls = new ArrayList<PolygonButton>();
@@ -170,7 +170,7 @@ public class SecondFloorState extends State{
 
         //draw background stuff
         sb.draw(table,160,0,800,76);
-        sb.draw(labStuffAni.getFrame(),50,0,900,475);
+        sb.draw(labStuffAni.getFrame(),200,0,labStuffAni.getFrame().getRegionWidth() * 1.75f,labStuffAni.getFrame().getRegionHeight()* 2f);
 
         //draw the cure
         if(!gotCure) {
