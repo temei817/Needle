@@ -45,12 +45,12 @@ public class GameOverState extends State {
         flatline = Gdx.audio.newMusic(Gdx.files.internal("Music/flatline.wav"));
         explosion2 = Gdx.audio.newSound(Gdx.files.internal("Music/explosion2.ogg"));
         carsound2 = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
-        carsound1 = Gdx.audio.newSound(Gdx.files.internal("Music/Driveoff.ogg"));
+        carsound1 = Gdx.audio.newSound(Gdx.files.internal("Music/burnout.ogg"));
         dying = Gdx.audio.newSound(Gdx.files.internal("Music/infected.ogg"));
-        carsound3 = Gdx.audio.newSound(Gdx.files.internal("Music/burnout.ogg"));
+        carsound3 = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
         carkeysound = Gdx.audio.newSound(Gdx.files.internal("Music/carkeys.mp3"));
         carsound2good = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
-        carsound3good = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
+        carsound3good = Gdx.audio.newSound(Gdx.files.internal("Music/Driveoff.ogg"));
         carkeysound2 = Gdx.audio.newSound(Gdx.files.internal("Music/carkeys.mp3"));
 
     }
@@ -156,7 +156,7 @@ public class GameOverState extends State {
         if (goodEnd) {
             if (!escape0.getDone()) {
                 sb.draw(escape0.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
-                if(escape0.getcurrentRunTime() > 2.5 && !carkeysoundplayed){
+                if(/*escape0.getcurrentRunTime() > 2 && */!carkeysoundplayed){
                     carkeysound.play(1f);
                     carkeysoundplayed = true;
                 }
@@ -164,7 +164,7 @@ public class GameOverState extends State {
                 sb.draw(escape1.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
                 if(!carsound1played){
                     carsound1.play();
-                    carsound1played = true;
+                carsound1played = true;
                 }
             } else if (!escape2.getDone()) {
                 sb.draw(escape2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
@@ -197,7 +197,7 @@ public class GameOverState extends State {
         if (badEnd) {
             if (!escape0.getDone()) {
                 sb.draw(escape0.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
-                if(escape0.getcurrentRunTime() > 2.5 && !carkeysound2played){
+                if(/*escape0.getcurrentRunTime() > 2.5 &&*/ !carkeysound2played){
                     carkeysound2.play(1f);
                     carkeysound2played = true;
                 }
