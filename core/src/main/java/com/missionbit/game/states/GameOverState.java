@@ -31,8 +31,8 @@ public class GameOverState extends State {
         }
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
         if(goodEnd) {
-            goodEnding = new Animations("images/goodending.png", 3, 6, 18, 3f, false);
-            goodEnding2 = new Animations("images/buncure.png", 5, 10, 47, 3f, false);
+            goodEnding = new Animations("images/goodending.png", 3, 6, 18, 2f, false);
+            goodEnding2 = new Animations("images/buncure.png", 5, 10, 47, 2f, false);
             goodEnding3 = new Animations("images/Goodlast.png", 2, 6, 12, 0.6f, false);
             goodendmusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Hollow_Knight_OST_White_Palace.mp3"));
         }
