@@ -19,7 +19,7 @@ public class KeypadState extends State {
     private ArrayList<Button> buttons = new ArrayList<Button>();
     private String Combo = "";
     private String Answer = "4260";
-    private Sound dooropensound3, doorlockedsound3;
+    private Sound dooropensound3, doorlockedsound3, pressDown;
     public KeypadState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
@@ -53,6 +53,8 @@ public class KeypadState extends State {
 
         dooropensound3 = Gdx.audio.newSound(Gdx.files.internal("Music/doorlock.mp3"));
         doorlockedsound3 = Gdx.audio.newSound(Gdx.files.internal("Music/not.wav"));
+        pressDown = Gdx.audio.newSound(Gdx.files.internal("Music/pressdown.wav"));
+
 
 
 
@@ -94,6 +96,7 @@ public class KeypadState extends State {
                         gsm.pop();
                     }
                     else{
+                        pressDown.play(1f,0.5f,1);
                         Combo += b.getValue();
                     }
                     System.out.println(b.getValue());
@@ -133,6 +136,7 @@ public class KeypadState extends State {
 
     @Override
     public void dispose(){
+        pressDown.dispose();
 
     }
 

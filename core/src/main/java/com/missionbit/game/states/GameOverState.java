@@ -12,8 +12,8 @@ public class GameOverState extends State {
     private Animations goodEnding, badEnding, badEnding2, goodEnding2, badEnding3, goodEnding3;
     private Animations escape0, escape1, escape2, escape3;
     private Animations deadLine;
-    private Music goodendmusic, badendmusic,bunnymusic, flatline;
-    private Sound explosion, explosion2,carsound2, carsound1, carsound3, dying, carkeysound, carsound2good, carsound3good, carkeysound2;
+    private Music goodendmusic, badendmusic,bunnymusic;
+    private Sound explosion, explosion2,carsound2, carsound1, carsound3, dying, carkeysound, carsound2good, carsound3good, carkeysound2,flatline;
     private boolean explosionplayed, explosion2played, carsound2played, carsound1played, carsound3played, dyingplayed, carkeysoundplayed, flatlineplayed, carsound2goodplayed, carsound3goodplayed, carkeysound2played;
 
 
@@ -39,7 +39,7 @@ public class GameOverState extends State {
         //gsm.getInventory().setCarKey(true);
         bunnymusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Layers_Of_Fear_Soundtrack_The_End_feat_Penelopa_Willmann_Szynalik_.mp3"));
         explosion = Gdx.audio.newSound(Gdx.files.internal("Music/explosion.wav"));
-        flatline = Gdx.audio.newMusic(Gdx.files.internal("Music/flatline.wav"));
+        flatline = Gdx.audio.newSound(Gdx.files.internal("Music/flatline.wav"));
         explosion2 = Gdx.audio.newSound(Gdx.files.internal("Music/explosion2.ogg"));
         carsound2 = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
         carsound1 = Gdx.audio.newSound(Gdx.files.internal("Music/burnout.ogg"));
@@ -255,8 +255,9 @@ public class GameOverState extends State {
         if(deadEnd){
             sb.draw(deadLine.getFrame(),0,0,Needle.WIDTH,Needle.HEIGHT);
             if(/*deadLine.getcurrentRunTime() < 1 && */!flatlineplayed){
-                flatline.play();
-                flatline.setPosition(4f);
+                //flatline.setVolume(0.1f);
+                flatline.play(0.5f,0.5f,1f);
+                //flatline.setPosition(4f);
             flatlineplayed = true;
             }
         }
