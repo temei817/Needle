@@ -45,7 +45,7 @@ public class GameOverState extends State {
         flatline = Gdx.audio.newMusic(Gdx.files.internal("Music/flatline.wav"));
         explosion2 = Gdx.audio.newSound(Gdx.files.internal("Music/explosion2.ogg"));
         carsound2 = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
-        carsound1 = Gdx.audio.newSound(Gdx.files.internal("Music/burnout.ogg"));
+        carsound1 = Gdx.audio.newSound(Gdx.files.internal("Music/Driveoff.ogg"));
         dying = Gdx.audio.newSound(Gdx.files.internal("Music/infected.ogg"));
         carsound3 = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
         carkeysound = Gdx.audio.newSound(Gdx.files.internal("Music/carkeys.mp3"));
@@ -162,10 +162,10 @@ public class GameOverState extends State {
                 }
             } else if (!escape1.getDone()) {
                 sb.draw(escape1.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
-//                if(/*escape1.getcurrentRunTime() < 1 &&*/ !carkeysoundplayed){
-//                    carkeysound.play(1f);
- //                   carkeysoundplayed = true;
- //               }
+                if(!carsound1played){
+                    carsound1.play();
+                    carsound1played = true;
+                }
             } else if (!escape2.getDone()) {
                 sb.draw(escape2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
                 if(!carsound2goodplayed){

@@ -86,7 +86,7 @@ public class ThirdFloorState extends State{
         exitDoor = new PolygonButton(exitDoorVertices);
 
         carkeypickupsound = Gdx.audio.newSound(Gdx.files.internal("Music/keyy.wav"));
-        doorsound3 = Gdx.audio.newSound(Gdx.files.internal("Music/door.wav"));
+        doorsound3 = Gdx.audio.newSound(Gdx.files.internal("Music/doorlock.mp3"));
 
 
     }
