@@ -224,5 +224,8 @@ public class SecondFloorState extends State{
         cure.dispose();
         /*music.stop();
         music.dispose();*/
+        labStuffAni.dispose();
+        cureAni.dispose();
+        System.out.println("disposing of second floor");
     }
 }

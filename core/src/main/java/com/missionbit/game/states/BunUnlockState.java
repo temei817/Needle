@@ -79,6 +79,9 @@ public class BunUnlockState extends State{
 
     @Override
     public void dispose() {
+        unlock.dispose();
+        fullUnlock.dispose();
+        bunOneLock.dispose();
 
     }
 }

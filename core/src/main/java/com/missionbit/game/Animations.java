@@ -85,4 +85,9 @@ public class Animations{
         return currentRunTime;
     }
 
+    public void dispose() {
+        for(TextureRegion r: frames){
+            r.getTexture().dispose();
+        }
+    }
 }

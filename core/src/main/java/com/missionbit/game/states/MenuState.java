@@ -63,6 +63,7 @@ public class MenuState extends State {
         music.stop();
         music.dispose();
         System.out.println("Disposing of MenuState");
+        bkgdAni.dispose();
 
     }
 

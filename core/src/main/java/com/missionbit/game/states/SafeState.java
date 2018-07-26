@@ -189,6 +189,10 @@ public class SafeState extends State {
         safe.dispose();
         key.dispose();
         pressDown.dispose();
+        box.dispose();
+        keysound.dispose();
+        doorsafeopensound.dispose();
+        doorsafelockedsound.dispose();
 
     }
 

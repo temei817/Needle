@@ -66,7 +66,7 @@ public class ThirdFloorState extends State{
         issac = new Animations("images/Isaac.png",4,3,11,3f,true);
         props = new Texture("images/thirdprop.png");
         carKeyInv = new Texture("images/carkeyin.png");
-        carKey = new Interactables(new Texture("images/carkeys.png"),280,210,24,24);
+        carKey = new Interactables(new Texture("images/carkeys.png"),280,210,16,12);
         bunInv = new Texture("images/bunnyin.png");
 
         //bunny lock animations
@@ -254,6 +254,13 @@ public class ThirdFloorState extends State{
         bkgd.dispose();
         female.dispose();
         props.dispose();
+        issac.dispose();
+        oneLock.dispose();
+        carkeypickupsound.dispose();
+        doorsound3.dispose();
+        exitdoorlocksound.dispose();
+        exitdooropensound.dispose();
+        System.out.println("disposing of third floor");
 
     }
 }
