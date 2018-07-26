@@ -45,8 +45,8 @@ public class SecondFloorState extends State{
     private BitmapFont font;
     private GameStateManager gameStateManager;
 
-    private Sound doorsound2;
-    private boolean doorsound2played;
+    private Sound dooropensound2, doorlockedsound2;
+    private boolean dooropensound2played;
 
 
 
@@ -77,7 +77,8 @@ public class SecondFloorState extends State{
         gameStateManager = gsm;
         font = new BitmapFont();
 
-        doorsound2 = Gdx.audio.newSound(Gdx.files.internal("Music/door.wav"));
+        dooropensound2 = Gdx.audio.newSound(Gdx.files.internal("Music/doorlock.mp3"));
+        doorlockedsound2 = Gdx.audio.newSound(Gdx.files.internal("Music/not.wav"));
     }
 
     @Override
@@ -93,8 +94,8 @@ public class SecondFloorState extends State{
             }
             //switch to keypad
             else if(labDoor.handleClick(touchPos)){
-                doorsound2.play();
                 gsm.push(new KeypadState(gsm));
+
 
             }
             //switch to inventory

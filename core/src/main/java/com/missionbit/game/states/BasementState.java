@@ -49,7 +49,7 @@ public class BasementState extends State {
     private boolean locked;
     private Animations lockedAni;
 
-    private Sound doorsound;
+    private Sound dooropensound, doorlockedsound;
     private boolean doorsoundplayed;
 
 
@@ -86,7 +86,8 @@ public class BasementState extends State {
         System.out.println(intBuffer.get());
 
         pickupsound = Gdx.audio.newSound(Gdx.files.internal("Music/pickup.mp3"));
-        doorsound = Gdx.audio.newSound(Gdx.files.internal("Music/door.wav"));
+        dooropensound = Gdx.audio.newSound(Gdx.files.internal("Music/doorlock.mp3"));
+        doorlockedsound = Gdx.audio.newSound(Gdx.files.internal("Music/not.wav"));
 
 
     }
@@ -117,12 +118,14 @@ public class BasementState extends State {
             }
             else if(doorButton.handleClick(touchPos)) {
                 //switch to second floor
-                doorsound.play();
                 if (gsm.getInventory().getKey()){
                     gsm.push(new SecondFloorState(gsm));
+                    dooropensound.play();
                  }
                  else{
                     locked = true;
+                    doorlockedsound.play();
+
                 }
             }
             //switch to close up

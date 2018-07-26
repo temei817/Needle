@@ -2,6 +2,7 @@ package com.missionbit.game.states;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -18,6 +19,7 @@ public class KeypadState extends State {
     private ArrayList<Button> buttons = new ArrayList<Button>();
     private String Combo = "";
     private String Answer = "4260";
+    private Sound dooropensound3, doorlockedsound3;
     public KeypadState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
@@ -49,6 +51,9 @@ public class KeypadState extends State {
         b = new Button(816, 30, 105, 73, "Back");
         buttons.add(b);
 
+        dooropensound3 = Gdx.audio.newSound(Gdx.files.internal("Music/doorlock.mp3"));
+        doorlockedsound3 = Gdx.audio.newSound(Gdx.files.internal("Music/not.wav"));
+
 
 
 
@@ -76,9 +81,11 @@ public class KeypadState extends State {
                         if(Combo.equals(Answer)){
                             System.out.println("Unlocked");
                             Combo = "";
+                            dooropensound3.play();
                             gsm.set(new ThirdFloorState(gsm));
                         }
                         else{
+                            doorlockedsound3.play();
                             Combo = "";
                             System.out.println("Wrong! Try Again");
                         }
