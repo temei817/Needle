@@ -280,8 +280,14 @@ public class GameOverState extends State {
 
     @Override
     public void dispose() {
-        goodendmusic.dispose();
-        badendmusic.dispose();
-        bunnymusic.dispose();
+        if(goodendmusic != null){
+            goodendmusic.dispose();
+        }
+        if (badendmusic != null) {
+            badendmusic.dispose();
+        }
+        if(bunnymusic != null) {
+            bunnymusic.dispose();
+        }
     }
 }
