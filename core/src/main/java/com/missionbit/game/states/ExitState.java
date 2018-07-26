@@ -15,6 +15,7 @@ public class ExitState extends State {
     private ShapeRenderer debugRenderer;
     private Sound exitdooropensound, exitdoorlocksound;
 
+
     public ExitState(GameStateManager gsm) {
         super(gsm);
         exit = new Texture("images/KeypadExit.png");
@@ -34,6 +35,7 @@ public class ExitState extends State {
             touchPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
             cam.unproject(touchPos);
             if(back.handleClick(touchPos)){
+
                 gsm.pop();
             }
         }
