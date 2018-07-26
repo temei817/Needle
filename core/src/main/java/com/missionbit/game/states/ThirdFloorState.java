@@ -138,6 +138,9 @@ public class ThirdFloorState extends State{
                     gsm.clear();
                     gsm.push(new GameOverState(gsm));
                 }
+                else{
+                    gsm.push(new ExitState(gsm));
+                }
             }
             //move the char
             else {

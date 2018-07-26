@@ -29,7 +29,7 @@ public class MenuState extends State {
             //gsm.set(basementstate);
             System.out.println(gsm);
             //gsm.set(new BasementState(gsm));
-           gsm.push(new IntroState(gsm));
+            gsm.push(new IntroState(gsm));
             //gsm.push(new IntroState(gsm));
             //gsm.push(new IntroState(gsm));
             //gsm.set(new KeypadState(gsm));
@@ -38,6 +38,7 @@ public class MenuState extends State {
             //gsm.set(new ThirdFloorState(gsm));
             //gsm.set(new GameOverState(gsm));
             //gsm.set(new BunUnlockState(gsm));
+            //gsm.set(new ExitState(gsm));
 
         }
     }
