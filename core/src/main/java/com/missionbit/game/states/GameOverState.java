@@ -45,7 +45,7 @@ public class GameOverState extends State {
         flatline = Gdx.audio.newMusic(Gdx.files.internal("Music/flatline.wav"));
         explosion2 = Gdx.audio.newSound(Gdx.files.internal("Music/explosion2.ogg"));
         carsound2 = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
-        carsound1 = Gdx.audio.newSound(Gdx.files.internal("Music/burnout.ogg"));
+        carsound1 = Gdx.audio.newSound(Gdx.files.internal("Music/Driveoff.ogg"));
         dying = Gdx.audio.newSound(Gdx.files.internal("Music/infected.ogg"));
         carsound3 = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
         carkeysound = Gdx.audio.newSound(Gdx.files.internal("Music/carkeys.mp3"));
