@@ -94,6 +94,7 @@ public class DeadBodiesState extends State{
     @Override
     public void dispose() {
         dead.dispose();
+        deadAni.dispose();
 
     }
 }

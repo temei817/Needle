@@ -49,6 +49,7 @@ public class BookshelfState extends State {
 
     @Override
     public void dispose() {
+        BookShelfAnimation.dispose();
 
     }
 }

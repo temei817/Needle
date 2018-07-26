@@ -82,6 +82,7 @@ public class KeypadState extends State {
                             System.out.println("Unlocked");
                             Combo = "";
                             dooropensound3.play();
+                            gsm.pop().dispose();
                             gsm.set(new ThirdFloorState(gsm));
                         }
                         else{

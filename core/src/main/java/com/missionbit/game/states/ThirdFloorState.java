@@ -254,6 +254,13 @@ public class ThirdFloorState extends State{
         bkgd.dispose();
         female.dispose();
         props.dispose();
+        issac.dispose();
+        oneLock.dispose();
+        carkeypickupsound.dispose();
+        doorsound3.dispose();
+        exitdoorlocksound.dispose();
+        exitdooropensound.dispose();
+        System.out.println("disposing of third floor");
 
     }
 }

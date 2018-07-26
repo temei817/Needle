@@ -92,6 +92,10 @@ public class IntroState extends State{
     @Override
     public void dispose() {
         System.out.println("Disposing of IntroState");
+        ortniAni.dispose();
+        introAni.dispose();
+        splatter.dispose();
+        stamp.dispose();
 
     }
 }

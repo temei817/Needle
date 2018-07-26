@@ -43,6 +43,7 @@ public class HangingState extends State{
     @Override
     public void dispose() {
         hanging.dispose();
+        hangingAni.dispose();
 
     }
 }
