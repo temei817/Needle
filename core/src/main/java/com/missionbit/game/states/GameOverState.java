@@ -60,7 +60,7 @@ public class GameOverState extends State {
         if (gsm.getInventory().getBun()) {
             goodEnd = true;
             goodendmusic.play();
-        } else if(gsm.getInventory().getCarKey() && !gsm.getInventory().getBunKey()){
+        } else if(gsm.getInventory().getCarKey() && !gsm.getInventory().getBun()){
             badEnd = true;
             if(badEnding2.getDone()){
                 badendmusic.stop();
