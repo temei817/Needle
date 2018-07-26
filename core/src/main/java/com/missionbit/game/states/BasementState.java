@@ -168,7 +168,7 @@ public class BasementState extends State {
 
         //timer
         if (!gameStateManager.getStopTimer()){
-            if (System.currentTimeMillis() - gameStateManager.getStartTime() > 2000) {
+            if (System.currentTimeMillis() - gameStateManager.getStartTime() > 180000) {
                 female.setDead(true);
                 if(female.getDeath().getDone()){
                     gsm.push(new GameOverState(gsm));
