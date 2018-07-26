@@ -30,7 +30,7 @@ public class SafeState extends State {
     private Boolean gotKey = false;
     private Interactables key;
     private Button back;
-    private Sound keysound;
+    private Sound keysound, doorsafeopensound, doorsafelockedsound;
     private boolean keyplayed;
     public SafeState(GameStateManager gsm) {
         super(gsm);
@@ -67,6 +67,8 @@ public class SafeState extends State {
         buttons.add(b);
 
         keysound = Gdx.audio.newSound(Gdx.files.internal("Music/keyy.wav"));
+        doorsafeopensound = Gdx.audio.newSound(Gdx.files.internal("Music/doorlock.mp3"));
+        doorsafelockedsound = Gdx.audio.newSound(Gdx.files.internal("Music/not.wav"));
 
 
 
@@ -92,10 +94,12 @@ public class SafeState extends State {
                             Combo = "";
                         } else if (b.getValue().equals("Check")) {
                             if (Combo.equals(Answer)) {
+                                doorsafeopensound.play();
                                 System.out.println("Unlocked");
                                 Combo = "";
                                 open = true;
                             } else {
+                                doorsafelockedsound.play();
                                 Combo = "";
                                 System.out.println("Wrong! Try Again");
                             }

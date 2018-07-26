@@ -27,7 +27,7 @@ public class GameOverState extends State {
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
         goodEnding = new Animations("images/goodending.png",3,6,18,3f,false);
         goodEnding2 = new Animations("images/buncure.png",5,10,47,3f,false);
-        goodEnding3 = new Animations("images/Goodlast.png",2,6,12,1f,false);
+        goodEnding3 = new Animations("images/Goodlast.png",2,6,12,0.6f,false);
         badEnding = new Animations("images/badending1.png",4,7,28,1f,false);
         badEnding2 = new Animations("images/badending2.png",2,6,11,2f,false);
         badEnding3 = new Animations("images/Badendng.png",3,7,20,3f,false);
