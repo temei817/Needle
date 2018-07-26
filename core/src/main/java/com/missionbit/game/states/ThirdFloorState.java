@@ -26,7 +26,7 @@ public class ThirdFloorState extends State{
     private Texture props, carKeyInv, bunInv, bunOpen;
     private Interactables bun, carKey,bunKey;
     private boolean playUnlock, playFullUnlock, carkeysoundplayed, doorsound3played;
-    private Sound carkeypickupsound, doorsound3;
+    private Sound carkeypickupsound, doorsound3, exitdooropensound, exitdoorlocksound;
 
 
     //debug stuff
@@ -87,6 +87,8 @@ public class ThirdFloorState extends State{
 
         carkeypickupsound = Gdx.audio.newSound(Gdx.files.internal("Music/keyy.wav"));
         doorsound3 = Gdx.audio.newSound(Gdx.files.internal("Music/doorlock.mp3"));
+        exitdooropensound = Gdx.audio.newSound(Gdx.files.internal("Music/doorlock.mp3"));
+        exitdoorlocksound = Gdx.audio.newSound(Gdx.files.internal("Music/not.wav"));
 
 
     }
@@ -135,10 +137,12 @@ public class ThirdFloorState extends State{
             //switch to end animations
             else if(exitDoor.handleClick(touchPos)){
                 if(gsm.getInventory().getCarKey()){
+                    exitdooropensound.play();
                     gsm.clear();
                     gsm.push(new GameOverState(gsm));
                 }
                 else{
+                    exitdoorlocksound.play();
                     gsm.push(new ExitState(gsm));
                 }
             }

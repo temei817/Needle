@@ -13,7 +13,6 @@ public class ExitState extends State {
     private Texture exit;
     private Button back;
     private ShapeRenderer debugRenderer;
-    private Sound exitdooropensound, exitdoorlocksound;
 
 
     public ExitState(GameStateManager gsm) {
@@ -22,9 +21,6 @@ public class ExitState extends State {
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
         back = new Button(653,27,85,63,"back");
         debugRenderer = new ShapeRenderer();
-
-        exitdooropensound = Gdx.audio.newSound(Gdx.files.internal("Music/doorlock.mp3"));
-        exitdoorlocksound = Gdx.audio.newSound(Gdx.files.internal("Music/not.wav"));
 
     }
 

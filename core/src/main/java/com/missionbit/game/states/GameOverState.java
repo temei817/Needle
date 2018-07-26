@@ -12,10 +12,7 @@ public class GameOverState extends State {
     private Animations goodEnding, badEnding, badEnding2, goodEnding2, badEnding3, goodEnding3;
     private Animations escape0, escape1, escape2, escape3;
     private Animations deadLine;
-    private Music goodendmusic;
-    private Music badendmusic;
-    private Music bunnymusic, flatline;
-
+    private Music goodendmusic, badendmusic,bunnymusic, flatline;
     private Sound explosion, explosion2,carsound2, carsound1, carsound3, dying, carkeysound, carsound2good, carsound3good, carkeysound2;
     private boolean explosionplayed, explosion2played, carsound2played, carsound1played, carsound3played, dyingplayed, carkeysoundplayed, flatlineplayed, carsound2goodplayed, carsound3goodplayed, carkeysound2played;
 
