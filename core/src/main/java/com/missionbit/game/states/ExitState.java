@@ -1,6 +1,7 @@
 package com.missionbit.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -12,6 +13,7 @@ public class ExitState extends State {
     private Texture exit;
     private Button back;
     private ShapeRenderer debugRenderer;
+    private Sound exitdooropensound, exitdoorlocksound;
 
     public ExitState(GameStateManager gsm) {
         super(gsm);
@@ -19,6 +21,9 @@ public class ExitState extends State {
         cam.setToOrtho(false, Needle.WIDTH, Needle.HEIGHT);
         back = new Button(653,27,85,63,"back");
         debugRenderer = new ShapeRenderer();
+
+        exitdooropensound = Gdx.audio.newSound(Gdx.files.internal("Music/doorlock.mp3"));
+        exitdoorlocksound = Gdx.audio.newSound(Gdx.files.internal("Music/not.wav"));
 
     }
 

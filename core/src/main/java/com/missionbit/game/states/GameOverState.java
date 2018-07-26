@@ -162,10 +162,10 @@ public class GameOverState extends State {
                 }
             } else if (!escape1.getDone()) {
                 sb.draw(escape1.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
-//                if(/*escape1.getcurrentRunTime() < 1 &&*/ !carkeysoundplayed){
-//                    carkeysound.play(1f);
- //                   carkeysoundplayed = true;
- //               }
+                if(!carsound1played){
+                    carsound1.play();
+                    carsound1played = true;
+                }
             } else if (!escape2.getDone()) {
                 sb.draw(escape2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
                 if(!carsound2goodplayed){
