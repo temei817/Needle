@@ -31,10 +31,10 @@ public class GameOverState extends State {
         badEnding = new Animations("images/badending1.png",4,7,28,1f,false);
         badEnding2 = new Animations("images/badending2.png",2,6,11,2f,false);
         badEnding3 = new Animations("images/Badendng.png",3,7,20,3f,false);
-        escape0 = new Animations("images/escape0.png",3,6,17,3f,false);
+        escape0 = new Animations("images/escape0.png",3,6,17,0.68f,false);
         escape1 = new Animations("images/escape1.png",3,5,15,0.6f,false);
         escape2 = new Animations("images/escape2.png",3,8,24,0.6f,false);
-        escape3 = new Animations("images/escape3.png",4,8,30,1f,false);
+        escape3 = new Animations("images/escape3.png",4,8,30,1.2f,false);
         deadLine = new Animations("images/DEADLINE.png",3,6,16,1f,false);
         goodendmusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Hollow_Knight_OST_White_Palace.mp3"));
         badendmusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Rain_World_Threat_Chimney_Canopy_Soundtrack_OST_.mp3"));
@@ -45,9 +45,9 @@ public class GameOverState extends State {
         flatline = Gdx.audio.newMusic(Gdx.files.internal("Music/flatline.wav"));
         explosion2 = Gdx.audio.newSound(Gdx.files.internal("Music/explosion2.ogg"));
         carsound2 = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
-        carsound1 = Gdx.audio.newSound(Gdx.files.internal("Music/burnout.ogg"));
+        carsound1 = Gdx.audio.newSound(Gdx.files.internal("Music/Driveoff.ogg"));
         dying = Gdx.audio.newSound(Gdx.files.internal("Music/infected.ogg"));
-        carsound3 = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
+        carsound3 = Gdx.audio.newSound(Gdx.files.internal("Music/burnout.ogg"));
         carkeysound = Gdx.audio.newSound(Gdx.files.internal("Music/carkeys.mp3"));
         carsound2good = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
         carsound3good = Gdx.audio.newSound(Gdx.files.internal("Music/carsound2.ogg"));
@@ -162,10 +162,10 @@ public class GameOverState extends State {
                 }
             } else if (!escape1.getDone()) {
                 sb.draw(escape1.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
-//                if(/*escape1.getcurrentRunTime() < 1 &&*/ !carkeysoundplayed){
-//                    carkeysound.play(1f);
- //                   carkeysoundplayed = true;
- //               }
+                if(!carsound1played){
+                    carsound1.play();
+                    carsound1played = true;
+                }
             } else if (!escape2.getDone()) {
                 sb.draw(escape2.getFrame(), 0, 0, Needle.WIDTH, Needle.HEIGHT);
                 if(!carsound2goodplayed){
